@@ -4,26 +4,18 @@ export class Navbar {
   protected page: Page;
   protected context: BrowserContext;
   private homePageButton: Locator;
-  private navBar: Locator;
-  private xButton: Locator;
-  private commanderEntry: Locator;
-  private reportAttendance: Locator;
-  private reportsHistory: Locator;
-  private settings: Locator;
-  private logoutButton: Locator;
+  private appIconButton: Locator;
+  private notificationsMenuButton: Locator;
+  private profileMenuButton: Locator;
 
   // Constuctor
   constructor(page: Page, context: BrowserContext) {
     this.page = page;
     this.context = context;
-    this.homePageButton = page.locator(".menuBtn");
-    this.navBar = page.locator(".menuBtn");
-    this.xButton = page.locator(".closeMenuBtn");
-    this.commanderEntry = page.getByText("כניסת מפקד");
-    this.reportAttendance = page.getByText("דיווח נוכחות");
-    this.reportsHistory = page.getByText("היסטוריית דיווחים");
-    this.settings = page.getByText("הגדרות");
-    this.logoutButton = page.getByText("התנתקות");
+    this.homePageButton = this.page.locator(".icon-house-door");
+    this.appIconButton = this.page.locator(".header_logo_size");
+    this.notificationsMenuButton = this.page.locator(".NotificationMenu");
+    this.profileMenuButton = this.page.locator("#profile_menu_settings");
   }
 
   // Getters
@@ -31,31 +23,32 @@ export class Navbar {
     return this.homePageButton;
   }
 
-  getCommanderEntry(): Locator {
-    return this.commanderEntry;
+  getAppIcon(): Locator {
+    return this.appIconButton;
   }
 
-  getNavBar(): Locator {
-    return this.navBar;
+  getNotificationsMenuButton(): Locator {
+    return this.notificationsMenuButton;
   }
 
-  getXButton(): Locator {
-    return this.xButton;
+  geProfileMenuButton(): Locator {
+    return this.profileMenuButton;
   }
 
-  getReportAttendance(): Locator {
-    return this.reportAttendance;
+  // Methods
+  async goToHomePage() {
+    await this.getHomePageButton().click();
   }
 
-  getReportsHistory(): Locator {
-    return this.reportsHistory;
+  async clickOnAppIcon() {
+    await this.getAppIcon().click();
   }
 
-  getSettings(): Locator {
-    return this.settings;
+  async openNotificationsMenu() {
+    await this.getNotificationsMenuButton().click();
   }
 
-  getLogoutButton(): Locator {
-    return this.logoutButton;
+  async openProfileMenu() {
+    await this.geProfileMenuButton().click();
   }
 }
