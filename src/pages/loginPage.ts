@@ -1,20 +1,30 @@
-import { Page, BrowserContext, Locator } from "@playwright/test";
-import { TZ } from "env-variables";
+import { BrowserContext, Page, Locator } from "@playwright/test";
+import { PASSWORD, EMAIL } from "env-variables";
 
 export class LoginPage {
   // Locators
-  private tzInput: Locator;
+  protected page: Page;
+  protected context: BrowserContext;
+  private emailInput: Locator;
+  private passwordInput: Locator;
   private loginButton: Locator;
 
   // Constructor
   constructor(page: Page, context: BrowserContext) {
-    this.tzInput = page.locator("input");
-    this.loginButton = page.locator(".btnGeneral");
+    this.page = page;
+    this.context = context;
+    this.emailInput = this.page.locator("#user_email");
+    this.passwordInput = this.page.locator("#user_password");
+    this.loginButton = this.page.locator("[value='Log in']");
   }
 
   // Getters
-  getTzInput(): Locator {
-    return this.tzInput;
+  getEmailInput(): Locator {
+    return this.emailInput;
+  }
+
+  getPasswordInput(): Locator {
+    return this.passwordInput;
   }
   getLoginButton(): Locator {
     return this.loginButton;
@@ -22,7 +32,8 @@ export class LoginPage {
 
   // Methods
   async login(): Promise<void> {
-    await this.getTzInput().fill(TZ);
+    await this.getEmailInput().fill(EMAIL);
+    await this.getPasswordInput().fill(PASSWORD);
     await this.getLoginButton().click();
   }
 }

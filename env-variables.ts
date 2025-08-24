@@ -1,7 +1,8 @@
 import "dotenv/config";
 import envVar from "env-var";
-const TZ = envVar.get("TZ").required().asString();
+const EMAIL = envVar.get("EMAIL").required().asString();
 const URL = envVar.get("URL").required().asString();
+const PASSWORD = envVar.get("PASSWORD").required().asString();
 const AUTH_STATE_FILE_PATH = envVar
   .get("AUTH_STATE_FILE_PATH")
   .required()
@@ -12,4 +13,10 @@ const AUTH_STATE_DATE_FILE_NAME = envVar
   .default("state.json")
   .asString();
 
-export { TZ, URL, AUTH_STATE_FILE_PATH, AUTH_STATE_DATE_FILE_NAME };
+export {
+  EMAIL,
+  URL,
+  PASSWORD,
+  AUTH_STATE_FILE_PATH,
+  AUTH_STATE_DATE_FILE_NAME,
+};
