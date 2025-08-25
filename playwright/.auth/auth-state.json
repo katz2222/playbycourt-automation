@@ -1,331 +1,61 @@
 {
   "cookies": [
     {
-      "name": "BIGipServerMFT-One-Frontends",
-      "value": "1454715402.20480.0000",
-      "domain": "one.prat.idf.il",
+      "name": "_ga",
+      "value": "GA1.1.231465393.1756114279",
+      "domain": ".playbycourt.com",
       "path": "/",
-      "expires": -1,
+      "expires": 1790674283.43678,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "_gcl_au",
+      "value": "1.1.1565097329.1756114279.1419293760.1756114281.1756114281",
+      "domain": ".playbycourt.com",
+      "path": "/",
+      "expires": 1763890279,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "IDE",
+      "value": "AHWqTUkAoq0Sb5pD4TDjlqoj6kUXXvxLo6ZRalXXsZJzwzVLp5OLZPtxM3-cOX5w",
+      "domain": ".doubleclick.net",
+      "path": "/",
+      "expires": 1790674281.453315,
       "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "aws-waf-token",
+      "value": "3a794526-6eab-4351-8458-0aae31de6595:EQoAZzpCp8kSAAAA:HA76i0YM7FENqU42ee0Ljf5TR4xl3AaMbFtnHfPkr3FT3tZ9ymJ5lgpupLlfaiBcIrAEPG8e6edNKUZifeorhnv8r26/FRl6xMjeciVhVRu3H4MNoX9TlECX2N+5hccCz0JLmElvt9BjrjKL5uRTUeaUaQrb3NQ5OYr+3pQ0h5PI/au/FL/0YF/Wylgmk/2N3LXXjkT0YPMLrZGoQTp2w3+Gr5zziukdcdPx0PFB3p2NyouwALs5oc08q5zG7TW2EhTQWnr2knwY",
+      "domain": ".playbycourt.com",
+      "path": "/",
+      "expires": 1756459882,
+      "httpOnly": false,
       "secure": true,
       "sameSite": "Lax"
     },
     {
-      "name": "visid_incap_2025883",
-      "value": "rKplN3cuQfScxiNV3khUhJaLoWgAAAAAQUIPAAAAAAB17Vh4ZWHZJj+gpjYiQkgX",
-      "domain": ".prat.idf.il",
+      "name": "_ga_M060445B8S",
+      "value": "GS2.1.s1756114278$o1$g1$t1756114283$j55$l0$h0",
+      "domain": ".playbycourt.com",
       "path": "/",
-      "expires": 1786905970.357688,
-      "httpOnly": true,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "nlbi_2025883",
-      "value": "Eqj2FQdJ0A/hEOhENh3FqAAAAADvET3cOIyOJMZdxClugxDD",
-      "domain": ".prat.idf.il",
-      "path": "/",
-      "expires": -1,
-      "httpOnly": true,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "incap_ses_1051_2025883",
-      "value": "9771MlSBHBB6fZqVWeeVDpaLoWgAAAAAW0f0uEEkuqR5CWt76Lq5bw==",
-      "domain": ".prat.idf.il",
-      "path": "/",
-      "expires": -1,
+      "expires": 1790674283.436392,
       "httpOnly": false,
-      "secure": true,
-      "sameSite": "None"
+      "secure": false,
+      "sameSite": "Lax"
     },
     {
-      "name": "nlbi_2025883_2147483392",
-      "value": "WGqKDIR2Fx5SsBbVNh3FqAAAAADdfPfeGRS9c43h7qsZdGHC",
-      "domain": ".prat.idf.il",
+      "name": "_paybycourt_session",
+      "value": "ZmRS023CwBqLR6iWfPxbpvN9NPq%2BGWDTAp66xt6AxFoRYiPYChGZGK0DJmIMwKiQQng6MgItvfqh%2FLwOgNX573D%2BW4NTbWrwoJw2yqI9gU7uTILZEJvug%2BYQKUKHA5vxSRIovcHejq%2FxFQMo4WRrgLTkHcWot6OwU4DSU1CJH702a38yj8yQ0McCzBt9ngkP%2BmxT15fj%2BmGxRaa95xkNLciHATWunxuojlG8v5K7cElpGHCiG9AnzZGuoraJwWFgYM1C0wqFcOFP0c7cxVAq%2FpMYDH7WKta%2BW1Se9mip4156Tj6uMXCberjvewszjH1c3rOallvpa05tNDU%2FHXG4%2BKhKRiT3O6t4JJjdQ8Sdl7JyDrTgtRGnfKqrQHEOs1WAgYuVY14thB2Z9QSjPENL1k22Gg%3D%3D--Xo%2FH7Ty1pZSGd6hG--lhVkhHOa6ZN5yKy5F7%2BXyw%3D%3D",
+      "domain": "playbycourt.com",
       "path": "/",
       "expires": -1,
-      "httpOnly": true,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "esctx-gsaloNSX18",
-      "value": "AQABCQEAAABVrSpeuWamRam2jAF1XRQEOFgTasfPcs2mxul1gMCRokNQye0aeuaxOIf27NopV12C9m5uIaFtPNH9Vi_zrpsMI-BUf-Pi3VXMeAH-RZnkJRXOM67qoGtOQy4Oa9JBtXUNf6ToTbPKRFrkqMDgmUCXGULvbePYc9ccxS0zIxE71CAA",
-      "domain": ".login.microsoftonline.com",
-      "path": "/",
-      "expires": -1,
-      "httpOnly": true,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "x-ms-gateway-slice",
-      "value": "estsfd",
-      "domain": "login.microsoftonline.com",
-      "path": "/",
-      "expires": -1,
-      "httpOnly": true,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "stsservicecookie",
-      "value": "estsfd",
-      "domain": "login.microsoftonline.com",
-      "path": "/",
-      "expires": -1,
-      "httpOnly": true,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "AADSSO",
-      "value": "NA|NoExtension",
-      "domain": ".login.microsoftonline.com",
-      "path": "/",
-      "expires": -1,
-      "httpOnly": false,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "SSOCOOKIEPULLED",
-      "value": "1",
-      "domain": "login.microsoftonline.com",
-      "path": "/",
-      "expires": 1755417556,
-      "httpOnly": false,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "esctx-PcsWYOJHuBg",
-      "value": "AQABCQEAAABVrSpeuWamRam2jAF1XRQEMN1A2u8UCk_hNiCH6BrBW6ntIkgNDZat4YBCccW0myRG33y3XHQPnp6qIlVH9U-dljFvAimOaiBUBu3yeklmHhCLyK3kLKsqTPlsKE_FqQpETueWDZxRZJfmYNlOV6hv3cjDEVwj2st0Py3GeadCRCAA",
-      "domain": ".login.microsoftonline.com",
-      "path": "/",
-      "expires": -1,
-      "httpOnly": true,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "MicrosoftApplicationsTelemetryDeviceId",
-      "value": "eba763bf-d2d1-4032-8e3b-40dce4f34871",
-      "domain": "login.microsoftonline.com",
-      "path": "/",
-      "expires": 1786953526.657179,
-      "httpOnly": false,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "brcap",
-      "value": "0",
-      "domain": ".login.microsoftonline.com",
-      "path": "/",
-      "expires": 1789113512,
-      "httpOnly": false,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "esctx-8lEOplohbU4",
-      "value": "AQABCQEAAABVrSpeuWamRam2jAF1XRQE2P3JeG_4vq3js1HdddROo1d2a_zNdTgzSZ7Gqnvm4Ofiq1-BkCT10LJy7IPSb2we0XyWMBcMO5lE32SQBZdjs3os0TRneBODYq3SSl0F2J1J45InpMoIThkTEouEftBCpuGU5RF3CABp22TcUMCW5iAA",
-      "domain": ".login.microsoftonline.com",
-      "path": "/",
-      "expires": -1,
-      "httpOnly": true,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "MC1",
-      "value": "GUID=98a4da72dcfa434a8e8111ecf2319c6c&HASH=98a4&LV=202508&V=4&LU=1755417508808",
-      "domain": ".microsoft.com",
-      "path": "/",
-      "expires": 1786953509.098078,
-      "httpOnly": false,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "MS0",
-      "value": "aab10593309a4043ba788c4922bad8b5",
-      "domain": ".microsoft.com",
-      "path": "/",
-      "expires": 1755419309.098195,
-      "httpOnly": false,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "esctx-0v7Z13oBbR4",
-      "value": "AQABCQEAAABVrSpeuWamRam2jAF1XRQEgXLM2bZvXI0NJVauPgw4VSAfX07SEUZ2QHRuxFM8iW_QPU-JF9Vt8fmkTJeQfIGsawl3_oqD4aUX78H-xr1RWP3hWdSZyhtJXUziEW4P0cRZp0-LOf5kIF9sZPbhd7tqchVQWHaT0HZsZvUy1ugLxyAA",
-      "domain": ".login.microsoftonline.com",
-      "path": "/",
-      "expires": -1,
-      "httpOnly": true,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "wlidperf",
-      "value": "FR=L&ST=1755417516517",
-      "domain": ".microsoftonline.com",
-      "path": "/",
-      "expires": 1789113516,
-      "httpOnly": false,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "ESTSAUTHLIGHT",
-      "value": "+007cb1f9-069f-1688-d546-cff2a80bdc5a",
-      "domain": "login.microsoftonline.com",
-      "path": "/",
-      "expires": -1,
-      "httpOnly": false,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "esctx-PVckKzNwsrE",
-      "value": "AQABCQEAAABVrSpeuWamRam2jAF1XRQEwucRBB1AYMX1ixe5qtsnNfDmKyOIXx3bIQ9fR5QvXmv4VCabShkOQogLgbHywZrh3T1D5zecuu9BGo6_nGjNRTSRIYjfJ2IQRc7B-ctT_fVLbLP76Qq4GihbRQwJm6fQJ5w73UFQfJQIi5tuXR_eYCAA",
-      "domain": ".login.microsoftonline.com",
-      "path": "/",
-      "expires": -1,
-      "httpOnly": true,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "MSFPC",
-      "value": "GUID=98a4da72dcfa434a8e8111ecf2319c6c&HASH=98a4&LV=202508&V=4&LU=1755417508808",
-      "domain": "login.microsoftonline.com",
-      "path": "/",
-      "expires": 1786953521.964937,
-      "httpOnly": false,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "esctx",
-      "value": "PAQABBwEAAABVrSpeuWamRam2jAF1XRQEaBJ6zFd6LO4zY2luylohxiEKxlijtAjxC5DEj-NBs7HrzmJYDVcR7d7v1nR8RCI2iMRt-qNo3ekf_Isq6S0UtPPoucCIS1RVXbGfRG6rEd8VUz8HbLBCsx8BItxc9r4rar4HydGfBVSvggoB7Uh0xkvslGLuRalellI8182k0wsgAA",
-      "domain": ".login.microsoftonline.com",
-      "path": "/",
-      "expires": -1,
-      "httpOnly": true,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "esctx-cGhthUqyI84",
-      "value": "AQABCQEAAABVrSpeuWamRam2jAF1XRQE0wExdLo_fjJ-4IIBwj440gshn9ADXv2h1xtKDWGkFvMtzmu4SZp_d47T0jSV62HTZWd_LF-_h8lZK2rQw_S96BN-WUhTliycX1iXYRn25dkhh-SchbnVEciN3N3cVducQGqRhmrvdw6n6DSpIvxsySAA",
-      "domain": ".login.microsoftonline.com",
-      "path": "/",
-      "expires": -1,
-      "httpOnly": true,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "uaid",
-      "value": "78010685b3f04f2091bf444817a6cd5e",
-      "domain": ".login.live.com",
-      "path": "/",
-      "expires": -1,
-      "httpOnly": true,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "MSPRequ",
-      "value": "id=N&lt=1755417526&co=0",
-      "domain": ".login.live.com",
-      "path": "/",
-      "expires": -1,
-      "httpOnly": true,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "ESTSAUTHPERSISTENT",
-      "value": "1.ATUAUgiCePpVC0WQjUXA2RHna0v7nfNQaqVCmKqCn8dBShA1AAA1AA.AgABFwQAAABVrSpeuWamRam2jAF1XRQEAwDs_wUA9P_ZDzwVEf1Urzsi7MdkpCjg6FzVIL8a4tXUXwOhSSMkDvmZ-5K52GWFSc_DEDxmoBgPCScs7rB5NfFtm0cNDG2Fr85UTObnTipuQy9fcSq0fHE54FOPo5jXsU9Dgt6TVsnTK2BHs_2jSJtaUoK7CdLd8aRfy3SHgzBxa86FKQwVZpykSECZFbP6doKyMg0msK_M073WwZSepAtGwG6HxmfGI4fysFk-ef0xeyTwpmn5ML3hmAzsKqIbW5OVizmRW9kzyGP1wudWxksPjTJE9DxVopDmgg7o9xpmg3ooO-LRmFaJ3cvrOfDIQrSEjAn6wa_R6Q6QN_Th7AkCzZVQQxVJdUYwvyvEtrb8Z2I3sb2-kPDTpkNOtGGZXOvY27B9jffVd8LwIuHODVdeemb73E-DFEzEp5wuEcvmPf1yWb0JsoJuQKy9HJnbZfL1BlW8r58WJ0P8LqHXz1QoFYNeRRBOAZgmk7rLnkWU06l5B9T2bDO2QsLWerOtV23uiyh6seWeg-4uIQMdPone0EEcSbRN_qgYKo9G0MMd0-OFdBwGXBIosV-D42zVYId8vamL55jsU13Tcj8CwCedPYogj6vYWxgX_b3qh-7zeuSGBs968lwNLqo5s6tMA3coNlcgEkfNzA",
-      "domain": ".login.microsoftonline.com",
-      "path": "/",
-      "expires": 1763193527.899331,
-      "httpOnly": true,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "ESTSAUTH",
-      "value": "1.ATUAUgiCePpVC0WQjUXA2RHna0v7nfNQaqVCmKqCn8dBShA1AAA1AA.AgABFwQAAABVrSpeuWamRam2jAF1XRQEAwDs_wUA9P8diSUW6o9J8Np1GSM5yP8JiDsiQIaOfOqWkUC8jY2pwK4uBdZkVdYcJ4qBoI5ypAmRnrXQRWwlePGp",
-      "domain": ".login.microsoftonline.com",
-      "path": "/",
-      "expires": -1,
-      "httpOnly": true,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "buid",
-      "value": "1.ATUAUgiCePpVC0WQjUXA2RHna0v7nfNQaqVCmKqCn8dBShA1AAA1AA.AQABGgEAAABVrSpeuWamRam2jAF1XRQEB8uV0FRzJtQNPvrGrkflodcPjlsCDz--CazP0935D7XXGbfDc-zA4DeQ9J9UYtc8Dv8r5nnljo5g7OG81IoZikMIqa2mgnDRnkFZmvhAAB2gYu2TtN3kdQ8747ZOfE9alQgWShoBbghlRVBy8ULAIghLXfZBMiDJ4Q-TbBSD3RYgAA",
-      "domain": "login.microsoftonline.com",
-      "path": "/",
-      "expires": 1758009527.899719,
-      "httpOnly": true,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "CCState",
-      "value": "RWhJS0VGOXZIdVJlNFhKQ3NMQ3FOT3hlT2hRPQ==",
-      "domain": ".login.microsoftonline.com",
-      "path": "/",
-      "expires": 1756281527.899808,
-      "httpOnly": true,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "SignInStateCookie",
-      "value": "CAgABFgIAAABVrSpeuWamRam2jAF1XRQEAwDs_wUA9P8bl4FjLbzOAr4N2TXYvj9T1GXGfgH9u-FQVeR7U0WA0aTJLiLZTsTz0oaSUuG4WZhf2vvhKXkTtaLPykJms1KZ6lWECVOCeTi0snXFa1YSfy6wQkmtXbUnpkVVZL-k5RGOamd74iWQeCRQCX2iKvs0HU3bspqlWgf8ulr0NZAi4xuYCDULsXhO7mg7775GXI-qk-FTzoeR5yWcZdDm5uzqs0Vb6nX1iGV-uCpKhNM01Y6ueCGbiFZETT_uZNnCLWhH_7ABMQ",
-      "domain": ".login.microsoftonline.com",
-      "path": "/",
-      "expires": -1,
-      "httpOnly": true,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "fpc",
-      "value": "AhOhob5zj85CtAOeQdeFDYivkID5AgAAALWCM-AOAAAAPEIEcQEAAACYgjPgDgAAAJMZnjYDAAAAo4Iz4A4AAAA",
-      "domain": "login.microsoftonline.com",
-      "path": "/",
-      "expires": 1758009527.899984,
-      "httpOnly": true,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "ai_session",
-      "value": "oiYOduKXmOc9uyPILt8hg8|1755417507744|1755417527990",
-      "domain": "login.microsoftonline.com",
-      "path": "/",
-      "expires": 1755419327,
-      "httpOnly": false,
-      "secure": true,
-      "sameSite": "None"
-    },
-    {
-      "name": "AppCookie",
-      "value": "CfDJ8DxvqQF0aSlNg5RVfZbTyYq2seBure_sEI5NKwQwB5Wv1msSZdqROtKO7Q0iUqjSNFnvjkldgOku6tYx0-TKBODNWA_1v072MrkIn8C4Kp5n-YYunjuOTWsUwY8jw4aeY_sDoluHwfciApAKp2yV-VgskdfT0DdiriZQWEzKBFQaVpRTTgj5GKxw9v8rLFdfpNYwrkeqPBNQuJiSCCrQ0P7j4Yp1HOruhpjMwxqJ5ZnjWsd6fWmjRYXBcNJTp6JPeuictx3tHbMfQ9KqM5LWN1stwsq_F_mYF8DX7lyKJKcekq3XkwyUGdOfzkwVpJn-ZAkKStkbZoz0bfJ2KlA8RkexGDMhkU8Bn6o0Z0WBarzL",
-      "domain": "one.prat.idf.il",
-      "path": "/",
-      "expires": 1755418429.839095,
       "httpOnly": true,
       "secure": true,
       "sameSite": "Lax"
@@ -333,51 +63,27 @@
   ],
   "origins": [
     {
-      "origin": "https://one.prat.idf.il",
+      "origin": "https://playbycourt.com",
       "localStorage": [
         {
-          "name": "persist:history",
-          "value": "{\"activeTabCode\":\"null\",\"activeUser\":\"null\",\"filesToUpload\":\"null\",\"dateToUploadFiles\":\"null\",\"_persist\":\"{\\\"version\\\":-1,\\\"rehydrated\\\":true}\"}"
+          "name": "awswaf_token_refresh_timestamp",
+          "value": "1756114281969"
         },
         {
-          "name": "06302453-c1d3-40cd-9de3-5c7c81742011.78820852-55fa-450b-908d-45c0d911e76b-login.microsoftonline.com-accesstoken-f39dfb4b-6a50-42a5-98aa-829fc7414a10-78820852-55fa-450b-908d-45c0d911e76b-user.read profile openid email--",
-          "value": "{\"homeAccountId\":\"06302453-c1d3-40cd-9de3-5c7c81742011.78820852-55fa-450b-908d-45c0d911e76b\",\"credentialType\":\"AccessToken\",\"secret\":\"eyJ0eXAiOiJKV1QiLCJub25jZSI6IjhvVzZjT2tYVXJQVkhPNlNybXYtSURZWDRnMDJRMzRqaHZTT3JzR05qMG8iLCJhbGciOiJSUzI1NiIsIng1dCI6IkpZaEFjVFBNWl9MWDZEQmxPV1E3SG4wTmVYRSIsImtpZCI6IkpZaEFjVFBNWl9MWDZEQmxPV1E3SG4wTmVYRSJ9.eyJhdWQiOiIwMDAwMDAwMy0wMDAwLTAwMDAtYzAwMC0wMDAwMDAwMDAwMDAiLCJpc3MiOiJodHRwczovL3N0cy53aW5kb3dzLm5ldC83ODgyMDg1Mi01NWZhLTQ1MGItOTA4ZC00NWMwZDkxMWU3NmIvIiwiaWF0IjoxNzU1NDE3MjI4LCJuYmYiOjE3NTU0MTcyMjgsImV4cCI6MTc1NTQyMjQ2MCwiYWNjdCI6MCwiYWNyIjoiMSIsImFjcnMiOlsicDEiLCJ1cm46dXNlcjpyZWdpc3RlcnNlY3VyaXR5aW5mbyJdLCJhaW8iOiJBV1FBbS84WkFBQUFqa1pSbWV6ZUJRdUNZOFFmUjg3VnI3VkNhb2hsZDJyUXBtcFlPV3FXNS9meDFaSEMrZE1JYlllaXRJZzIzL2xRdHhEbGN5emt0UEZsVDhyUjZGTWtwUTIwYzZ2SlRJRUY5M2NWa3lReTlkek9YOElhZ0xWQlptZUg2Y2NNL1NUUyIsImFtciI6WyJwd2QiLCJtZmEiXSwiYXBwX2Rpc3BsYXluYW1lIjoiRGlnaXRhbElERiAtIERvY2gxIC0gUHJvZCIsImFwcGlkIjoiZjM5ZGZiNGItNmE1MC00MmE1LTk4YWEtODI5ZmM3NDE0YTEwIiwiYXBwaWRhY3IiOiIwIiwiZmFtaWx5X25hbWUiOiLXm9elIiwiZ2l2ZW5fbmFtZSI6IteQ15PXqCIsImlkdHlwIjoidXNlciIsImlwYWRkciI6IjIxMy44LjI0NC44NiIsIm5hbWUiOiLXkNeT16gg15vXpSIsIm9pZCI6IjA2MzAyNDUzLWMxZDMtNDBjZC05ZGUzLTVjN2M4MTc0MjAxMSIsInBsYXRmIjoiMyIsInB1aWQiOiIxMDAzMjAwMzI3QzI3NTlEIiwicmgiOiIxLkFUVUFVZ2lDZVBwVkMwV1FqVVhBMlJIbmF3TUFBQUFBQUFBQXdBQUFBQUFBQUFBMUFCRTFBQS4iLCJzY3AiOiJVc2VyLlJlYWQgcHJvZmlsZSBvcGVuaWQgZW1haWwiLCJzaWQiOiIwMDdjYjFmOS0wNjlmLTE2ODgtZDU0Ni1jZmYyYTgwYmRjNWEiLCJzdWIiOiJFaUo0SEMtU25vVFZTTmxZVUR2NV8wUjZ0QW85S0N0QmNwbVZ3NEtmai0wIiwidGVuYW50X3JlZ2lvbl9zY29wZSI6Ik5BIiwidGlkIjoiNzg4MjA4NTItNTVmYS00NTBiLTkwOGQtNDVjMGQ5MTFlNzZiIiwidW5pcXVlX25hbWUiOiIzMjc5MjIyMTdAaWRmLmlsIiwidXBuIjoiMzI3OTIyMjE3QGlkZi5pbCIsInV0aSI6InFFQVJPOVUtcGttdEV5dGJTekpqQVEiLCJ2ZXIiOiIxLjAiLCJ3aWRzIjpbImI3OWZiZjRkLTNlZjktNDY4OS04MTQzLTc2YjE5NGU4NTUwOSJdLCJ4bXNfZnRkIjoid1BqR1VNbndzaXBITkNHWnppdzg2aGF5a2N6YURoOU5RZkZmd1BLbmRza0JkWE4zWlhOME15MWtjMjF6IiwieG1zX2lkcmVsIjoiMjIgMSIsInhtc19zdCI6eyJzdWIiOiJUVmsyajJra3prUXdSemFsRm5KUDFVNlJMRkN5ZVQxQThHTU55MDdKRlNZIn0sInhtc190Y2R0IjoxNTQ5ODkwNDg0fQ.ElX_KgUi4xXwqeQL-FXX5H32sVr9K33fDn5K3TBzzRSTPbcndtkTaKxNx7NJODJUq44CJAVJpNVzTiSRzwNiHTz3ruvntd9_mW2xjlqI1ed0CjPupJcEghWaiFAmAsEF-RhDwzyvVN7Q9Vm7UokiO_7rjXQNhBKBqU2FQM67RnL-rV6OhSEZq0Uxdfv9wPtT_OEg3COGwYFN7NWKueuBrQQUFKniAU_HzydS14fJnjMdV9JJIDownXK4A2Tsk3xtkW0wrdjV4mQueATEFTFWuFK1O7B1bq7XulaBqKrRWHnJW8XyaVrZnyp1ZNMCbw4kBwvpgG5ksRNyUwDN_zxAnw\",\"cachedAt\":\"1755417528\",\"expiresOn\":\"1755422459\",\"extendedExpiresOn\":\"1755427390\",\"environment\":\"login.microsoftonline.com\",\"clientId\":\"f39dfb4b-6a50-42a5-98aa-829fc7414a10\",\"realm\":\"78820852-55fa-450b-908d-45c0d911e76b\",\"target\":\"User.Read profile openid email\",\"tokenType\":\"Bearer\"}"
+          "name": "intercom.intercom-state-u1mtnxxh",
+          "value": "{\"app\":{\"openConfig\":{\"unifiedStyling\":true,\"spaces\":[],\"userHasReceivedChecklists\":false,\"userHasLiveNewsfeed\":false,\"userHasTickets\":false},\"selfServeSuggestionsMatch\":false,\"features\":{\"anonymousInboundMessages\":false,\"googleAnalytics\":false,\"inboundMessages\":false,\"googleAnalytics4Integration\":false},\"isDeveloperWorkspace\":false},\"launcher\":{\"isLauncherEnabled\":false},\"launcherDiscoveryMode\":{\"hasDiscoveredLauncher\":false},\"launcherSettings\":{\"isLoading\":true},\"user\":{},\"message\":{},\"conversations\":{\"byId\":{}},\"openOnBoot\":{\"type\":null,\"metadata\":{},\"lastOpenAtTimestamp\":1756114282506},\"operator\":{\"lastComposerEvent\":0},\"router\":{\"isInitialized\":false,\"navigationQueue\":[]}}"
         },
         {
-          "name": "06302453-c1d3-40cd-9de3-5c7c81742011.78820852-55fa-450b-908d-45c0d911e76b-login.microsoftonline.com-refreshtoken-f39dfb4b-6a50-42a5-98aa-829fc7414a10----",
-          "value": "{\"clientId\":\"f39dfb4b-6a50-42a5-98aa-829fc7414a10\",\"credentialType\":\"RefreshToken\",\"environment\":\"login.microsoftonline.com\",\"homeAccountId\":\"06302453-c1d3-40cd-9de3-5c7c81742011.78820852-55fa-450b-908d-45c0d911e76b\",\"secret\":\"1.ATUAUgiCePpVC0WQjUXA2RHna0v7nfNQaqVCmKqCn8dBShA1ABE1AA.AgABAwEAAABVrSpeuWamRam2jAF1XRQEAwDs_wUA9P-55VDA2B2AHXViCRpE9stkz9cHiTceRXcAC1YlVDOGW34x4nkB7ZkVBFNNKoipTLA4GJvLb0gIes4Ai2cqh73HDYhGf7QspGhKvfzjbEn0mFgN8dfUsQtupUn88swefHdCMTIUE-zHM3VnXym2g6mBE9FuJQDPTIp6QIvZJpHGmogdDAwXsVazo5A6Nki8ZVyjU8gqTA7sSzhQT0slRYJTZdaNbKZCBLOmyLDGgQ5WSICcMPUBhQ4qKh8CGp0yl9stpEdSqk8t9RZO4ePeE7iGv4syScDIZMyRUbEx1pyksHs-a73819bIJttdNNeULwyBFzzi0U4ypb25bUA9c6x7itc3HUe20y4PbVSob5jfxZUNdMeneFr-roNMblg8MDhG8UiwlB-vR0dZfyhQ5x31cMKlpF6MHk9p4pzfbayyRJiO31rlJFGnsFg6hQ0HSPStxcN7y0xUZ1Sif7g9rwLIjQPZgmfbf_cq6jV484fn1E4JMbp1ieyWYzLfN04vJRKw26N43ROkM7g26IzDZgS_i493DTcyo7h5yG50GJNGDyw-BNkMglPcWE_wHlqUz7xO5jYmYYuacEAIeALcNBPjm2GlXwisJhA5jA9QOuPS9zQTtg7X-3v0Oqr1FZcVFCAM-I8YweHdyJCl-Aw25BNw4YDiuN6umtOIv2auy0xeDvMwjejMT7m806DD0wXdfGbGMRtOybHKpUeofIy2uL_9CZ-RfFtARxlqqKF1nH8b9h1UDkEjiY3kCMnv9e8qlDDdtiAFMSMJ9zrWPCkP3p_AtzbkfOr5BBCOiQ5qdery7qJ8_EB6RiZJcDf2xnFkIuTE_uyrw_CoLy9c5UgXZUGdve0U-_I9ujF71vBsIwaiNeGmuFwfabkh2vxp28Pm1FrrhzB5HeFTgQ\"}"
+          "name": "_gcl_ls",
+          "value": "{\"schema\":\"gcl\",\"version\":1,\"gcl_ctr\":{\"value\":{\"value\":2,\"creationTimeMs\":1756114283535},\"expires\":1763890283535}}"
         },
         {
-          "name": "msal.f39dfb4b-6a50-42a5-98aa-829fc7414a10.active-account",
-          "value": "06302453-c1d3-40cd-9de3-5c7c81742011"
+          "name": "awswaf_session_storage",
+          "value": "3a794526-6eab-4351-8458-0aae31de6595:EQoAZzpCp8oSAAAA:YfQn0Yf76R6asAMfBiId/Z4V3pNo5l8kTprtIxiwq2oYocT3HO9vR1R1aZAOmQTViLlGhMAJPontAznl30SH5xWR22wnAk5SRz3aGbZmKutowcm+LKqXUa+4YkQ0RI4ycPe4if/dIoWNROsumqFHLhuO3TV1JLU7AYu3nrSa+w7YOY4+DLacqOwyrZPa6nQQfiPC6WxxHSlIi6vYhmu+so4oU9YKi5XBxpbGkmz0LNpgQCmLZyyqSpQgDfp+MsmuqlCr++WkK95Bs0mwJakn8rL1aTm2jWuEZfsfWkJdBk+veBhUkPO7Di4MzSKu0kbQWmlip3srvsfuUd3ZIPKVsGwM0v/40TvMtSNnOGORxxVaIjgjheR3mQgJxs4ss3qzKiUVo1LJGrF0vB6qbPEUEBSZoAD9"
         },
         {
-          "name": "persist:auth",
-          "value": "{\"_persist\":\"{\\\"version\\\":-1,\\\"rehydrated\\\":true}\"}"
-        },
-        {
-          "name": "06302453-c1d3-40cd-9de3-5c7c81742011.78820852-55fa-450b-908d-45c0d911e76b-login.microsoftonline.com-idtoken-f39dfb4b-6a50-42a5-98aa-829fc7414a10-78820852-55fa-450b-908d-45c0d911e76b---",
-          "value": "{\"credentialType\":\"IdToken\",\"homeAccountId\":\"06302453-c1d3-40cd-9de3-5c7c81742011.78820852-55fa-450b-908d-45c0d911e76b\",\"environment\":\"login.microsoftonline.com\",\"clientId\":\"f39dfb4b-6a50-42a5-98aa-829fc7414a10\",\"secret\":\"eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IkpZaEFjVFBNWl9MWDZEQmxPV1E3SG4wTmVYRSJ9.eyJhdWQiOiJmMzlkZmI0Yi02YTUwLTQyYTUtOThhYS04MjlmYzc0MTRhMTAiLCJpc3MiOiJodHRwczovL2xvZ2luLm1pY3Jvc29mdG9ubGluZS5jb20vNzg4MjA4NTItNTVmYS00NTBiLTkwOGQtNDVjMGQ5MTFlNzZiL3YyLjAiLCJpYXQiOjE3NTU0MTcyMjgsIm5iZiI6MTc1NTQxNzIyOCwiZXhwIjoxNzU1NDIxMTI4LCJhaW8iOiJBWFFBaS84WkFBQUFwR3YrMlJYZWQrWGQ3RFJ4amZnOFBDdGhDUStURVFFWTQ1eTBRNENxczBsR2U5SERGQnRGZkkyekt0YW9ZaTFpVHBhZkI3KzhjYU51UHRVUTUwSWNITzRuS3E0bnJITzlTOXBZU1lEcG4rYTA1MEdReHoyN2x5aEZ5NmNQR0hab0xQcEt6VVplQ0t1bUZ0NHhDblZjZWc9PSIsIm5hbWUiOiLXkNeT16gg15vXpSIsIm5vbmNlIjoiMGE1OGEzNjgtZGJjNi00ZjY1LTk4ZTctNTBiYzk2ZGNlZjJmIiwib2lkIjoiMDYzMDI0NTMtYzFkMy00MGNkLTlkZTMtNWM3YzgxNzQyMDExIiwicHJlZmVycmVkX3VzZXJuYW1lIjoiMzI3OTIyMjE3QGlkZi5pbCIsInJoIjoiMS5BVFVBVWdpQ2VQcFZDMFdRalVYQTJSSG5hMHY3bmZOUWFxVkNtS3FDbjhkQlNoQTFBQkUxQUEuIiwic2lkIjoiMDA3Y2IxZjktMDY5Zi0xNjg4LWQ1NDYtY2ZmMmE4MGJkYzVhIiwic3ViIjoiVFZrMmoya2t6a1F3UnphbEZuSlAxVTZSTEZDeWVUMUE4R01OeTA3SkZTWSIsInRpZCI6Ijc4ODIwODUyLTU1ZmEtNDUwYi05MDhkLTQ1YzBkOTExZTc2YiIsInV0aSI6InFFQVJPOVUtcGttdEV5dGJTekpqQVEiLCJ2ZXIiOiIyLjAifQ.UNiJoexDYeKKILQjJ_owa7n8ghbrS-4TgfUlzkPBTV0aG2dF8eQq-nVkaNMd7zbTTNiK5ok4KGdw6mS5FM9VB8cuvXxrXrL5lnLGRWtYymPRTW4gcgeSz8bOhn4ObPh8iDJBRaMBJg79p78R31b1jqpZfBT4TC5t77kgjiaVW51J-e0rSieNaLdLZnUULiGlmd8KmjBgbEHqsTfAlRV0PteQJmmXj6e88nUmKWJ3Ulycg7hhQJzMWXXagrSxOidT_4OlXdDIbYncKQ9svr4dGQT62P8t8oGA5vlrHqiweKIEqZFRiTKRU5OFCw3fs_DcrOt6ZlbodO_gcHFmnlV-sA\",\"realm\":\"78820852-55fa-450b-908d-45c0d911e76b\"}"
-        },
-        {
-          "name": "persist:layout",
-          "value": "{\"isWizardHeader\":\"false\",\"_persist\":\"{\\\"version\\\":-1,\\\"rehydrated\\\":true}\"}"
-        },
-        {
-          "name": "persist:wizard",
-          "value": "{\"gender\":\"\\\"ז\\\"\",\"primaries\":\"[{\\\"statusCode\\\":\\\"02\\\",\\\"statusDescription\\\":\\\"מחוץ ליחידה\\\",\\\"secondaries\\\":[{\\\"statusCode\\\":\\\"05\\\",\\\"statusDescription\\\":\\\"בתפקיד מחוץ ליחידה\\\",\\\"hasFiles\\\":false,\\\"hasText\\\":false,\\\"pratPrioritization\\\":0,\\\"notifications\\\":{\\\"commanderDaysQuotaNotification\\\":null,\\\"hafshshDays\\\":null,\\\"vacationDriver\\\":null,\\\"meyuhedetKeva\\\":null,\\\"meyuhedetHitmahut\\\":null,\\\"annualVacationHovaQuota\\\":null,\\\"annualVacationKevaQuota\\\":null,\\\"annualVacationQuota\\\":null,\\\"dDaysQuota\\\":null,\\\"initialTrainingQuota\\\":null,\\\"alertText\\\":\\\"\\\"},\\\"canEditNote\\\":true,\\\"futureReportDays\\\":7},{\\\"statusCode\\\":\\\"09\\\",\\\"statusDescription\\\":\\\"אחרי תורנות / משמרת\\\",\\\"hasFiles\\\":false,\\\"hasText\\\":false,\\\"pratPrioritization\\\":1,\\\"notifications\\\":{\\\"commanderDaysQuotaNotification\\\":null,\\\"hafshshDays\\\":null,\\\"vacationDriver\\\":null,\\\"meyuhedetKeva\\\":null,\\\"meyuhedetHitmahut\\\":null,\\\"annualVacationHovaQuota\\\":null,\\\"annualVacationKevaQuota\\\":null,\\\"annualVacationQuota\\\":null,\\\"dDaysQuota\\\":null,\\\"initialTrainingQuota\\\":null,\\\"alertText\\\":\\\"\\\"},\\\"canEditNote\\\":true,\\\"futureReportDays\\\":7},{\\\"statusCode\\\":\\\"03\\\",\\\"statusDescription\\\":\\\"עובד/ת משמרות\\\",\\\"hasFiles\\\":false,\\\"hasText\\\":false,\\\"pratPrioritization\\\":2,\\\"notifications\\\":{\\\"commanderDaysQuotaNotification\\\":null,\\\"hafshshDays\\\":null,\\\"vacationDriver\\\":null,\\\"meyuhedetKeva\\\":null,\\\"meyuhedetHitmahut\\\":null,\\\"annualVacationHovaQuota\\\":null,\\\"annualVacationKevaQuota\\\":null,\\\"annualVacationQuota\\\":null,\\\"dDaysQuota\\\":null,\\\"initialTrainingQuota\\\":null,\\\"alertText\\\":\\\"\\\"},\\\"canEditNote\\\":false,\\\"futureReportDays\\\":7},{\\\"statusCode\\\":\\\"13\\\",\\\"statusDescription\\\":\\\"הפניה רפואית\\\",\\\"hasFiles\\\":false,\\\"hasText\\\":false,\\\"pratPrioritization\\\":2,\\\"notifications\\\":{\\\"commanderDaysQuotaNotification\\\":null,\\\"hafshshDays\\\":null,\\\"vacationDriver\\\":null,\\\"meyuhedetKeva\\\":null,\\\"meyuhedetHitmahut\\\":null,\\\"annualVacationHovaQuota\\\":null,\\\"annualVacationKevaQuota\\\":null,\\\"annualVacationQuota\\\":null,\\\"dDaysQuota\\\":null,\\\"initialTrainingQuota\\\":null,\\\"alertText\\\":\\\"\\\"},\\\"canEditNote\\\":false,\\\"futureReportDays\\\":7},{\\\"statusCode\\\":\\\"16\\\",\\\"statusDescription\\\":\\\"משמרת ערב\\\",\\\"hasFiles\\\":false,\\\"hasText\\\":false,\\\"pratPrioritization\\\":3,\\\"notifications\\\":{\\\"commanderDaysQuotaNotification\\\":null,\\\"hafshshDays\\\":null,\\\"vacationDriver\\\":null,\\\"meyuhedetKeva\\\":null,\\\"meyuhedetHitmahut\\\":null,\\\"annualVacationHovaQuota\\\":null,\\\"annualVacationKevaQuota\\\":null,\\\"annualVacationQuota\\\":null,\\\"dDaysQuota\\\":null,\\\"initialTrainingQuota\\\":null,\\\"alertText\\\":\\\"\\\"},\\\"canEditNote\\\":false,\\\"futureReportDays\\\":7},{\\\"statusCode\\\":\\\"02\\\",\\\"statusDescription\\\":\\\"אבט\\\\\\\"ש\\\",\\\"hasFiles\\\":false,\\\"hasText\\\":false,\\\"pratPrioritization\\\":4,\\\"notifications\\\":{\\\"commanderDaysQuotaNotification\\\":null,\\\"hafshshDays\\\":null,\\\"vacationDriver\\\":null,\\\"meyuhedetKeva\\\":null,\\\"meyuhedetHitmahut\\\":null,\\\"annualVacationHovaQuota\\\":null,\\\"annualVacationKevaQuota\\\":null,\\\"annualVacationQuota\\\":null,\\\"dDaysQuota\\\":null,\\\"initialTrainingQuota\\\":null,\\\"alertText\\\":\\\"\\\"},\\\"canEditNote\\\":false,\\\"futureReportDays\\\":7},{\\\"statusCode\\\":\\\"20\\\",\\\"statusDescription\\\":\\\"סבב קו\\\",\\\"hasFiles\\\":false,\\\"hasText\\\":false,\\\"pratPrioritization\\\":7,\\\"notifications\\\":{\\\"commanderDaysQuotaNotification\\\":null,\\\"hafshshDays\\\":null,\\\"vacationDriver\\\":null,\\\"meyuhedetKeva\\\":null,\\\"meyuhedetHitmahut\\\":null,\\\"annualVacationHovaQuota\\\":null,\\\"annualVacationKevaQuota\\\":null,\\\"annualVacationQuota\\\":null,\\\"dDaysQuota\\\":null,\\\"initialTrainingQuota\\\":null,\\\"alertText\\\":\\\"\\\"},\\\"canEditNote\\\":false,\\\"futureReportDays\\\":7},{\\\"statusCode\\\":\\\"23\\\",\\\"statusDescription\\\":\\\"יום פרט\\\",\\\"hasFiles\\\":false,\\\"hasText\\\":false,\\\"pratPrioritization\\\":8,\\\"notifications\\\":{\\\"commanderDaysQuotaNotification\\\":null,\\\"hafshshDays\\\":null,\\\"vacationDriver\\\":null,\\\"meyuhedetKeva\\\":null,\\\"meyuhedetHitmahut\\\":null,\\\"annualVacationHovaQuota\\\":null,\\\"annualVacationKevaQuota\\\":null,\\\"annualVacationQuota\\\":null,\\\"dDaysQuota\\\":null,\\\"initialTrainingQuota\\\":null,\\\"alertText\\\":\\\"\\\"},\\\"canEditNote\\\":false,\\\"futureReportDays\\\":7},{\\\"statusCode\\\":\\\"24\\\",\\\"statusDescription\\\":\\\"השתלמות מקצועית בארץ\\\",\\\"hasFiles\\\":false,\\\"hasText\\\":false,\\\"pratPrioritization\\\":10,\\\"notifications\\\":{\\\"commanderDaysQuotaNotification\\\":null,\\\"hafshshDays\\\":null,\\\"vacationDriver\\\":null,\\\"meyuhedetKeva\\\":null,\\\"meyuhedetHitmahut\\\":null,\\\"annualVacationHovaQuota\\\":null,\\\"annualVacationKevaQuota\\\":null,\\\"annualVacationQuota\\\":null,\\\"dDaysQuota\\\":null,\\\"initialTrainingQuota\\\":null,\\\"alertText\\\":\\\"\\\"},\\\"canEditNote\\\":true,\\\"futureReportDays\\\":7},{\\\"statusCode\\\":\\\"30\\\",\\\"statusDescription\\\":\\\"יום תמורה\\\",\\\"hasFiles\\\":false,\\\"hasText\\\":false,\\\"pratPrioritization\\\":99,\\\"notifications\\\":{\\\"commanderDaysQuotaNotification\\\":null,\\\"hafshshDays\\\":null,\\\"vacationDriver\\\":null,\\\"meyuhedetKeva\\\":null,\\\"meyuhedetHitmahut\\\":null,\\\"annualVacationHovaQuota\\\":null,\\\"annualVacationKevaQuota\\\":null,\\\"annualVacationQuota\\\":null,\\\"dDaysQuota\\\":null,\\\"initialTrainingQuota\\\":null,\\\"alertText\\\":\\\"\\\"},\\\"canEditNote\\\":true,\\\"futureReportDays\\\":7}],\\\"icon\\\":\\\"img/location.png\\\",\\\"inBase\\\":false,\\\"pratPrioritization\\\":2,\\\"isEmergency\\\":false},{\\\"statusCode\\\":\\\"04\\\",\\\"statusDescription\\\":\\\"חופשה שנתית \\\",\\\"secondaries\\\":[{\\\"statusCode\\\":\\\"01\\\",\\\"statusDescription\\\":\\\"חופשה שנתית\\\",\\\"hasFiles\\\":false,\\\"hasText\\\":false,\\\"pratPrioritization\\\":0,\\\"notifications\\\":{\\\"commanderDaysQuotaNotification\\\":null,\\\"hafshshDays\\\":null,\\\"vacationDriver\\\":null,\\\"meyuhedetKeva\\\":null,\\\"meyuhedetHitmahut\\\":null,\\\"annualVacationHovaQuota\\\":null,\\\"annualVacationKevaQuota\\\":null,\\\"annualVacationQuota\\\":null,\\\"dDaysQuota\\\":null,\\\"initialTrainingQuota\\\":null,\\\"alertText\\\":\\\"\\\"},\\\"canEditNote\\\":false,\\\"futureReportDays\\\":7},{\\\"statusCode\\\":\\\"17\\\",\\\"statusDescription\\\":\\\"חופשת נהג/ת מבצעי\\\",\\\"hasFiles\\\":false,\\\"hasText\\\":false,\\\"pratPrioritization\\\":0,\\\"notifications\\\":{\\\"commanderDaysQuotaNotification\\\":null,\\\"hafshshDays\\\":null,\\\"vacationDriver\\\":null,\\\"meyuhedetKeva\\\":null,\\\"meyuhedetHitmahut\\\":null,\\\"annualVacationHovaQuota\\\":null,\\\"annualVacationKevaQuota\\\":null,\\\"annualVacationQuota\\\":null,\\\"dDaysQuota\\\":null,\\\"initialTrainingQuota\\\":null,\\\"alertText\\\":\\\"\\\"},\\\"canEditNote\\\":false,\\\"futureReportDays\\\":7},{\\\"statusCode\\\":\\\"06\\\",\\\"statusDescription\\\":\\\"חג עדתי\\\",\\\"hasFiles\\\":false,\\\"hasText\\\":false,\\\"pratPrioritization\\\":3,\\\"notifications\\\":{\\\"commanderDaysQuotaNotification\\\":null,\\\"hafshshDays\\\":null,\\\"vacationDriver\\\":null,\\\"meyuhedetKeva\\\":null,\\\"meyuhedetHitmahut\\\":null,\\\"annualVacationHovaQuota\\\":null,\\\"annualVacationKevaQuota\\\":null,\\\"annualVacationQuota\\\":null,\\\"dDaysQuota\\\":null,\\\"initialTrainingQuota\\\":null,\\\"alertText\\\":\\\"\\\"},\\\"canEditNote\\\":false,\\\"futureReportDays\\\":7},{\\\"statusCode\\\":\\\"11\\\",\\\"statusDescription\\\":\\\"אזכרה - קרבה ראשונה\\\",\\\"hasFiles\\\":false,\\\"hasText\\\":false,\\\"pratPrioritization\\\":3,\\\"notifications\\\":{\\\"commanderDaysQuotaNotification\\\":null,\\\"hafshshDays\\\":null,\\\"vacationDriver\\\":null,\\\"meyuhedetKeva\\\":null,\\\"meyuhedetHitmahut\\\":null,\\\"annualVacationHovaQuota\\\":null,\\\"annualVacationKevaQuota\\\":null,\\\"annualVacationQuota\\\":null,\\\"dDaysQuota\\\":null,\\\"initialTrainingQuota\\\":null,\\\"alertText\\\":\\\"\\\"},\\\"canEditNote\\\":false,\\\"futureReportDays\\\":7}],\\\"icon\\\":\\\"img/beachHoliday.png\\\",\\\"inBase\\\":false,\\\"pratPrioritization\\\":3,\\\"isEmergency\\\":false},{\\\"statusCode\\\":\\\"05\\\",\\\"statusDescription\\\":\\\"חופשת מחלה\\\",\\\"secondaries\\\":[{\\\"statusCode\\\":\\\"01\\\",\\\"statusDescription\\\":\\\"חופשת מחלה (גימלים)\\\",\\\"hasFiles\\\":true,\\\"hasText\\\":false,\\\"pratPrioritization\\\":0,\\\"notifications\\\":{\\\"commanderDaysQuotaNotification\\\":null,\\\"hafshshDays\\\":null,\\\"vacationDriver\\\":null,\\\"meyuhedetKeva\\\":null,\\\"meyuhedetHitmahut\\\":null,\\\"annualVacationHovaQuota\\\":null,\\\"annualVacationKevaQuota\\\":null,\\\"annualVacationQuota\\\":null,\\\"dDaysQuota\\\":null,\\\"initialTrainingQuota\\\":null,\\\"alertText\\\":\\\"\\\"},\\\"canEditNote\\\":false,\\\"futureReportDays\\\":7},{\\\"statusCode\\\":\\\"08\\\",\\\"statusDescription\\\":\\\"יום ד\\\",\\\"hasFiles\\\":false,\\\"hasText\\\":false,\\\"pratPrioritization\\\":3,\\\"notifications\\\":{\\\"commanderDaysQuotaNotification\\\":null,\\\"hafshshDays\\\":null,\\\"vacationDriver\\\":null,\\\"meyuhedetKeva\\\":null,\\\"meyuhedetHitmahut\\\":null,\\\"annualVacationHovaQuota\\\":null,\\\"annualVacationKevaQuota\\\":null,\\\"annualVacationQuota\\\":null,\\\"dDaysQuota\\\":null,\\\"initialTrainingQuota\\\":null,\\\"alertText\\\":\\\"\\\"},\\\"canEditNote\\\":false,\\\"futureReportDays\\\":7}],\\\"icon\\\":\\\"img/pills.png\\\",\\\"inBase\\\":false,\\\"pratPrioritization\\\":4,\\\"isEmergency\\\":false},{\\\"statusCode\\\":\\\"13\\\",\\\"statusDescription\\\":\\\"חו\\\\\\\"ל\\\",\\\"secondaries\\\":[{\\\"statusCode\\\":\\\"34\\\",\\\"statusDescription\\\":\\\"השתלמות מקצועית בחו\\\\\\\"ל\\\",\\\"hasFiles\\\":false,\\\"hasText\\\":false,\\\"pratPrioritization\\\":0,\\\"notifications\\\":{\\\"commanderDaysQuotaNotification\\\":null,\\\"hafshshDays\\\":null,\\\"vacationDriver\\\":null,\\\"meyuhedetKeva\\\":null,\\\"meyuhedetHitmahut\\\":null,\\\"annualVacationHovaQuota\\\":null,\\\"annualVacationKevaQuota\\\":null,\\\"annualVacationQuota\\\":null,\\\"dDaysQuota\\\":null,\\\"initialTrainingQuota\\\":null,\\\"alertText\\\":\\\"\\\"},\\\"canEditNote\\\":true,\\\"futureReportDays\\\":7},{\\\"statusCode\\\":\\\"35\\\",\\\"statusDescription\\\":\\\"חופשת נהג מבצעי\\\",\\\"hasFiles\\\":false,\\\"hasText\\\":false,\\\"pratPrioritization\\\":99,\\\"notifications\\\":{\\\"commanderDaysQuotaNotification\\\":null,\\\"hafshshDays\\\":null,\\\"vacationDriver\\\":\\\"\\\",\\\"meyuhedetKeva\\\":null,\\\"meyuhedetHitmahut\\\":null,\\\"annualVacationHovaQuota\\\":null,\\\"annualVacationKevaQuota\\\":null,\\\"annualVacationQuota\\\":null,\\\"dDaysQuota\\\":null,\\\"initialTrainingQuota\\\":null,\\\"alertText\\\":\\\"\\\"},\\\"canEditNote\\\":false,\\\"futureReportDays\\\":7}],\\\"icon\\\":\\\"img/plane.png\\\",\\\"inBase\\\":false,\\\"pratPrioritization\\\":5,\\\"isEmergency\\\":false},{\\\"statusCode\\\":\\\"99\\\",\\\"statusDescription\\\":\\\"דיווחי חירום\\\",\\\"secondaries\\\":[{\\\"statusCode\\\":\\\"01\\\",\\\"statusDescription\\\":\\\"בתפקיד מחוץ ליחידה או במרחב צבאי אחר\\\",\\\"hasFiles\\\":false,\\\"hasText\\\":false,\\\"pratPrioritization\\\":1,\\\"notifications\\\":{\\\"commanderDaysQuotaNotification\\\":null,\\\"hafshshDays\\\":null,\\\"vacationDriver\\\":null,\\\"meyuhedetKeva\\\":null,\\\"meyuhedetHitmahut\\\":null,\\\"annualVacationHovaQuota\\\":null,\\\"annualVacationKevaQuota\\\":null,\\\"annualVacationQuota\\\":null,\\\"dDaysQuota\\\":null,\\\"initialTrainingQuota\\\":null,\\\"alertText\\\":\\\"\\\"},\\\"canEditNote\\\":false,\\\"futureReportDays\\\":0},{\\\"statusCode\\\":\\\"02\\\",\\\"statusDescription\\\":\\\"בדרך אל היחידה\\\\t\\\",\\\"hasFiles\\\":false,\\\"hasText\\\":false,\\\"pratPrioritization\\\":2,\\\"notifications\\\":{\\\"commanderDaysQuotaNotification\\\":null,\\\"hafshshDays\\\":null,\\\"vacationDriver\\\":null,\\\"meyuhedetKeva\\\":null,\\\"meyuhedetHitmahut\\\":null,\\\"annualVacationHovaQuota\\\":null,\\\"annualVacationKevaQuota\\\":null,\\\"annualVacationQuota\\\":null,\\\"dDaysQuota\\\":null,\\\"initialTrainingQuota\\\":null,\\\"alertText\\\":\\\"\\\"},\\\"canEditNote\\\":false,\\\"futureReportDays\\\":0},{\\\"statusCode\\\":\\\"03\\\",\\\"statusDescription\\\":\\\"בדרך מהיחידה\\\",\\\"hasFiles\\\":false,\\\"hasText\\\":false,\\\"pratPrioritization\\\":3,\\\"notifications\\\":{\\\"commanderDaysQuotaNotification\\\":null,\\\"hafshshDays\\\":null,\\\"vacationDriver\\\":null,\\\"meyuhedetKeva\\\":null,\\\"meyuhedetHitmahut\\\":null,\\\"annualVacationHovaQuota\\\":null,\\\"annualVacationKevaQuota\\\":null,\\\"annualVacationQuota\\\":null,\\\"dDaysQuota\\\":null,\\\"initialTrainingQuota\\\":null,\\\"alertText\\\":\\\"\\\"},\\\"canEditNote\\\":false,\\\"futureReportDays\\\":0},{\\\"statusCode\\\":\\\"04\\\",\\\"statusDescription\\\":\\\"ביחידה\\\",\\\"hasFiles\\\":false,\\\"hasText\\\":false,\\\"pratPrioritization\\\":4,\\\"notifications\\\":{\\\"commanderDaysQuotaNotification\\\":null,\\\"hafshshDays\\\":null,\\\"vacationDriver\\\":null,\\\"meyuhedetKeva\\\":null,\\\"meyuhedetHitmahut\\\":null,\\\"annualVacationHovaQuota\\\":null,\\\"annualVacationKevaQuota\\\":null,\\\"annualVacationQuota\\\":null,\\\"dDaysQuota\\\":null,\\\"initialTrainingQuota\\\":null,\\\"alertText\\\":\\\"\\\"},\\\"canEditNote\\\":false,\\\"futureReportDays\\\":0},{\\\"statusCode\\\":\\\"05\\\",\\\"statusDescription\\\":\\\"בבית או במרחב אזרחי אחר\\\",\\\"hasFiles\\\":false,\\\"hasText\\\":false,\\\"pratPrioritization\\\":5,\\\"notifications\\\":{\\\"commanderDaysQuotaNotification\\\":null,\\\"hafshshDays\\\":null,\\\"vacationDriver\\\":null,\\\"meyuhedetKeva\\\":null,\\\"meyuhedetHitmahut\\\":null,\\\"annualVacationHovaQuota\\\":null,\\\"annualVacationKevaQuota\\\":null,\\\"annualVacationQuota\\\":null,\\\"dDaysQuota\\\":null,\\\"initialTrainingQuota\\\":null,\\\"alertText\\\":\\\"\\\"},\\\"canEditNote\\\":false,\\\"futureReportDays\\\":0}],\\\"icon\\\":\\\"img/basis.png\\\",\\\"inBase\\\":false,\\\"pratPrioritization\\\":16,\\\"isEmergency\\\":true}]\",\"primarySelection\":\"null\",\"fullSelection\":\"{\\\"primaryCode\\\":\\\"\\\",\\\"primaryText\\\":\\\"\\\",\\\"icon\\\":\\\"\\\",\\\"secondaryCode\\\":\\\"\\\",\\\"secondaryText\\\":\\\"\\\",\\\"note\\\":\\\"\\\",\\\"files\\\":[],\\\"startDate\\\":null,\\\"endDate\\\":null,\\\"isEmergency\\\":false,\\\"reportedDate\\\":null}\",\"isChangeReport\":\"false\",\"_persist\":\"{\\\"version\\\":-1,\\\"rehydrated\\\":true}\",\"basePrimarie\":\"{\\\"statusCode\\\":\\\"01\\\",\\\"statusDescription\\\":\\\"נמצא/ת ביחידה\\\",\\\"secondaries\\\":[{\\\"statusCode\\\":\\\"01\\\",\\\"statusDescription\\\":\\\"נוכח/ת\\\",\\\"hasFiles\\\":false,\\\"hasText\\\":false,\\\"pratPrioritization\\\":0,\\\"notifications\\\":{\\\"commanderDaysQuotaNotification\\\":null,\\\"hafshshDays\\\":null,\\\"vacationDriver\\\":null,\\\"meyuhedetKeva\\\":null,\\\"meyuhedetHitmahut\\\":null,\\\"annualVacationHovaQuota\\\":null,\\\"annualVacationKevaQuota\\\":null,\\\"annualVacationQuota\\\":null,\\\"dDaysQuota\\\":null,\\\"initialTrainingQuota\\\":null,\\\"alertText\\\":\\\"\\\"},\\\"canEditNote\\\":true,\\\"futureReportDays\\\":7}],\\\"icon\\\":\\\"img/basis.png\\\",\\\"inBase\\\":true,\\\"pratPrioritization\\\":1,\\\"isEmergency\\\":false}\",\"canUploadMoreFiles\":\"true\"}"
-        },
-        {
-          "name": "persist:commander",
-          "value": "{\"activeTabName\":\"\\\"\\\"\",\"activeTabCode\":\"\\\"\\\"\",\"usersGroup\":\"{\\\"users\\\":[],\\\"isGroupValid\\\":false,\\\"isGroupDetermined\\\":null,\\\"isEmergencyPractice\\\":false,\\\"showEmergencyReport\\\":false}\",\"selectionGroup\":\"{\\\"groupCode\\\":null,\\\"usersReport\\\":[]}\",\"userToUpdateStatus\":\"{}\",\"filterList\":\"[]\",\"_persist\":\"{\\\"version\\\":-1,\\\"rehydrated\\\":true}\"}"
-        },
-        {
-          "name": "06302453-c1d3-40cd-9de3-5c7c81742011.78820852-55fa-450b-908d-45c0d911e76b-login.microsoftonline.com-78820852-55fa-450b-908d-45c0d911e76b",
-          "value": "{\"authorityType\":\"MSSTS\",\"clientInfo\":\"eyJ1aWQiOiIwNjMwMjQ1My1jMWQzLTQwY2QtOWRlMy01YzdjODE3NDIwMTEiLCJ1dGlkIjoiNzg4MjA4NTItNTVmYS00NTBiLTkwOGQtNDVjMGQ5MTFlNzZiIn0\",\"homeAccountId\":\"06302453-c1d3-40cd-9de3-5c7c81742011.78820852-55fa-450b-908d-45c0d911e76b\",\"environment\":\"login.microsoftonline.com\",\"realm\":\"78820852-55fa-450b-908d-45c0d911e76b\",\"idTokenClaims\":{\"aud\":\"f39dfb4b-6a50-42a5-98aa-829fc7414a10\",\"iss\":\"https://login.microsoftonline.com/78820852-55fa-450b-908d-45c0d911e76b/v2.0\",\"iat\":1755417228,\"nbf\":1755417228,\"exp\":1755421128,\"aio\":\"AXQAi/8ZAAAApGv+2RXed+Xd7DRxjfg8PCthCQ+TEQEY45y0Q4Cqs0lGe9HDFBtFfI2zKtaoYi1iTpafB7+8caNuPtUQ50IcHO4nKq4nrHO9S9pYSYDpn+a050GQxz27lyhFy6cPGHZoLPpKzUZeCKumFt4xCnVceg==\",\"name\":\"אדר כץ\",\"nonce\":\"0a58a368-dbc6-4f65-98e7-50bc96dcef2f\",\"oid\":\"06302453-c1d3-40cd-9de3-5c7c81742011\",\"preferred_username\":\"327922217@idf.il\",\"rh\":\"1.ATUAUgiCePpVC0WQjUXA2RHna0v7nfNQaqVCmKqCn8dBShA1ABE1AA.\",\"sid\":\"007cb1f9-069f-1688-d546-cff2a80bdc5a\",\"sub\":\"TVk2j2kkzkQwRzalFnJP1U6RLFCyeT1A8GMNy07JFSY\",\"tid\":\"78820852-55fa-450b-908d-45c0d911e76b\",\"uti\":\"qEARO9U-pkmtEytbSzJjAQ\",\"ver\":\"2.0\"},\"localAccountId\":\"06302453-c1d3-40cd-9de3-5c7c81742011\",\"username\":\"327922217@idf.il\",\"name\":\"אדר כץ\"}"
-        },
-        {
-          "name": "msal.f39dfb4b-6a50-42a5-98aa-829fc7414a10.active-account-filters",
-          "value": "{\"homeAccountId\":\"06302453-c1d3-40cd-9de3-5c7c81742011.78820852-55fa-450b-908d-45c0d911e76b\",\"localAccountId\":\"06302453-c1d3-40cd-9de3-5c7c81742011\"}"
+          "name": "NRBA_SESSION",
+          "value": "{\"value\":\"441811c73267e28c\",\"inactiveAt\":1756116081490,\"expiresAt\":1756128681363,\"updatedAt\":1756114282749,\"sessionReplayMode\":0,\"sessionReplaySentFirstChunk\":false,\"sessionTraceMode\":0,\"traceHarvestStarted\":false,\"loggingMode\":0,\"serverTimeDiff\":443,\"custom\":{},\"numOfResets\":0}"
         }
       ]
     }

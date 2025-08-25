@@ -12,7 +12,7 @@ export class Navbar {
   constructor(page: Page, context: BrowserContext) {
     this.page = page;
     this.context = context;
-    this.homePageButton = this.page.locator(".icon-house-door");
+    this.homePageButton = this.page.locator(".item.mobile .icon-house-door");
     this.appIconButton = this.page.locator(".header_logo_size");
     this.notificationsMenuButton = this.page.locator(".NotificationMenu");
     this.profileMenuButton = this.page.locator("#profile_menu_settings");

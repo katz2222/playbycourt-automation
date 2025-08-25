@@ -1,20 +1,16 @@
 import { test } from "@src/fixtures/login";
 import { expect, Locator } from "@playwright/test";
 import { HomePage } from "@pages/homePage";
-import { URL } from "env-variables";
-import { LoginPage } from "@src/pages/loginPage";
 import { OrderCourtPage } from "@src/pages/orderCourtPage";
 import { formatDate } from "@src/utilities/date.utils";
 import { sendWhatsAppMessage } from "@src/utilities/whatsappSender.util";
 
-test("find available slots", async ({ page, context }, testInfo) => {
+test("find available slots", async ({
+  page,
+  context,
+  orderCourtPage,
+}, testInfo) => {
   testInfo.setTimeout(85000);
-  await page.goto(URL);
-  const loginPage: LoginPage = new LoginPage(page, context);
-  await loginPage.login();
-  const homePage: HomePage = new HomePage(page, context);
-  await homePage.openOrderCourtPage();
-  const orderCourtPage: OrderCourtPage = new OrderCourtPage(page, context);
   const availableDates: Locator = orderCourtPage.getDates();
   const serachStartHour: number = 17.5;
   const searchEndHour: number = 22;
