@@ -5,6 +5,7 @@ import { URL } from "env-variables";
 import { LoginPage } from "@src/pages/loginPage";
 import { OrderCourtPage } from "@src/pages/orderCourtPage";
 import { formatDate } from "@src/utilities/date.utils";
+import { sendWhatsAppMessage } from "@src/utilities/whatsappSender.util";
 
 test("find available slots", async ({ page, context }, testInfo) => {
   testInfo.setTimeout(85000);
@@ -15,11 +16,12 @@ test("find available slots", async ({ page, context }, testInfo) => {
   await homePage.openOrderCourtPage();
   const orderCourtPage: OrderCourtPage = new OrderCourtPage(page, context);
   const availableDates: Locator = orderCourtPage.getDates();
-  const serachStartHour: number = 18.5;
+  const serachStartHour: number = 17.5;
   const searchEndHour: number = 22;
+  const results: string[] = [];
   const baseDate = new Date();
   let countFreeSlotsStreak = 0;
-  let freeStartHour: number | null = 0;
+  let freeStartHour: number | null = null;
   let date = new Date(baseDate);
   await expect(availableDates).toHaveCount(15);
 
@@ -52,17 +54,21 @@ test("find available slots", async ({ page, context }, testInfo) => {
           if (countFreeSlotsStreak > 2) {
             const freeEndHour: number | null =
               await orderCourtPage.getSlotStartHour(hoursSlots.nth(j));
-
-            console.log(
-              `free court in ${formatDate(
-                date
-              )} between ${freeStartHour} to ${freeEndHour}`
-            );
+            const currentMessage: string = `free court on ${formatDate(
+              date
+            )} between ${freeStartHour} to ${freeEndHour}`;
+            results.push(currentMessage);
+            console.log(currentMessage);
           }
           countFreeSlotsStreak = 0;
         }
       }
     }
     date.setDate(date.getDate() + 1);
+  }
+
+  if (results.length > 0) {
+    const fullMessage = `✅ Free court slots found:\n\n${results.join("\n")}`;
+    await sendWhatsAppMessage(fullMessage);
   }
 });
