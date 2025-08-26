@@ -1,37 +1,40 @@
-import { test } from "@src/fixtures/login";
-import { expect, Locator } from "@playwright/test";
+import { BrowserContext, chromium, Page } from "@playwright/test";
 import { formatDate } from "@src/utilities/date.utils";
 import { sendWhatsAppMessage } from "@src/utilities/whatsappSender.util";
 import { formatCourtMessage } from "@src/utilities/general.util";
+import { OrderCourtPage } from "@src/pages/orderCourtPage";
+import { URL } from "env-variables";
+import { HomePage } from "@src/pages/homePage";
 
-test("find available slots", async ({
-  page,
-  context,
-  orderCourtPage,
-}, testInfo) => {
-  testInfo.setTimeout(85000);
-  const availableDates: Locator = orderCourtPage.getDates();
-  const serachStartHour: number = 18;
-  const searchEndHour: number = 22;
+export async function findAvailableSlots(page: Page, context: BrowserContext) {
+  await page.goto(URL);
+  const homePage: HomePage = new HomePage(page, context);
+  await homePage.openOrderCourtPage();
+  const orderCourtPage: OrderCourtPage = new OrderCourtPage(page, context);
+  const availableDates = orderCourtPage.getDates();
+  const serachStartHour = 18;
+  const searchEndHour = 22;
   const results: { date: string; start: number; end: number }[] = [];
   const baseDate = new Date();
   let countFreeSlotsStreak = 0;
   let freeStartHour: number | null = null;
   let date = new Date(baseDate);
-  await expect(availableDates).toHaveCount(15);
 
+  await availableDates.first().waitFor();
   for (let i = 0; i < (await availableDates.count()); i++) {
     const day = date.getDay();
-    const currentDate: Locator = availableDates.nth(i);
+    const currentDate = availableDates.nth(i);
     await currentDate.click();
     await page.waitForTimeout(1000);
 
     if (day !== 5 && day !== 6) {
-      const hoursSlots: Locator = orderCourtPage.getHoursSlots();
-      const startSlotIndex: number | undefined =
-        await orderCourtPage.findStartSlotIndex(serachStartHour);
-      const endSlotIndex: number | undefined =
-        await orderCourtPage.findLastSlotIndex(searchEndHour);
+      const hoursSlots = orderCourtPage.getHoursSlots();
+      const startSlotIndex = await orderCourtPage.findStartSlotIndex(
+        serachStartHour
+      );
+      const endSlotIndex = await orderCourtPage.findLastSlotIndex(
+        searchEndHour
+      );
 
       if (startSlotIndex !== undefined && endSlotIndex !== undefined) {
         for (let j = startSlotIndex; j < endSlotIndex; j++) {
@@ -47,8 +50,9 @@ test("find available slots", async ({
           }
 
           if (countFreeSlotsStreak > 2) {
-            const freeEndHour: number | null =
-              await orderCourtPage.getSlotStartHour(hoursSlots.nth(j));
+            const freeEndHour = await orderCourtPage.getSlotStartHour(
+              hoursSlots.nth(j)
+            );
             if (freeStartHour && freeEndHour) {
               const currentMessage: {
                 date: string;
@@ -74,4 +78,4 @@ test("find available slots", async ({
     console.log(fullMessage);
     await sendWhatsAppMessage(fullMessage);
   }
-});
+}

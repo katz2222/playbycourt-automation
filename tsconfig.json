@@ -36,6 +36,8 @@
       "@pages/*": ["src/pages/*"],
       "@fixtures": ["src/fixtures/*"],
       "@utils/*": ["src/utilities/*"],
+      "@services/*": ["src/services/*"],
+      "@jobs/*": ["src/jobs/*"]
     },    
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
     // "typeRoots": [],                                  /* Specify multiple folders that act like './node_modules/@types'. */

@@ -11,7 +11,8 @@
   "devDependencies": {
     "@playwright/test": "^1.54.2",
     "@types/node": "^24.2.1",
-    "@types/twilio": "^3.19.2"
+    "@types/twilio": "^3.19.2",
+    "tsconfig-paths": "^4.2.0"
   },
   "dependencies": {
     "dotenv": "^17.2.1",
