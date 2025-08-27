@@ -7,11 +7,12 @@ function formatHour(hour: number): string {
 export function formatCourtMessage(
   slots: { date: string; start: number; end: number }[]
 ): string {
-  let message = "✅ Free court slots found:\n";
-  for (const slot of slots) {
-    message += `• Free court on ${slot.date} between ${formatHour(
-      slot.start
-    )} and ${formatHour(slot.end)}\n`;
-  }
-  return message.trim();
+  const header = "✅ Free court slots found:";
+  const lines = slots.map(
+    (slot) =>
+      `• Free court on ${slot.date} between ${formatHour(
+        slot.start
+      )} and ${formatHour(slot.end)}`
+  );
+  return `${header}\n${lines.join("\n\n")}`;
 }

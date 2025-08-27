@@ -12,7 +12,7 @@ export async function findAvailableSlots(page: Page, context: BrowserContext) {
   await homePage.openOrderCourtPage();
   const orderCourtPage: OrderCourtPage = new OrderCourtPage(page, context);
   const availableDates = orderCourtPage.getDates();
-  const serachStartHour = 18;
+  const serachStartHour = 19;
   const searchEndHour = 22;
   const results: { date: string; start: number; end: number }[] = [];
   const baseDate = new Date();
