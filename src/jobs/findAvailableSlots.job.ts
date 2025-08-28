@@ -2,6 +2,7 @@ import cron from "node-cron";
 import { chromium } from "@playwright/test";
 import { findAvailableSlots } from "@services/findAvailableSlots.service";
 import { AUTH_STATE_FILE_PATH } from "env-variables";
+import { logWithTimestamp } from "@src/utilities/logger.utils";
 
 async function runJob() {
   const browser = await chromium.launch({ headless: true });
@@ -15,8 +16,9 @@ async function runJob() {
   const page = await context.newPage();
 
   try {
-    console.log(`[${new Date().toISOString()}] Running job...`);
+    logWithTimestamp("Running job...");
     await findAvailableSlots(page, context);
+    logWithTimestamp("successfully finished run");
   } catch (error) {
     console.error("Error running job:", error);
   } finally {
