@@ -5,6 +5,7 @@ import { formatCourtMessage } from "@src/utilities/general.util";
 import { OrderCourtPage } from "@src/pages/orderCourtPage";
 import { URL } from "env-variables";
 import { HomePage } from "@src/pages/homePage";
+import { hasNewSlots, saveNewSlots } from "@src/utilities/saveSlots.util";
 
 export async function findAvailableSlots(page: Page, context: BrowserContext) {
   await page.goto(URL);
@@ -73,7 +74,8 @@ export async function findAvailableSlots(page: Page, context: BrowserContext) {
     date.setDate(date.getDate() + 1);
   }
 
-  if (results.length > 0) {
+  if (results.length > 0 && hasNewSlots(results)) {
+    saveNewSlots(results);
     const fullMessage = formatCourtMessage(results);
     console.log(fullMessage);
     await sendWhatsAppMessage(fullMessage);
