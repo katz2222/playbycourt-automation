@@ -13,20 +13,20 @@ export async function findAvailableSlots(page: Page, context: BrowserContext) {
   const homePage: HomePage = new HomePage(page, context);
   await homePage.openOrderCourtPage();
   const orderCourtPage: OrderCourtPage = new OrderCourtPage(page, context);
-  const availableDates: Locator = orderCourtPage.getDates();
+  const datesUi: Locator = orderCourtPage.getDates();
   const searchStartHour: number = 19;
   const searchEndHour: number = 22;
-  const results: TimeSlot[] = [];
+  const availableTimeSlots: TimeSlot[] = [];
   const baseDate: Date = new Date();
-  let countFreeSlotsStreak: number = 0;
+  let freeSlotsStreak: number = 0;
   let freeStartHour: number | null = null;
-  let date: Date = new Date(baseDate);
+  let currentSearchDate: Date = new Date(baseDate);
 
-  await availableDates.first().waitFor();
-  for (let i = 0; i < (await availableDates.count()); i++) {
-    const day: number = date.getDay();
-    const currentDate: Locator = availableDates.nth(i);
-    await currentDate.click();
+  await datesUi.first().waitFor();
+  for (let i = 0; i < (await datesUi.count()); i++) {
+    const day: number = currentSearchDate.getDay();
+    const currentDateUi: Locator = datesUi.nth(i);
+    await currentDateUi.click();
     await page.waitForTimeout(1000);
 
     if (day !== 5 && day !== 6) {
@@ -44,33 +44,33 @@ export async function findAvailableSlots(page: Page, context: BrowserContext) {
             );
 
             while (await orderCourtPage.isSlotFree(hoursSlots.nth(j))) {
-              countFreeSlotsStreak++;
+              freeSlotsStreak++;
               j++;
             }
           }
 
-          if (countFreeSlotsStreak > 2) {
+          if (freeSlotsStreak > 2) {
             const freeEndHour: number | null =
               await orderCourtPage.getSlotStartHour(hoursSlots.nth(j));
             if (freeStartHour && freeEndHour) {
-              const currentMessage: TimeSlot = {
-                date: formatDate(date),
+              const availableTimeSlot: TimeSlot = {
+                date: formatDate(currentSearchDate),
                 start: freeStartHour,
                 end: freeEndHour,
               };
-              results.push(currentMessage);
+              availableTimeSlots.push(availableTimeSlot);
             }
           }
-          countFreeSlotsStreak = 0;
+          freeSlotsStreak = 0;
         }
       }
     }
-    date.setDate(date.getDate() + 1);
+    currentSearchDate.setDate(currentSearchDate.getDate() + 1);
   }
 
-  if (results.length > 0 && hasNewSlots(results)) {
-    saveNewSlots(results);
-    const fullMessage: string = formatCourtMessage(results);
+  if (availableTimeSlots.length > 0 && hasNewSlots(availableTimeSlots)) {
+    saveNewSlots(availableTimeSlots);
+    const fullMessage: string = formatCourtMessage(availableTimeSlots);
     console.log(fullMessage);
     await sendWhatsAppMessage(fullMessage);
   }
