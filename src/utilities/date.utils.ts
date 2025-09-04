@@ -20,3 +20,7 @@ export function formatDate(date: Date): string {
 
   return `${day}/${month} ${weekday}`;
 }
+
+export function isWeekend(day: number): boolean {
+  return day === 5 || day === 6;
+}

@@ -1,5 +1,5 @@
 import { BrowserContext, Locator, Page } from "@playwright/test";
-import { formatDate } from "@src/utilities/date.utils";
+import { formatDate, isWeekend } from "@src/utilities/date.utils";
 import { sendWhatsAppMessage } from "@src/utilities/whatsappSender.util";
 import { formatCourtMessage } from "@src/utilities/general.util";
 import { OrderCourtPage } from "@src/pages/orderCourtPage";
@@ -29,7 +29,7 @@ export async function findAvailableSlots(page: Page, context: BrowserContext) {
     await currentDateUi.click();
     await page.waitForTimeout(1000);
 
-    if (day !== 5 && day !== 6) {
+    if (!isWeekend(day)) {
       const hoursSlots: Locator = orderCourtPage.getHoursSlots();
       const startSlotIndex: number | undefined =
         await orderCourtPage.findStartSlotIndex(searchStartHour);
@@ -43,7 +43,10 @@ export async function findAvailableSlots(page: Page, context: BrowserContext) {
               hoursSlots.nth(j)
             );
 
-            while (await orderCourtPage.isSlotFree(hoursSlots.nth(j))) {
+            while (
+              (await orderCourtPage.isSlotFree(hoursSlots.nth(j))) &&
+              j < endSlotIndex
+            ) {
               freeSlotsStreak++;
               j++;
             }
