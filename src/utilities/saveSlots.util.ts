@@ -25,6 +25,11 @@ export function hasNewSlots(
 ): boolean {
   const lastSlots = loadLastSlots();
   const currentSlotKeys = generateSlotKeys(currentSlots);
+
+  if (currentSlotKeys.length !== lastSlots.length) {
+    return true;
+  }
+
   return currentSlotKeys.some((slot) => !lastSlots.includes(slot));
 }
 

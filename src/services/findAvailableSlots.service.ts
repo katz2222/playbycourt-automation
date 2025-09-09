@@ -15,7 +15,7 @@ export async function findAvailableSlots(page: Page, context: BrowserContext) {
   const orderCourtPage: OrderCourtPage = new OrderCourtPage(page, context);
   const datesUi: Locator = orderCourtPage.getDates();
   const searchStartHour: number = 19;
-  const searchEndHour: number = 22;
+  const searchEndHour: number = 22.5;
   const availableTimeSlots: TimeSlot[] = [];
   const baseDate: Date = new Date();
   let freeSlotsStreak: number = 0;
@@ -71,10 +71,14 @@ export async function findAvailableSlots(page: Page, context: BrowserContext) {
     currentSearchDate.setDate(currentSearchDate.getDate() + 1);
   }
 
-  if (availableTimeSlots.length > 0 && hasNewSlots(availableTimeSlots)) {
+  const message: string = formatCourtMessage(availableTimeSlots);
+  console.log(message);
+
+  if (hasNewSlots(availableTimeSlots)) {
     saveNewSlots(availableTimeSlots);
-    const fullMessage: string = formatCourtMessage(availableTimeSlots);
-    console.log(fullMessage);
-    await sendWhatsAppMessage(fullMessage);
+
+    if (availableTimeSlots.length > 0) {
+      await sendWhatsAppMessage(message);
+    }
   }
 }

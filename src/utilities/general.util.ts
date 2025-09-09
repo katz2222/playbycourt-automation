@@ -7,6 +7,10 @@ function formatHour(hour: number): string {
 export function formatCourtMessage(
   slots: { date: string; start: number; end: number }[]
 ): string {
+  if (slots.length === 0) {
+    return "No free court slots found.";
+  }
+
   const header = "✅ Free court slots found:";
   const lines = slots.map(
     (slot) =>
