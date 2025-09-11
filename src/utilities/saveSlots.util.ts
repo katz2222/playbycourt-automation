@@ -1,11 +1,10 @@
 import fs from "fs";
 import path from "path";
+import { TimeSlot } from "./types.util";
 
-const slotsFile = path.resolve(__dirname, "lastSlots.json");
+const slotsFile: string = path.resolve(__dirname, "../../data/lastSlots.json");
 
-function generateSlotKeys(
-  slots: { date: string; start: number; end: number }[]
-): string[] {
+function generateSlotKeys(slots: TimeSlot[]): string[] {
   return slots.map((slot) => `${slot.date}-${slot.start}-${slot.end}`);
 }
 
@@ -20,11 +19,9 @@ export function saveLastSlots(slots: string[]): void {
   fs.writeFileSync(slotsFile, JSON.stringify(slots, null, 2));
 }
 
-export function hasNewSlots(
-  currentSlots: { date: string; start: number; end: number }[]
-): boolean {
-  const lastSlots = loadLastSlots();
-  const currentSlotKeys = generateSlotKeys(currentSlots);
+export function hasNewSlots(currentSlots: TimeSlot[]): boolean {
+  const lastSlots: string[] = loadLastSlots();
+  const currentSlotKeys: string[] = generateSlotKeys(currentSlots);
 
   if (currentSlotKeys.length !== lastSlots.length) {
     return true;
@@ -33,9 +30,7 @@ export function hasNewSlots(
   return currentSlotKeys.some((slot) => !lastSlots.includes(slot));
 }
 
-export function saveNewSlots(
-  currentSlots: { date: string; start: number; end: number }[]
-): void {
-  const slotKeys = generateSlotKeys(currentSlots);
+export function saveNewSlots(currentSlots: TimeSlot[]): void {
+  const slotKeys: string[] = generateSlotKeys(currentSlots);
   saveLastSlots(slotKeys);
 }
