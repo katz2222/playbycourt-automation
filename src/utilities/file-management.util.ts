@@ -4,7 +4,7 @@ import * as promiseFs from "fs/promises";
  *@param path path of directory to delete
  */
 const isFileExists = async (path: string): Promise<boolean> => {
-  let isFileExistsFlag = false;
+  let isFileExistsFlag: boolean = false;
   try {
     const stats = await promiseFs.stat(path);
     if (stats.isFile()) {

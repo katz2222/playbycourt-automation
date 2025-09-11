@@ -6,7 +6,14 @@ import {
   AUTH_STATE_FILE_PATH,
   AUTH_STATE_DATE_FILE_NAME,
 } from "../../env-variables";
-import { chromium, expect } from "@playwright/test";
+import {
+  Browser,
+  BrowserContext,
+  chromium,
+  expect,
+  Locator,
+  Page,
+} from "@playwright/test";
 import { isFileExists } from "@utils/file-management.util";
 import { LoginPage } from "@src/pages/loginPage";
 import { HomePage } from "@src/pages/homePage";
@@ -16,18 +23,18 @@ export interface State {
 }
 
 const authLogin = async () => {
-  const browser = await chromium.launch({
+  const browser: Browser = await chromium.launch({
     headless: false,
   });
 
-  const context = await browser.newContext();
-  const page = await context.newPage();
+  const context: BrowserContext = await browser.newContext();
+  const page: Page = await context.newPage();
 
   await page.goto(URL);
-  const loginPage = new LoginPage(page, context);
+  const loginPage: LoginPage = new LoginPage(page, context);
   await loginPage.login();
-  const homePage = new HomePage(page, context);
-  const homePageButton = homePage.getHomePageButton();
+  const homePage: HomePage = new HomePage(page, context);
+  const homePageButton: Locator = homePage.getHomePageButton();
   await expect(homePageButton).toBeVisible();
 
   // await page.click("input#idSIButton9"); //microsft default button

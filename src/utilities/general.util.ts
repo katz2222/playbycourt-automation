@@ -1,18 +1,18 @@
+import { TimeSlot } from "./types.util";
+
 function formatHour(hour: number): string {
-  const h = Math.floor(hour);
-  const m = (hour % 1) * 60;
+  const h: number = Math.floor(hour);
+  const m: number = (hour % 1) * 60;
   return `${h.toString().padStart(2, "0")}:${m === 0 ? "00" : "30"}`;
 }
 
-export function formatCourtMessage(
-  slots: { date: string; start: number; end: number }[]
-): string {
+export function formatCourtMessage(slots: TimeSlot[]): string {
   if (slots.length === 0) {
     return "No free court slots found.";
   }
 
-  const header = "✅ Free court slots found:";
-  const lines = slots.map(
+  const header: string = "✅ Free court slots found:";
+  const lines: string[] = slots.map(
     (slot) =>
       `• Free court on ${slot.date} between ${formatHour(
         slot.start
