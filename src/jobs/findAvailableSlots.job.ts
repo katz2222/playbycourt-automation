@@ -1,4 +1,3 @@
-import cron from "node-cron";
 import { Browser, BrowserContext, chromium, Page } from "@playwright/test";
 import { findAvailableSlots } from "@services/findAvailableSlots.service";
 import { AUTH_STATE_FILE_PATH } from "env-variables";
@@ -26,4 +25,4 @@ async function runJob() {
   }
 }
 
-cron.schedule("*/5 * * * *", runJob);
+runJob();
