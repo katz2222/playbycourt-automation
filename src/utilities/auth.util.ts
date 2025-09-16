@@ -36,9 +36,6 @@ const authLogin = async () => {
   const homePage: HomePage = new HomePage(page, context);
   const homePageButton: Locator = homePage.getHomePageButton();
   await expect(homePageButton).toBeVisible();
-
-  // await page.click("input#idSIButton9"); //microsft default button
-
   await page.waitForURL(URL, {
     timeout: 120000,
   });

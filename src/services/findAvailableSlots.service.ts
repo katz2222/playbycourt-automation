@@ -14,7 +14,7 @@ export async function findAvailableSlots(page: Page, context: BrowserContext) {
   await homePage.openOrderCourtPage();
   const orderCourtPage: OrderCourtPage = new OrderCourtPage(page, context);
   const datesUi: Locator = orderCourtPage.getDates();
-  const searchStartHour: number = 19;
+  const searchStartHour: number = 17.5;
   const searchEndHour: number = 22.5;
   const availableTimeSlots: TimeSlot[] = [];
   const baseDate: Date = new Date();
