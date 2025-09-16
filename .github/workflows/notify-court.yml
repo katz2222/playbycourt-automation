@@ -8,6 +8,7 @@ on:
 jobs:
   check-court:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
       - name: Checkout repository
@@ -17,6 +18,13 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
+
+      - name: Restore lastSlots.json from cache
+        id: restore-cache
+        uses: actions/cache@v3
+        with:
+          path: data/lastSlots.json
+          key: court-cache
 
       - name: Install dependencies
         run: npm install
@@ -36,3 +44,9 @@ jobs:
           TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
           TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
         run: npx ts-node -r tsconfig-paths/register src/jobs/findAvailableSlots.job.ts
+
+      - name: Save updated lastSlots.json to cache
+        uses: actions/cache@v3
+        with:
+          path: data/lastSlots.json
+          key: court-cache
