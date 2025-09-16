@@ -1,0 +1,38 @@
+name: Notify if Free Court
+
+on:
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch: # Allow manual trigger from GitHub UI
+
+jobs:
+  check-court:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Playwright and dependencies
+        run: npx playwright install --with-deps
+
+      - name: Run court availability check
+        env:
+          EMAIL: ${{ secrets.EMAIL }}
+          URL: ${{ secrets.URL }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+          PHONE_NUMBER: ${{ secrets.PHONE_NUMBER }}
+          TWILIO_SANDBOX_NUMBER: ${{ secrets.TWILIO_SANDBOX_NUMBER }}
+          AUTH_STATE_FILE_PATH: ${{ secrets.AUTH_STATE_FILE_PATH }}
+          AUTH_STATE_DATE_FILE_NAME: ${{ secrets.AUTH_STATE_DATE_FILE_NAME }}
+          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
+          TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+        run: npx ts-node -r tsconfig-paths/register src/jobs/findAvailableSlots.job.ts
