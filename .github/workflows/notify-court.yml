@@ -1,7 +1,7 @@
 name: Notify if Free Court
 
 on:
-  workflow_dispatch: # Allow manual trigger from GitHub UI
+  workflow_dispatch:
 
 jobs:
   check-court:
@@ -22,7 +22,11 @@ jobs:
         uses: actions/cache@v3
         with:
           path: data/lastSlots.json
-          key: court-cache
+          key: court-cache-${{ github.run_id }}
+          restore-keys: court-cache-
+
+      - name: Debug – Print lastSlots.json content
+        run: cat data/lastSlots.json || echo "No cache file found"
 
       - name: Install dependencies
         run: npm install
@@ -47,4 +51,4 @@ jobs:
         uses: actions/cache@v3
         with:
           path: data/lastSlots.json
-          key: court-cache
+          key: court-cache-${{ github.run_id }}
