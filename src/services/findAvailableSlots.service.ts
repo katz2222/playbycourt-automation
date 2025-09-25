@@ -1,5 +1,9 @@
 import { BrowserContext, Locator, Page } from "@playwright/test";
-import { formatDate, isWeekend } from "@src/utilities/date.utils";
+import {
+  formatDate,
+  isWeekend,
+  searchFromDate,
+} from "@src/utilities/date.utils";
 import { sendWhatsAppMessage } from "@src/utilities/whatsappSender.util";
 import { formatCourtMessage } from "@src/utilities/general.util";
 import { OrderCourtPage } from "@src/pages/orderCourtPage";
@@ -17,10 +21,9 @@ export async function findAvailableSlots(page: Page, context: BrowserContext) {
   const searchStartHour: number = 19;
   const searchEndHour: number = 22.5;
   const availableTimeSlots: TimeSlot[] = [];
-  const baseDate: Date = new Date();
   let freeSlotsStreak: number = 0;
   let freeStartHour: number | null = null;
-  let currentSearchDate: Date = new Date(baseDate);
+  let currentSearchDate: Date = searchFromDate();
 
   await datesUi.first().waitFor();
   for (let i = 0; i < (await datesUi.count()); i++) {
