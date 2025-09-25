@@ -1,10 +1,5 @@
+import { formatHour } from "./date.utils";
 import { TimeSlot } from "./types.util";
-
-function formatHour(hour: number): string {
-  const h: number = Math.floor(hour);
-  const m: number = (hour % 1) * 60;
-  return `${h.toString().padStart(2, "0")}:${m === 0 ? "00" : "30"}`;
-}
 
 export function formatCourtMessage(slots: TimeSlot[]): string {
   if (slots.length === 0) {

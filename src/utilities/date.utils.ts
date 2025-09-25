@@ -13,6 +13,12 @@ export function parseSlotStartTimeToHour(slot: string): number {
   return hour + minutes / 60;
 }
 
+export function formatHour(hour: number): string {
+  const h: number = Math.floor(hour);
+  const m: number = (hour % 1) * 60;
+  return `${h.toString().padStart(2, "0")}:${m === 0 ? "00" : "30"}`;
+}
+
 export function formatDate(date: Date): string {
   const day: string = String(date.getDate()).padStart(2, "0");
   const month: string = String(date.getMonth() + 1).padStart(2, "0");
@@ -23,4 +29,18 @@ export function formatDate(date: Date): string {
 
 export function isWeekend(day: number): boolean {
   return day === 5 || day === 6;
+}
+
+export function hasHourPassed(date: Date, targetHour: number): boolean {
+  return date.getHours() >= targetHour;
+}
+
+export function searchFromDate(): Date {
+  const now: Date = new Date();
+  const lastSearchHourOfDay: number = 22;
+
+  if (hasHourPassed(now, lastSearchHourOfDay)) {
+    now.setDate(now.getDate() + 1);
+  }
+  return now;
 }
