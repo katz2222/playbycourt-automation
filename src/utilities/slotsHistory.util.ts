@@ -5,6 +5,7 @@ import { SlotHistoryRecord, TimeSlot } from "./types.util";
 import {
   formatHourDecimalToTimeString,
   getCurrentDateTime,
+  parseHourStringToDecimal,
 } from "./date.utils";
 
 const historyFilePath: string = path.resolve(
@@ -28,8 +29,8 @@ export function loadSlotHistory(): SlotHistoryRecord[] {
     (row: Record<string, any>): SlotHistoryRecord => ({
       TimeSlot: {
         date: row.date,
-        start: Number(row.start),
-        end: Number(row.end),
+        start: parseHourStringToDecimal(row.start),
+        end: parseHourStringToDecimal(row.end),
       },
       becameAvailableAt: row.becameAvailableAt,
       becameUnavailableAt: row.becameUnavailableAt || undefined,

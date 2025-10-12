@@ -57,3 +57,8 @@ export function formatHourDecimalToTimeString(decimalHour: number): string {
     "0"
   )}`;
 }
+
+export function parseHourStringToDecimal(time: string): number {
+  const [hours, minutes] = time.split(":").map(Number);
+  return hours + minutes / 60;
+}
