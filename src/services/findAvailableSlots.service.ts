@@ -9,8 +9,12 @@ import { formatCourtMessage } from "@src/utilities/general.util";
 import { OrderCourtPage } from "@src/pages/orderCourtPage";
 import { URL } from "env-variables";
 import { HomePage } from "@src/pages/homePage";
-import { hasNewSlots, saveNewSlots } from "@src/utilities/saveSlots.util";
-import { TimeSlot } from "@src/utilities/types.util";
+import { SlotHistoryRecord, TimeSlot } from "@src/utilities/types.util";
+import {
+  findNewSlots,
+  loadSlotHistory,
+  updateSlotHistoryExcel,
+} from "@src/utilities/slotsHistory.util";
 
 export async function findAvailableSlots(page: Page, context: BrowserContext) {
   await page.goto(URL);
@@ -74,16 +78,20 @@ export async function findAvailableSlots(page: Page, context: BrowserContext) {
     currentSearchDate.setDate(currentSearchDate.getDate() + 1);
   }
 
+  const previousRecords: SlotHistoryRecord[] = loadSlotHistory();
+  const newSlots: TimeSlot[] = findNewSlots(
+    availableTimeSlots,
+    previousRecords
+  );
   const message: string = formatCourtMessage(availableTimeSlots);
   console.log(message);
 
-  if (hasNewSlots(availableTimeSlots)) {
-    saveNewSlots(availableTimeSlots);
-
-    if (availableTimeSlots.length > 0) {
-      await sendWhatsAppMessage(message);
-    }
+  if (newSlots.length > 0) {
+    // await sendWhatsAppMessage(message);
+    console.log("New slots found, sending message.");
   } else {
     console.log("No new slots found, not sending message.");
   }
+
+  updateSlotHistoryExcel(availableTimeSlots);
 }

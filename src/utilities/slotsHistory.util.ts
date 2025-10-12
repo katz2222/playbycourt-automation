@@ -15,7 +15,7 @@ function slotKey(row: TimeSlot): string {
   return `${row.date}-${row.start}-${row.end}`;
 }
 
-function loadSlotHistory(): SlotHistoryRecord[] {
+export function loadSlotHistory(): SlotHistoryRecord[] {
   if (!fs.existsSync(historyFilePath)) return [];
 
   const workbook: XLSX.WorkBook = XLSX.readFile(historyFilePath);
@@ -120,4 +120,24 @@ export function updateSlotHistoryExcel(currentSlots: TimeSlot[]): void {
   markUnavailableSlots(records, currentSlotKeys);
   addNewSlots(records, currentSlots, existingKeys);
   writeSlotHistory(records);
+}
+
+/**
+ * Returns only the slots that are newly available compared to the history records.
+ */
+export function findNewSlots(
+  currentSlots: TimeSlot[],
+  historyRecords: SlotHistoryRecord[]
+): TimeSlot[] {
+  const activeSlotKeys: Set<string> = new Set(
+    historyRecords
+      .filter((r) => !r.becameUnavailableAt)
+      .map((r) => slotKey(r.TimeSlot))
+  );
+
+  const newSlots: TimeSlot[] = currentSlots.filter(
+    (slot) => !activeSlotKeys.has(slotKey(slot))
+  );
+
+  return newSlots;
 }
