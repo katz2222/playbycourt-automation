@@ -2,7 +2,6 @@ import * as XLSX from "xlsx";
 import fs from "fs";
 import path from "path";
 import { SlotHistoryRecord, TimeSlot } from "./types.util";
-import { generateSlotKeys } from "./saveSlots.util";
 import { getCurrentDateTime } from "./date.utils";
 
 const historyFilePath: string = path.resolve(
@@ -13,6 +12,10 @@ const sheetName: string = "Slot History";
 
 function slotKey(row: TimeSlot): string {
   return `${row.date}-${row.start}-${row.end}`;
+}
+
+function generateSlotKeys(slots: TimeSlot[]): string[] {
+  return slots.map((slot) => `${slot.date}-${slot.start}-${slot.end}`);
 }
 
 export function loadSlotHistory(): SlotHistoryRecord[] {
