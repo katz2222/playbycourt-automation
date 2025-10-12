@@ -13,12 +13,6 @@ export function parseSlotStartTimeToHour(slot: string): number {
   return hour + minutes / 60;
 }
 
-export function formatHour(hour: number): string {
-  const h: number = Math.floor(hour);
-  const m: number = (hour % 1) * 60;
-  return `${h.toString().padStart(2, "0")}:${m === 0 ? "00" : "30"}`;
-}
-
 export function formatDate(date: Date): string {
   const day: string = String(date.getDate()).padStart(2, "0");
   const month: string = String(date.getMonth() + 1).padStart(2, "0");
