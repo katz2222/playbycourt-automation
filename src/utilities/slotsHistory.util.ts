@@ -143,3 +143,15 @@ export function findNewSlots(
 
   return newSlots;
 }
+
+export function hasAnySlotBecomeUnavailable(
+  currentSlots: TimeSlot[],
+  previousRecords: SlotHistoryRecord[]
+): boolean {
+  const currentSlotKeys = new Set(currentSlots.map(slotKey));
+
+  return previousRecords.some((record) => {
+    const key = slotKey(record.TimeSlot);
+    return !record.becameUnavailableAt && !currentSlotKeys.has(key);
+  });
+}

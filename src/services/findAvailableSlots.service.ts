@@ -12,6 +12,7 @@ import { HomePage } from "@src/pages/homePage";
 import { SlotHistoryRecord, TimeSlot } from "@src/utilities/types.util";
 import {
   findNewSlots,
+  hasAnySlotBecomeUnavailable,
   loadSlotHistory,
   updateSlotHistoryExcel,
 } from "@src/utilities/slotsHistory.util";
@@ -83,15 +84,26 @@ export async function findAvailableSlots(page: Page, context: BrowserContext) {
     availableTimeSlots,
     previousRecords
   );
+  const hasUnavailable: boolean = hasAnySlotBecomeUnavailable(
+    availableTimeSlots,
+    previousRecords
+  );
+
   const message: string = formatCourtMessage(availableTimeSlots);
   console.log(message);
 
   if (newSlots.length > 0) {
     // await sendWhatsAppMessage(message);
     console.log("New slots found, sending message.");
+    updateSlotHistoryExcel(availableTimeSlots);
   } else {
     console.log("No new slots found, not sending message.");
-  }
 
-  updateSlotHistoryExcel(availableTimeSlots);
+    if (hasUnavailable) {
+      updateSlotHistoryExcel(availableTimeSlots);
+      console.log("Some slots became unavailable. Excel updated.");
+    } else {
+      console.log("No slot availability changes. Excel not updated.");
+    }
+  }
 }
