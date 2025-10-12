@@ -54,3 +54,12 @@ export function getCurrentDateTime(): string {
   const min: string = String(now.getMinutes()).padStart(2, "0");
   return `${yyyy}-${mm}-${dd} ${hh}:${min}`;
 }
+
+export function formatHourDecimalToTimeString(decimalHour: number): string {
+  const hours = Math.floor(decimalHour);
+  const minutes = Math.round((decimalHour - hours) * 60);
+  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
+    2,
+    "0"
+  )}`;
+}

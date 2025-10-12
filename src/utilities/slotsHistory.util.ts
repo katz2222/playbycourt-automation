@@ -2,7 +2,10 @@ import * as XLSX from "xlsx";
 import fs from "fs";
 import path from "path";
 import { SlotHistoryRecord, TimeSlot } from "./types.util";
-import { getCurrentDateTime } from "./date.utils";
+import {
+  formatHourDecimalToTimeString,
+  getCurrentDateTime,
+} from "./date.utils";
 
 const historyFilePath: string = path.resolve(
   __dirname,
@@ -12,10 +15,6 @@ const sheetName: string = "Slot History";
 
 function slotKey(row: TimeSlot): string {
   return `${row.date}-${row.start}-${row.end}`;
-}
-
-function generateSlotKeys(slots: TimeSlot[]): string[] {
-  return slots.map((slot) => `${slot.date}-${slot.start}-${slot.end}`);
 }
 
 export function loadSlotHistory(): SlotHistoryRecord[] {
@@ -91,8 +90,8 @@ function writeSlotHistory(records: SlotHistoryRecord[]): void {
   const flatRows: Record<string, string | number>[] = records.map(
     (r: SlotHistoryRecord) => ({
       date: r.TimeSlot.date,
-      start: r.TimeSlot.start,
-      end: r.TimeSlot.end,
+      start: formatHourDecimalToTimeString(r.TimeSlot.start),
+      end: formatHourDecimalToTimeString(r.TimeSlot.end),
       becameAvailableAt: r.becameAvailableAt,
       becameUnavailableAt: r.becameUnavailableAt ?? "",
     })
@@ -114,7 +113,7 @@ function writeSlotHistory(records: SlotHistoryRecord[]): void {
 }
 
 export function updateSlotHistoryExcel(currentSlots: TimeSlot[]): void {
-  const currentSlotKeys: Set<string> = new Set(generateSlotKeys(currentSlots));
+  const currentSlotKeys: Set<string> = new Set(currentSlots.map(slotKey));
   const records: SlotHistoryRecord[] = loadSlotHistory();
   const existingKeys: Set<string> = new Set(
     records.map((r: SlotHistoryRecord) => slotKey(r.TimeSlot))
