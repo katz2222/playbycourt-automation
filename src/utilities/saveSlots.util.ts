@@ -4,7 +4,7 @@ import { TimeSlot } from "./types.util";
 
 const slotsFile: string = path.resolve(__dirname, "../../data/lastSlots.json");
 
-function generateSlotKeys(slots: TimeSlot[]): string[] {
+export function generateSlotKeys(slots: TimeSlot[]): string[] {
   return slots.map((slot) => `${slot.date}-${slot.start}-${slot.end}`);
 }
 

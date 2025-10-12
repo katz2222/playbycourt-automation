@@ -44,3 +44,13 @@ export function searchFromDate(): Date {
   }
   return now;
 }
+
+export function getCurrentDateTime(): string {
+  const now: Date = new Date();
+  const yyyy: number = now.getFullYear();
+  const mm: string = String(now.getMonth() + 1).padStart(2, "0");
+  const dd: string = String(now.getDate()).padStart(2, "0");
+  const hh: string = String(now.getHours()).padStart(2, "0");
+  const min: string = String(now.getMinutes()).padStart(2, "0");
+  return `${yyyy}-${mm}-${dd} ${hh}:${min}`;
+}
