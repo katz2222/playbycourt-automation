@@ -58,21 +58,22 @@ function markUnavailableSlots(
 
 function addNewSlots(
   records: SlotHistoryRecord[],
-  currentSlots: TimeSlot[],
-  existingKeys: Set<string>
+  currentSlots: TimeSlot[]
 ): void {
   const now: string = getCurrentDateTime();
+  const activeKeys = new Set(
+    records
+      .filter((r) => !r.becameUnavailableAt)
+      .map((r) => slotKey(r.TimeSlot))
+  );
 
   for (const slot of currentSlots) {
-    const key: string = slotKey(slot);
-    const alreadyExists: boolean = existingKeys.has(key);
-
-    if (!alreadyExists) {
-      const newRecord: SlotHistoryRecord = {
+    const key = slotKey(slot);
+    if (!activeKeys.has(key)) {
+      records.push({
         TimeSlot: slot,
         becameAvailableAt: now,
-      };
-      records.push(newRecord);
+      });
     }
   }
 }
@@ -116,12 +117,8 @@ function writeSlotHistory(records: SlotHistoryRecord[]): void {
 export function updateSlotHistoryExcel(currentSlots: TimeSlot[]): void {
   const currentSlotKeys: Set<string> = new Set(currentSlots.map(slotKey));
   const records: SlotHistoryRecord[] = loadSlotHistory();
-  const existingKeys: Set<string> = new Set(
-    records.map((r: SlotHistoryRecord) => slotKey(r.TimeSlot))
-  );
-
   markUnavailableSlots(records, currentSlotKeys);
-  addNewSlots(records, currentSlots, existingKeys);
+  addNewSlots(records, currentSlots);
   writeSlotHistory(records);
 }
 
