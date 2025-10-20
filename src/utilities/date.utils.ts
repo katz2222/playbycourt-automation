@@ -62,3 +62,23 @@ export function parseHourStringToDecimal(time: string): number {
   const [hours, minutes] = time.split(":").map(Number);
   return hours + minutes / 60;
 }
+
+export function smartParseDate(
+  dateStr: string,
+  contextTimestamp: string
+): Date {
+  const [day, month] = dateStr.split(" ")[0].split("/").map(Number);
+  const contextDate: Date = new Date(contextTimestamp);
+  let year: number = contextDate.getFullYear();
+
+  let slotDate: Date = new Date(year, month - 1, day);
+
+  const TWO_WEEKS_MS: number = 14 * 24 * 60 * 60 * 1000;
+
+  // If slot date is more than 2 weeks in the past, it's probably for next year
+  if (slotDate.getTime() < contextDate.getTime() - TWO_WEEKS_MS) {
+    slotDate = new Date(year + 1, month - 1, day);
+  }
+
+  return slotDate;
+}

@@ -6,6 +6,7 @@ import {
   formatHourDecimalToTimeString,
   getCurrentDateTime,
   parseHourStringToDecimal,
+  smartParseDate,
 } from "./date.utils";
 
 const historyFilePath: string = path.resolve(
@@ -79,10 +80,14 @@ function addNewSlots(
 }
 
 function sortSlotHistoryRecords(records: SlotHistoryRecord[]): void {
-  records.sort((a: SlotHistoryRecord, b: SlotHistoryRecord): number => {
-    const dateCompare: number = a.TimeSlot.date.localeCompare(b.TimeSlot.date);
-    if (dateCompare !== 0) return dateCompare;
-    return a.TimeSlot.start - b.TimeSlot.start;
+  records.sort((a, b) => {
+    const dateA: Date = smartParseDate(a.TimeSlot.date, a.becameAvailableAt);
+    const dateB: Date = smartParseDate(b.TimeSlot.date, b.becameAvailableAt);
+
+    const timeCompare: number = dateB.getTime() - dateA.getTime();
+    if (timeCompare !== 0) return timeCompare;
+
+    return b.TimeSlot.start - a.TimeSlot.start;
   });
 }
 
