@@ -23,7 +23,7 @@ export async function findAvailableSlots(page: Page, context: BrowserContext) {
   await homePage.openOrderCourtPage();
   const orderCourtPage: OrderCourtPage = new OrderCourtPage(page, context);
   const datesUi: Locator = orderCourtPage.getDates();
-  const searchStartHour: number = 19;
+  const searchStartHour: number = 17.5;
   const searchEndHour: number = 22.5;
   const availableTimeSlots: TimeSlot[] = [];
   let freeSlotsStreak: number = 0;
@@ -93,8 +93,7 @@ export async function findAvailableSlots(page: Page, context: BrowserContext) {
   console.log(message);
 
   if (newSlots.length > 0) {
-    // await sendWhatsAppMessage(message);
-    console.log("New slots found, sending message.");
+    await sendWhatsAppMessage(message);
     updateSlotHistoryExcel(availableTimeSlots);
   } else {
     console.log("No new slots found, not sending message.");

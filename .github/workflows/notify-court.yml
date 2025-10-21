@@ -63,3 +63,10 @@ jobs:
         with:
           path: data/slot_history.xlsx
           key: court-cache-${{ github.run_id }}
+
+      - name: Upload slot_history.xlsx as artifact
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: slot_history
+          path: data/slot_history.xlsx
