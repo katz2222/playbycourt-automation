@@ -65,8 +65,8 @@ jobs:
           key: court-cache-${{ github.run_id }}
 
       - name: Upload slot_history.xlsx as artifact
-        if: always()
-        uses: actions/upload-artifact@v3
+        if: always() # Always attempt to upload, even if earlier steps failed
+        uses: actions/upload-artifact@v4
         with:
           name: slot_history
           path: data/slot_history.xlsx
