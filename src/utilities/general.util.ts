@@ -1,4 +1,4 @@
-import { formatHour } from "./date.utils";
+import { formatHourDecimalToTimeString } from "./date.utils";
 import { TimeSlot } from "./types.util";
 
 export function formatCourtMessage(slots: TimeSlot[]): string {
@@ -9,9 +9,9 @@ export function formatCourtMessage(slots: TimeSlot[]): string {
   const header: string = "✅ Free court slots found:";
   const lines: string[] = slots.map(
     (slot) =>
-      `• Free court on ${slot.date} between ${formatHour(
+      `• Free court on ${slot.date} between ${formatHourDecimalToTimeString(
         slot.start
-      )} and ${formatHour(slot.end)}`
+      )} and ${formatHourDecimalToTimeString(slot.end)}`
   );
   return `${header}\n${lines.join("\n\n")}`;
 }
