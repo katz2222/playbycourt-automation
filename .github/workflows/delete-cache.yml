@@ -1,24 +1,45 @@
-name: Delete all caches
-on: workflow_dispatch
+name: Clear All GitHub Actions Caches
+on:
+  workflow_dispatch:
 
 jobs:
-  clear-cache:
+  clear-caches:
     runs-on: ubuntu-latest
     permissions:
       actions: write
       contents: read
+
     steps:
-      - name: Delete all caches
+      - name: Delete all caches (all pages)
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "Fetching all caches..."
-          REPO=${{ github.repository }}
-          curl -s -H "Authorization: token $GH_TOKEN" \
-            "https://api.github.com/repos/$REPO/actions/caches?per_page=100" \
-            | jq -r '.actions_caches[].id' | while read id; do
-              echo "Deleting cache ID: $id"
-              curl -s -X DELETE -H "Authorization: token $GH_TOKEN" \
-                "https://api.github.com/repos/$REPO/actions/caches/$id"
+          set -e
+          REPO="${{ github.repository }}"
+          PAGE=1
+          TOTAL_DELETED=0
+
+          while true; do
+            echo "🔎 Fetching caches (page $PAGE)..."
+            RESPONSE=$(curl -s -H "Authorization: token $GH_TOKEN" \
+              "https://api.github.com/repos/$REPO/actions/caches?per_page=100&page=$PAGE")
+
+            COUNT=$(echo "$RESPONSE" | jq '.actions_caches | length')
+            if [ "$COUNT" -eq 0 ]; then
+              echo "✅ No more caches found."
+              break
+            fi
+
+            echo "$RESPONSE" | jq -r '.actions_caches[].id' | while read -r ID; do
+              if [ -n "$ID" ]; then
+                echo "🗑️  Deleting cache ID: $ID"
+                curl -s -X DELETE -H "Authorization: token $GH_TOKEN" \
+                  "https://api.github.com/repos/$REPO/actions/caches/$ID" > /dev/null
+                TOTAL_DELETED=$((TOTAL_DELETED + 1))
+              fi
             done
-          echo "All caches deleted."
+
+            PAGE=$((PAGE + 1))
+          done
+
+          echo "🎉 Finished! Total caches deleted: $TOTAL_DELETED"
