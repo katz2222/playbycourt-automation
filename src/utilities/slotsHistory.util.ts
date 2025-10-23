@@ -6,6 +6,8 @@ import {
   formatHourDecimalToTimeString,
   getCurrentDateTime,
   parseHourStringToDecimal,
+  prettyDateTime,
+  reversePrettyDateTime,
   smartParseDate,
 } from "./date.utils";
 
@@ -33,8 +35,10 @@ export function loadSlotHistory(): SlotHistoryRecord[] {
         start: parseHourStringToDecimal(row.start),
         end: parseHourStringToDecimal(row.end),
       },
-      becameAvailableAt: row.becameAvailableAt,
-      becameUnavailableAt: row.becameUnavailableAt || undefined,
+      becameAvailableAt: reversePrettyDateTime(row.becameAvailableAt),
+      becameUnavailableAt: row.becameUnavailableAt
+        ? reversePrettyDateTime(row.becameUnavailableAt)
+        : undefined,
     })
   );
 
@@ -99,8 +103,10 @@ function writeSlotHistory(records: SlotHistoryRecord[]): void {
       date: r.TimeSlot.date,
       start: formatHourDecimalToTimeString(r.TimeSlot.start),
       end: formatHourDecimalToTimeString(r.TimeSlot.end),
-      becameAvailableAt: r.becameAvailableAt,
-      becameUnavailableAt: r.becameUnavailableAt ?? "",
+      becameAvailableAt: prettyDateTime(r.becameAvailableAt),
+      becameUnavailableAt: r.becameUnavailableAt
+        ? prettyDateTime(r.becameUnavailableAt)
+        : "",
     })
   );
 
@@ -119,6 +125,7 @@ function writeSlotHistory(records: SlotHistoryRecord[]): void {
   XLSX.writeFile(workbook, historyFilePath);
 }
 
+// Main function to update slot history
 export function updateSlotHistoryExcel(currentSlots: TimeSlot[]): void {
   const currentSlotKeys: Set<string> = new Set(currentSlots.map(slotKey));
   const records: SlotHistoryRecord[] = loadSlotHistory();

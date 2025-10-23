@@ -40,13 +40,21 @@ export function searchFromDate(): Date {
 }
 
 export function getCurrentDateTime(): string {
-  const now: Date = new Date();
-  const yyyy: number = now.getFullYear();
-  const mm: string = String(now.getMonth() + 1).padStart(2, "0");
-  const dd: string = String(now.getDate()).padStart(2, "0");
-  const hh: string = String(now.getHours()).padStart(2, "0");
-  const min: string = String(now.getMinutes()).padStart(2, "0");
-  return `${yyyy}-${mm}-${dd} ${hh}:${min}`;
+  const now = new Date();
+  const options: Intl.DateTimeFormatOptions = {
+    timeZone: "Asia/Jerusalem",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  };
+
+  const formatted: string = now.toLocaleString("en-GB", options);
+  const [datePart, timePart] = formatted.split(", ");
+  const [dd, mm, yyyy] = datePart.split("/");
+  return `${yyyy}-${mm}-${dd} ${timePart}`;
 }
 
 export function formatHourDecimalToTimeString(decimalHour: number): string {
@@ -81,4 +89,18 @@ export function smartParseDate(
   }
 
   return slotDate;
+}
+
+export function prettyDateTime(dateTimeStr: string): string {
+  // Input example: "2025-10-23 14:30"
+  const [datePart, timePart] = dateTimeStr.split(" ");
+  const [yyyy, mm, dd] = datePart.split("-");
+  return `${dd}/${mm}/${yyyy} ${timePart}`;
+}
+
+export function reversePrettyDateTime(prettyDateTimeStr: string): string {
+  // Input example: "23/10/2025 14:30"
+  const [datePart, timePart] = prettyDateTimeStr.split(" ");
+  const [dd, mm, yyyy] = datePart.split("/");
+  return `${yyyy}-${mm}-${dd} ${timePart}`;
 }
