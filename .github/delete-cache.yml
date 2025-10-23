@@ -1,0 +1,24 @@
+name: Delete all caches
+on: workflow_dispatch
+
+jobs:
+  clear-cache:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: read
+    steps:
+      - name: Delete all caches
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Fetching all caches..."
+          REPO=${{ github.repository }}
+          curl -s -H "Authorization: token $GH_TOKEN" \
+            "https://api.github.com/repos/$REPO/actions/caches?per_page=100" \
+            | jq -r '.actions_caches[].id' | while read id; do
+              echo "Deleting cache ID: $id"
+              curl -s -X DELETE -H "Authorization: token $GH_TOKEN" \
+                "https://api.github.com/repos/$REPO/actions/caches/$id"
+            done
+          echo "All caches deleted."
