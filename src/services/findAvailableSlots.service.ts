@@ -84,10 +84,6 @@ export async function findAvailableSlots(page: Page, context: BrowserContext) {
     availableTimeSlots,
     previousRecords
   );
-  const hasUnavailable: boolean = hasAnySlotBecomeUnavailable(
-    availableTimeSlots,
-    previousRecords
-  );
 
   const message: string = formatCourtMessage(availableTimeSlots);
   console.log(message);
@@ -97,6 +93,10 @@ export async function findAvailableSlots(page: Page, context: BrowserContext) {
     updateSlotHistoryExcel(availableTimeSlots);
   } else {
     console.log("No new slots found, not sending message.");
+    const hasUnavailable: boolean = hasAnySlotBecomeUnavailable(
+      availableTimeSlots,
+      previousRecords
+    );
 
     if (hasUnavailable) {
       updateSlotHistoryExcel(availableTimeSlots);
