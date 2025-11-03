@@ -17,22 +17,33 @@ jobs:
         with:
           node-version: 18
 
-      - name: Restore lastSlots.json from cache
+      - name: Restore slot_history.xlsx from cache
         id: restore-cache
         uses: actions/cache@v3
         with:
-          path: data/lastSlots.json
+          path: data/slot_history.xlsx
           key: court-cache-${{ github.run_id }}
           restore-keys: court-cache-
-
-      - name: Debug – Print lastSlots.json content
-        run: cat data/lastSlots.json || echo "No cache file found"
 
       - name: Install dependencies
         run: npm install
 
       - name: Install Playwright and dependencies
         run: npx playwright install --with-deps
+
+      - name: Print slot_history.xlsx content if it exists
+        run: |
+          if [ -f data/slot_history.xlsx ]; then
+            echo "✅ slot_history.xlsx found. Printing contents:"
+            node -e "
+              const XLSX = require('xlsx');
+              const wb = XLSX.readFile('data/slot_history.xlsx');
+              const ws = wb.Sheets[wb.SheetNames[0]];
+              console.log(JSON.stringify(XLSX.utils.sheet_to_json(ws, { header: 1 }), null, 2));
+            "
+          else
+            echo '❌ slot_history.xlsx not found.'
+          fi
 
       - name: Run court availability check
         env:
@@ -47,8 +58,15 @@ jobs:
           TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
         run: npx ts-node -r tsconfig-paths/register src/jobs/findAvailableSlots.job.ts
 
-      - name: Save updated lastSlots.json to cache
+      - name: Save updated slot_history.xlsx to cache
         uses: actions/cache@v3
         with:
-          path: data/lastSlots.json
+          path: data/slot_history.xlsx
           key: court-cache-${{ github.run_id }}
+
+      - name: Upload slot_history.xlsx as artifact
+        if: always() # Always attempt to upload, even if earlier steps failed
+        uses: actions/upload-artifact@v4
+        with:
+          name: slot_history
+          path: data/slot_history.xlsx
