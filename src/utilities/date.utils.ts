@@ -31,7 +31,7 @@ export function hasHourPassed(date: Date, targetHour: number): boolean {
 
 export function searchFromDate(): Date {
   const now: Date = new Date();
-  const lastSearchHourOfDay: number = 22;
+  const lastSearchHourOfDay: number = 20;
 
   if (hasHourPassed(now, lastSearchHourOfDay)) {
     now.setDate(now.getDate() + 1);
