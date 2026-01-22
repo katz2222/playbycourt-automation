@@ -2,58 +2,128 @@
   "cookies": [
     {
       "name": "_ga",
-      "value": "GA1.1.231465393.1756114279",
+      "value": "GA1.1.1737440916.1769084659",
       "domain": ".playbycourt.com",
       "path": "/",
-      "expires": 1790674283.43678,
+      "expires": 1803644664.034687,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
     },
     {
       "name": "_gcl_au",
-      "value": "1.1.1565097329.1756114279.1419293760.1756114281.1756114281",
+      "value": "1.1.1910392354.1769084659.1549760461.1769084662.1769084662",
       "domain": ".playbycourt.com",
       "path": "/",
-      "expires": 1763890279,
+      "expires": 1776860659,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
     },
     {
       "name": "IDE",
-      "value": "AHWqTUkAoq0Sb5pD4TDjlqoj6kUXXvxLo6ZRalXXsZJzwzVLp5OLZPtxM3-cOX5w",
+      "value": "AHWqTUkNrVx7hWAb2Z_FC5z_zIx0F_zgOsnfF_moe8HT6MHiUPfwXU47YbkDid5b",
       "domain": ".doubleclick.net",
       "path": "/",
-      "expires": 1790674281.453315,
+      "expires": 1803644662.20124,
       "httpOnly": true,
       "secure": true,
       "sameSite": "None"
     },
     {
-      "name": "aws-waf-token",
-      "value": "3a794526-6eab-4351-8458-0aae31de6595:EQoAZzpCp8kSAAAA:HA76i0YM7FENqU42ee0Ljf5TR4xl3AaMbFtnHfPkr3FT3tZ9ymJ5lgpupLlfaiBcIrAEPG8e6edNKUZifeorhnv8r26/FRl6xMjeciVhVRu3H4MNoX9TlECX2N+5hccCz0JLmElvt9BjrjKL5uRTUeaUaQrb3NQ5OYr+3pQ0h5PI/au/FL/0YF/Wylgmk/2N3LXXjkT0YPMLrZGoQTp2w3+Gr5zziukdcdPx0PFB3p2NyouwALs5oc08q5zG7TW2EhTQWnr2knwY",
+      "name": "m",
+      "value": "184577e4-1860-4923-8cf9-94ed8503435585a75a",
+      "domain": "m.stripe.com",
+      "path": "/",
+      "expires": 1803644662.510978,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "__stripe_mid",
+      "value": "335dcb48-e17c-4046-8b90-e6e52cbaa7bcd5e22f",
+      "domain": ".app.playbycourt.com",
+      "path": "/",
+      "expires": 1800620664,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "Strict"
+    },
+    {
+      "name": "__stripe_sid",
+      "value": "318afd95-7b3d-469a-a472-6195dc94fcdd1b1d2b",
+      "domain": ".app.playbycourt.com",
+      "path": "/",
+      "expires": 1769086464,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "Strict"
+    },
+    {
+      "name": "ar_debug",
+      "value": "1",
+      "domain": ".www.google-analytics.com",
+      "path": "/",
+      "expires": 1776860662.651412,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    },
+    {
+      "name": "intercom-id-u1mtnxxh",
+      "value": "bfa7b1fe-3a4c-4eb0-8ac0-198a1685ea5f",
       "domain": ".playbycourt.com",
       "path": "/",
-      "expires": 1756459882,
+      "expires": 1792414663,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "intercom-session-u1mtnxxh",
+      "value": "",
+      "domain": ".playbycourt.com",
+      "path": "/",
+      "expires": 1769689463,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "intercom-device-id-u1mtnxxh",
+      "value": "34a44170-5dcf-4cef-b6ca-16fcc987f45d",
+      "domain": ".playbycourt.com",
+      "path": "/",
+      "expires": 1792414663,
+      "httpOnly": false,
+      "secure": false,
+      "sameSite": "Lax"
+    },
+    {
+      "name": "aws-waf-token",
+      "value": "6d2051f1-ce42-45fd-8c82-5710b9414b70:EQoAfgdWp9tSAAAA:WQrLMttVAGgi6+s6Ig3XZktn/1pqzqbrSnzj9mUkhK05n63b24VDlumMWG9z1eIjBcMglqa/yOX55G5UQ2ek/uP/yZ/7SRjKcm6S1gsZcWlNiswBVaBxUjw+rGKa0Pag8ziekBgdjUT6LMYsOohsKNK72WWlQXNw+B94rBiMjQ2mYQ4gHW0CflAotrHZCHvQqKM3H5L+e+JnRU3gGBOqR/k8ubCShuTJ6PFdmTqZSUowZwCTrXrbfVBgNO2lJX3hrpNzLxn4FtpBD6lZzeUQZLczCXbpPAKM",
+      "domain": ".app.playbycourt.com",
+      "path": "/",
+      "expires": 1769430263,
       "httpOnly": false,
       "secure": true,
       "sameSite": "Lax"
     },
     {
       "name": "_ga_M060445B8S",
-      "value": "GS2.1.s1756114278$o1$g1$t1756114283$j55$l0$h0",
+      "value": "GS2.1.s1769084658$o1$g1$t1769084664$j54$l0$h0",
       "domain": ".playbycourt.com",
       "path": "/",
-      "expires": 1790674283.436392,
+      "expires": 1803644664.042185,
       "httpOnly": false,
       "secure": false,
       "sameSite": "Lax"
     },
     {
       "name": "_paybycourt_session",
-      "value": "ZmRS023CwBqLR6iWfPxbpvN9NPq%2BGWDTAp66xt6AxFoRYiPYChGZGK0DJmIMwKiQQng6MgItvfqh%2FLwOgNX573D%2BW4NTbWrwoJw2yqI9gU7uTILZEJvug%2BYQKUKHA5vxSRIovcHejq%2FxFQMo4WRrgLTkHcWot6OwU4DSU1CJH702a38yj8yQ0McCzBt9ngkP%2BmxT15fj%2BmGxRaa95xkNLciHATWunxuojlG8v5K7cElpGHCiG9AnzZGuoraJwWFgYM1C0wqFcOFP0c7cxVAq%2FpMYDH7WKta%2BW1Se9mip4156Tj6uMXCberjvewszjH1c3rOallvpa05tNDU%2FHXG4%2BKhKRiT3O6t4JJjdQ8Sdl7JyDrTgtRGnfKqrQHEOs1WAgYuVY14thB2Z9QSjPENL1k22Gg%3D%3D--Xo%2FH7Ty1pZSGd6hG--lhVkhHOa6ZN5yKy5F7%2BXyw%3D%3D",
-      "domain": "playbycourt.com",
+      "value": "jzQKW8GvtnB85Prhrbzs%2FPAYTNViw3QBUApGE1TTnGkLtwkKOS3qScMn7OESyjiCVGc5RUg4XiH7OBnVRsHz9OMj7KLLNV44kyUBEMEM4eKMxruW7wHDboZ57v0qD5A3r9lxU4PD9euSHOh43moh8zpUi98Sv5KK8JRDptfAVVcIuUp4OSERpK0vydos5InzFeadL3h%2BLRcHV0aWom8njQ%2BBNPvt9cdIHqlaLD%2B9cnjKB7%2FiaLrVef0%2FFknUjcX1oSN2uP11ROMwuTueTSf4HFkzOmc%2B0AEoklQsx41dcUUDztxTAySjDi9VBR%2BFYaNPZ7jmioy9rSwtoX4zHZpsJ8xnOOVtok%2FFYel42N8B8tc8BnKu8RrJIUZNJcgbpFUwOveO41NIncjRP0qfdriqspHjgA%3D%3D--EdX%2FMIm3AzMypL8h--UTpHVdM7Kopy8y%2Bk8gmw%2BA%3D%3D",
+      "domain": "app.playbycourt.com",
       "path": "/",
       "expires": -1,
       "httpOnly": true,
@@ -63,27 +133,27 @@
   ],
   "origins": [
     {
-      "origin": "https://playbycourt.com",
+      "origin": "https://app.playbycourt.com",
       "localStorage": [
         {
           "name": "awswaf_token_refresh_timestamp",
-          "value": "1756114281969"
+          "value": "1769084661306"
         },
         {
           "name": "intercom.intercom-state-u1mtnxxh",
-          "value": "{\"app\":{\"openConfig\":{\"unifiedStyling\":true,\"spaces\":[],\"userHasReceivedChecklists\":false,\"userHasLiveNewsfeed\":false,\"userHasTickets\":false},\"selfServeSuggestionsMatch\":false,\"features\":{\"anonymousInboundMessages\":false,\"googleAnalytics\":false,\"inboundMessages\":false,\"googleAnalytics4Integration\":false},\"isDeveloperWorkspace\":false},\"launcher\":{\"isLauncherEnabled\":false},\"launcherDiscoveryMode\":{\"hasDiscoveredLauncher\":false},\"launcherSettings\":{\"isLoading\":true},\"user\":{},\"message\":{},\"conversations\":{\"byId\":{}},\"openOnBoot\":{\"type\":null,\"metadata\":{},\"lastOpenAtTimestamp\":1756114282506},\"operator\":{\"lastComposerEvent\":0},\"router\":{\"isInitialized\":false,\"navigationQueue\":[]}}"
+          "value": "{\"app\":{\"openConfig\":{\"unifiedStyling\":true,\"openTo\":\"home\",\"spaces\":[{\"type\":\"home\",\"label\":\"Home\",\"navigationLabel\":\"Home\",\"badge\":null},{\"type\":\"messages\",\"label\":\"Messages\",\"navigationLabel\":\"Messages\",\"badge\":null},{\"type\":\"tickets\",\"label\":\"Tickets\",\"navigationLabel\":\"Tickets\",\"badge\":null},{\"type\":\"help\",\"label\":\"Help\",\"navigationLabel\":\"Help\",\"badge\":null},{\"type\":\"tasks\",\"label\":\"Tasks\",\"navigationLabel\":\"Tasks\",\"badge\":null},{\"type\":\"news\",\"label\":\"News\",\"navigationLabel\":\"News\",\"badge\":null}],\"userHasReceivedChecklists\":false,\"userHasLiveNewsfeed\":false,\"userHasTickets\":false},\"selfServeSuggestionsMatch\":false,\"name\":\"Playbypoint\",\"features\":{\"anonymousInboundMessages\":true,\"googleAnalytics\":false,\"hubspotInstalled\":false,\"inboundMessages\":true,\"marketoEnrichmentInstalled\":false,\"googleAnalytics4Integration\":true},\"helpCenterSiteUrl\":\"https://help.playbypoint.com\",\"inboundConversationsDisabled\":false,\"isDeveloperWorkspace\":false,\"customGoogleAnalyticsTrackerId\":null},\"launcher\":{\"isLauncherEnabled\":true},\"launcherDiscoveryMode\":{\"hasDiscoveredLauncher\":false},\"launcherSettings\":{\"alignment\":\"right\",\"color\":\"#66E27D\",\"colorDark\":\"#86F4D8\",\"hasRequiredFeatures\":true,\"horizontalPadding\":20,\"instantBootEnabled\":true,\"launcherLogoUrl\":\"https://downloads.intercomcdn.com/i/o/u1mtnxxh/691111/73665bb1072edd107145db0b3fe9/d258b6a61768a0c26cfe885a7405cc48.png\",\"launcherLogoDarkUrl\":null,\"secondaryColor\":\"#091416\",\"secondaryColorDark\":\"#000000\",\"showLauncher\":true,\"themeMode\":\"light\",\"updatedAt\":1769047524,\"verticalPadding\":20,\"isLoading\":false},\"user\":{\"role\":\"visitor\",\"locale\":\"en\",\"hasConversations\":false},\"message\":{},\"conversations\":{\"byId\":{}},\"openOnBoot\":{\"type\":null,\"metadata\":{},\"lastOpenAtTimestamp\":1769084663649},\"operator\":{\"lastComposerEvent\":0},\"router\":{\"isInitialized\":false,\"navigationQueue\":[]}}"
         },
         {
           "name": "_gcl_ls",
-          "value": "{\"schema\":\"gcl\",\"version\":1,\"gcl_ctr\":{\"value\":{\"value\":2,\"creationTimeMs\":1756114283535},\"expires\":1763890283535}}"
+          "value": "{\"schema\":\"gcl\",\"version\":1,\"gcl_ctr\":{\"value\":{\"value\":2,\"timeouts\":0,\"creationTimeMs\":1769084664261},\"expires\":1776860664261}}"
         },
         {
           "name": "awswaf_session_storage",
-          "value": "3a794526-6eab-4351-8458-0aae31de6595:EQoAZzpCp8oSAAAA:YfQn0Yf76R6asAMfBiId/Z4V3pNo5l8kTprtIxiwq2oYocT3HO9vR1R1aZAOmQTViLlGhMAJPontAznl30SH5xWR22wnAk5SRz3aGbZmKutowcm+LKqXUa+4YkQ0RI4ycPe4if/dIoWNROsumqFHLhuO3TV1JLU7AYu3nrSa+w7YOY4+DLacqOwyrZPa6nQQfiPC6WxxHSlIi6vYhmu+so4oU9YKi5XBxpbGkmz0LNpgQCmLZyyqSpQgDfp+MsmuqlCr++WkK95Bs0mwJakn8rL1aTm2jWuEZfsfWkJdBk+veBhUkPO7Di4MzSKu0kbQWmlip3srvsfuUd3ZIPKVsGwM0v/40TvMtSNnOGORxxVaIjgjheR3mQgJxs4ss3qzKiUVo1LJGrF0vB6qbPEUEBSZoAD9"
+          "value": "6d2051f1-ce42-45fd-8c82-5710b9414b70:EQoAfgdWp9xSAAAA:vkitWUbVybUVhVf9ga/0oqR4pdh83qC4vuBr6at7sYOYEpdVq1EVTJ3fORSjx71qPZC+mNuhEeBIiQYC6KFpnhAoUwDCJLN54oHgJlneOrHLvTzbVLLSpMiCX20KufwXKbbShdfFcJLIKzf55asA7h4OghBiM/2DVfS7V+Q055k5XSjxwHIsSkH7kulHCD5yLMwARelCghyr70jTBiv+OjdcsE3xipZITC/H7oZtLhkITvzLUDcbVXm4SyoeiuYYyUIbCxbfaZu20jTO05wewvbpT8ufPOpMdVHkhcwTtlAcN18Myo4QI0wSn7jEGwd074oJyzfnhHVHczI8wd+O2nnQRt8getxgn71dk6hbMkanHpX5h2ryKDalQjrblKWRBY1bZ9/3fq+Y+TzOSNj81AKBcivg9V9vpS+y0TiKu4g4mZ/Nsy9JgqMTMrjteGVipl3jIFMcaQlYvVB0e6FMnqdiFSGC3bFAWSHpTYMNWexqlxOoGRZHi6qNaiP19w3D8PN98WPVZDqkskUC/R1B/aoIXC2OphauaN9ySYs1G8kzFVuWxXkkBOpDqP0jImKk/6ccn0gDyb2Vzo5I1Wy9RY4OnuugiYoqU2ezkWzEM6CllK7Mmwb3mvXpzw/WfaVf19VZ5UmijvwwVOBAoZ8vM6fRU5S7GYplthnx/+tZ0Yaqk/kopg=="
         },
         {
           "name": "NRBA_SESSION",
-          "value": "{\"value\":\"441811c73267e28c\",\"inactiveAt\":1756116081490,\"expiresAt\":1756128681363,\"updatedAt\":1756114282749,\"sessionReplayMode\":0,\"sessionReplaySentFirstChunk\":false,\"sessionTraceMode\":0,\"traceHarvestStarted\":false,\"loggingMode\":0,\"serverTimeDiff\":443,\"custom\":{},\"numOfResets\":0}"
+          "value": "{\"value\":\"2b4208b3ac66bb02\",\"inactiveAt\":1769086462380,\"expiresAt\":1769099062335,\"updatedAt\":1769084663666,\"sessionReplayMode\":0,\"sessionReplaySentFirstChunk\":false,\"sessionTraceMode\":0,\"traceHarvestStarted\":false,\"loggingMode\":0,\"logApiMode\":0,\"serverTimeDiff\":-875,\"custom\":{},\"numOfResets\":0,\"consent\":false}"
         }
       ]
     }
