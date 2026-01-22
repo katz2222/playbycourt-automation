@@ -15,7 +15,7 @@ export class LoginPage {
     this.context = context;
     this.emailInput = this.page.locator("#user_email");
     this.passwordInput = this.page.locator("#user_password");
-    this.loginButton = this.page.locator("[value='Log in']");
+    this.loginButton = this.page.locator("[value='Sign in']");
   }
 
   // Getters
