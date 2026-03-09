@@ -1,7 +1,7 @@
 import { checkCourtAvailability } from "@services/findAvailableSlots.service";
 import { logWithTimestamp } from "@src/utilities/logger.utils";
 
-async function runJob() {
+async function runJob(): Promise<void> {
   try {
     logWithTimestamp("Running job...");
     await checkCourtAvailability();

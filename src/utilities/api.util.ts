@@ -1,9 +1,9 @@
 import { COOKIE } from "env-variables";
 
-export async function fetchAvailableHours(timestamp: number) {
+export async function fetchAvailableHours(timestamp: number): Promise<any> {
   const url = `https://app.playbypoint.com/api/facilities/652/available_hours?timestamp=${timestamp}&surface=padel&kind=reservation&courts_for_pros=false`;
 
-  const res = await fetch(url, {
+  const res: Response = await fetch(url, {
     headers: {
       Cookie: COOKIE,
       "User-Agent":

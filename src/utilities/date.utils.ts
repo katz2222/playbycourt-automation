@@ -79,15 +79,15 @@ export function generateDateRange(
 ): Date[] {
   const { skipWeekend = false, skipWeekdays = [] } = options ?? {};
 
-  const skipSet = new Set<number>(skipWeekdays);
+  const skipSet: Set<number> = new Set<number>(skipWeekdays);
   if (skipWeekend) {
     skipSet.add(5);
     skipSet.add(6);
   }
 
   const dates: Date[] = [];
-  const current = new Date(start.getFullYear(), start.getMonth(), start.getDate());
-  const last = new Date(end.getFullYear(), end.getMonth(), end.getDate());
+  const current: Date = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+  const last: Date = new Date(end.getFullYear(), end.getMonth(), end.getDate());
 
   while (current <= last) {
     if (!skipSet.has(current.getDay())) {

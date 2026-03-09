@@ -2,7 +2,15 @@ import { test, expect } from '@playwright/test';
 import { findConsecutiveSlots } from '../../src/utilities/slots.util';
 
 function makeSlot(hh: number, mm: number) {
-  return { available: true, seconds_from_midnight: hh * 3600 + mm * 60 };
+  return {
+    facility_schedule_id: 0,
+    schedule: `${hh}-${hh}:${mm}am`,
+    shift: 'day',
+    available: true,
+    seconds_from_midnight: hh * 3600 + mm * 60,
+    in_waitlist: false,
+    group: 0,
+  };
 }
 
 test('finds full runs and skips short gaps', () => {

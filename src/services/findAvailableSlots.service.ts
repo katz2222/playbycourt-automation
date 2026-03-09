@@ -2,10 +2,11 @@ import { formatCourtMessage } from "@src/utilities/general.util";
 import { logScanParameters } from "@src/utilities/logger.utils";
 import { scanCourtSlots } from "@src/utilities/slots.util";
 import { findNewSlots, hasAnySlotBecomeUnavailable, loadSlotHistory, updateSlotHistoryExcel } from "@src/utilities/slotsHistory.util";
+import { ScanCourtSlotsOptions, SlotHistoryRecord, TimeSlot } from "@src/utilities/types.util";
 import { sendWhatsAppMessage } from "@src/utilities/whatsappSender.util";
 
-export async function checkCourtAvailability() {
-  const scanParameters = {
+export async function checkCourtAvailability(): Promise<void> {
+  const scanParameters: ScanCourtSlotsOptions = {
     startDate: new Date(),
     endDate: new Date(Date.now() + 14 * 24 * 3600 * 1000),
     startHour: 19,
@@ -15,11 +16,11 @@ export async function checkCourtAvailability() {
 
   logScanParameters(scanParameters);
 
-  const availableTimeSlots = await scanCourtSlots(scanParameters);
+  const availableTimeSlots: TimeSlot[] = await scanCourtSlots(scanParameters);
 
-  const previousRecords = loadSlotHistory();
+  const previousRecords: SlotHistoryRecord[] = loadSlotHistory();
 
-  const newSlots = findNewSlots(
+  const newSlots: TimeSlot[] = findNewSlots(
     availableTimeSlots,
     previousRecords
   );

@@ -1,9 +1,9 @@
 import { fetchAvailableHours } from "./api.util";
 import { dateToTimestamp, formatDate, generateDateRange } from "./date.utils";
-import { ScanCourtSlotsOptions, TimeSlot } from "./types.util";
+import { ScanCourtSlotsOptions, TimeSlot, ApiSlot } from "./types.util";
 
 function filterSlotsInRange(
-  slots: any[],
+  slots: ApiSlot[],
   startHour: number,
   endHour: number
 ) {
@@ -18,7 +18,7 @@ function filterSlotsInRange(
   );
 }
 
-export function findConsecutiveSlots(slots: any[], date: string): TimeSlot[] {
+export function findConsecutiveSlots(slots: ApiSlot[], date: string): TimeSlot[] {
   const results: TimeSlot[] = [];
   const requiredSlots = 3;
 
