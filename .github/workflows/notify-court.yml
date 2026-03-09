@@ -49,10 +49,9 @@ jobs:
           PASSWORD: ${{ secrets.PASSWORD }}
           PHONE_NUMBER: ${{ secrets.PHONE_NUMBER }}
           TWILIO_SANDBOX_NUMBER: ${{ secrets.TWILIO_SANDBOX_NUMBER }}
-          AUTH_STATE_FILE_PATH: ${{ secrets.AUTH_STATE_FILE_PATH }}
-          AUTH_STATE_DATE_FILE_NAME: ${{ secrets.AUTH_STATE_DATE_FILE_NAME }}
           TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
           TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+          COOKIE: ${{ secrets.COOKIE }}
         run: npx ts-node -r tsconfig-paths/register src/jobs/findAvailableSlots.job.ts
 
       - name: Save updated slot_history.xlsx to cache

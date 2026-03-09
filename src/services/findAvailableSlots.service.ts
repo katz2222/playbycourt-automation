@@ -1,4 +1,5 @@
 import { formatCourtMessage } from "@src/utilities/general.util";
+import { logScanParameters } from "@src/utilities/logger.utils";
 import { scanCourtSlots } from "@src/utilities/slots.util";
 import { findNewSlots, hasAnySlotBecomeUnavailable, loadSlotHistory, updateSlotHistoryExcel } from "@src/utilities/slotsHistory.util";
 import { sendWhatsAppMessage } from "@src/utilities/whatsappSender.util";
@@ -12,9 +13,7 @@ export async function checkCourtAvailability() {
     skipWeekend: true,
   };
 
-  console.log("Checking court availability between " + scanParameters.startDate.toDateString()
-  + " and " + scanParameters.endDate.toDateString() + " from " + scanParameters.startHour + " to "
-  + scanParameters.endHour + ", skipping weekends: " + scanParameters.skipWeekend);
+  logScanParameters(scanParameters);
 
   const availableTimeSlots = await scanCourtSlots(scanParameters);
 
@@ -30,7 +29,7 @@ export async function checkCourtAvailability() {
   if (newSlots.length > 0) {
     console.log(`New slots:\n${(JSON.stringify(newSlots, null, 2))}`);
 
-    // await sendWhatsAppMessage(message);
+    await sendWhatsAppMessage(message);
 
     updateSlotHistoryExcel(availableTimeSlots);
   } else {
