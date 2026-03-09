@@ -105,12 +105,27 @@ export function reversePrettyDateTime(prettyDateTimeStr: string): string {
   return `${yyyy}-${mm}-${dd} ${timePart}`;
 }
 
-export function generateDateRange(start: Date, end: Date): Date[] {
-  const dates: Date[] = [];
-  const current = new Date(start);
+export function generateDateRange(
+  start: Date,
+  end: Date,
+  options?: { skipWeekend?: boolean; skipWeekdays?: number[] }
+): Date[] {
+  const { skipWeekend = false, skipWeekdays = [] } = options ?? {};
 
-  while (current <= end) {
-    dates.push(new Date(current));
+  const skipSet = new Set<number>(skipWeekdays);
+  if (skipWeekend) {
+    skipSet.add(5);
+    skipSet.add(6);
+  }
+
+  const dates: Date[] = [];
+  const current = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+  const last = new Date(end.getFullYear(), end.getMonth(), end.getDate());
+
+  while (current <= last) {
+    if (!skipSet.has(current.getDay())) {
+      dates.push(new Date(current));
+    }
     current.setDate(current.getDate() + 1);
   }
 

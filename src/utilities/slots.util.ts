@@ -1,6 +1,6 @@
 import { fetchAvailableHours } from "./api.util";
 import { dateToTimestamp, formatDate, generateDateRange } from "./date.utils";
-import { TimeSlot } from "./types.util";
+import { ScanCourtSlotsOptions, TimeSlot } from "./types.util";
 
 function filterSlotsInRange(
   slots: any[],
@@ -54,12 +54,21 @@ export function findConsecutiveSlots(slots: any[], date: string): TimeSlot[] {
 }
 
 export async function scanCourtSlots(
-  startDate: Date,
-  endDate: Date,
-  startHour: number,
-  endHour: number
+  opts: ScanCourtSlotsOptions
 ): Promise<TimeSlot[]> {
-  const dates = generateDateRange(startDate, endDate);
+  const {
+    startDate,
+    endDate,
+    startHour,
+    endHour,
+    skipWeekend,
+    skipWeekdays,
+  } = opts;
+
+  const dates = generateDateRange(startDate, endDate, {
+    skipWeekend,
+    skipWeekdays,
+  });
 
   const requests = dates.map(async (date) => {
     const timestamp = dateToTimestamp(date);

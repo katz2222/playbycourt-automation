@@ -9,3 +9,12 @@ export interface SlotHistoryRecord {
   becameAvailableAt: string;
   becameUnavailableAt?: string;
 }
+
+export interface ScanCourtSlotsOptions {
+  startDate: Date;
+  endDate: Date;
+  startHour: number;
+  endHour: number;
+  skipWeekend?: boolean;
+  skipWeekdays?: number[];
+}
