@@ -22,6 +22,8 @@ const TWILIO_ACCOUNT_SID = envVar
   .required()
   .asString();
 const TWILIO_AUTH_TOKEN = envVar.get("TWILIO_AUTH_TOKEN").required().asString();
+const COOKIE = envVar.get("COOKIE").required().asString();
+
 
 export {
   EMAIL,
@@ -33,4 +35,5 @@ export {
   TWILIO_SANDBOX_NUMBER,
   TWILIO_ACCOUNT_SID,
   TWILIO_AUTH_TOKEN,
+  COOKIE
 };

@@ -1,28 +1,14 @@
-import { Browser, BrowserContext, chromium, Page } from "@playwright/test";
-import { findAvailableSlots } from "@services/findAvailableSlots.service";
-import { AUTH_STATE_FILE_PATH } from "env-variables";
+import { checkCourtAvailability } from "@services/findAvailableSlots.service";
 import { logWithTimestamp } from "@src/utilities/logger.utils";
 
 async function runJob() {
-  const browser: Browser = await chromium.launch({ headless: true });
-  const context: BrowserContext = await browser.newContext({
-    storageState: AUTH_STATE_FILE_PATH,
-    userAgent:
-      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36",
-    viewport: { width: 1366, height: 768 },
-    locale: "en-US",
-  });
-  const page: Page = await context.newPage();
-
   try {
     logWithTimestamp("Running job...");
-    await findAvailableSlots(page, context);
+    await checkCourtAvailability();
     logWithTimestamp("successfully finished run");
   } catch (error) {
     console.error("Error running job:", error);
-  } finally {
-    await browser.close();
-  }
+  } 
 }
 
 runJob();
