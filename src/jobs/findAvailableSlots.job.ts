@@ -1,14 +1,12 @@
 import { checkCourtAvailability } from "@services/findAvailableSlots.service";
-import { logWithTimestamp } from "@src/utilities/logger.utils";
+import { parseScanParams } from "@src/utilities/scanParams.util";
 
-async function runJob(): Promise<void> {
-  try {
-    logWithTimestamp("Running job...");
-    await checkCourtAvailability();
-    logWithTimestamp("successfully finished run");
-  } catch (error) {
-    console.error("Error running job:", error);
-  } 
+async function main(): Promise<void> {
+  const params = parseScanParams();
+  await checkCourtAvailability(params);
 }
 
-runJob();
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});

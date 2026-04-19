@@ -15,6 +15,22 @@ const TWILIO_ACCOUNT_SID = envVar
 const TWILIO_AUTH_TOKEN = envVar.get("TWILIO_AUTH_TOKEN").required().asString();
 const COOKIE = envVar.get("COOKIE").required().asString();
 
+// Scan parameters (required)
+const SCAN_START_DATE_OFFSET = envVar
+  .get("SCAN_START_DATE_OFFSET")
+  .required()
+  .asInt();
+const SCAN_END_DATE_OFFSET = envVar
+  .get("SCAN_END_DATE_OFFSET")
+  .required()
+  .asInt();
+const SCAN_START_HOUR = envVar.get("SCAN_START_HOUR").required().asInt();
+const SCAN_END_HOUR = envVar.get("SCAN_END_HOUR").required().asInt();
+const SCAN_SKIP_WEEKEND = envVar.get("SCAN_SKIP_WEEKEND").required().asBool();
+const SCAN_SKIP_WEEKDAYS = envVar
+  .get("SCAN_SKIP_WEEKDAYS")
+  .required()
+  .asString();
 
 export {
   EMAIL,
@@ -24,5 +40,11 @@ export {
   TWILIO_SANDBOX_NUMBER,
   TWILIO_ACCOUNT_SID,
   TWILIO_AUTH_TOKEN,
-  COOKIE
+  COOKIE,
+  SCAN_START_DATE_OFFSET,
+  SCAN_END_DATE_OFFSET,
+  SCAN_START_HOUR,
+  SCAN_END_HOUR,
+  SCAN_SKIP_WEEKEND,
+  SCAN_SKIP_WEEKDAYS,
 };
