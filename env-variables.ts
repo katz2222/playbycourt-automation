@@ -26,10 +26,8 @@ const SCAN_END_DATE_OFFSET = envVar
   .asInt();
 const SCAN_START_HOUR = envVar.get("SCAN_START_HOUR").required().asInt();
 const SCAN_END_HOUR = envVar.get("SCAN_END_HOUR").required().asInt();
-const SCAN_SKIP_WEEKEND = envVar
-  .get("SCAN_SKIP_WEEKEND")
-  .default("false")
-  .asBool();
+const SCAN_SKIP_WEEKEND =
+  envVar.get("SCAN_SKIP_WEEKEND").default("false").asString() === "true";
 const SCAN_SKIP_WEEKDAYS = envVar
   .get("SCAN_SKIP_WEEKDAYS")
   .default("")
