@@ -1,42 +1,9 @@
-export function parseSlotStartTimeToHour(slot: string): number {
-  const [start, end] = slot.replace("+", "").split("-");
-  const ampm = end.match(/am|pm/i)?.[0].toLowerCase();
-
-  const time: string = start.trim();
-  const [hourStr, minStr] = time.split(":");
-  let hour: number = parseInt(hourStr, 10);
-  const minutes: number = parseInt(minStr || "0", 10);
-
-  if (ampm === "pm" && hour < 12) hour += 12;
-  if (ampm === "am" && hour === 12) hour = 0;
-
-  return hour + minutes / 60;
-}
-
 export function formatDate(date: Date): string {
   const day: string = String(date.getDate()).padStart(2, "0");
   const month: string = String(date.getMonth() + 1).padStart(2, "0");
   const weekday: string = date.toLocaleString("en-US", { weekday: "long" });
 
   return `${day}/${month} ${weekday}`;
-}
-
-export function isWeekend(day: number): boolean {
-  return day === 5 || day === 6;
-}
-
-export function hasHourPassed(date: Date, targetHour: number): boolean {
-  return date.getHours() >= targetHour;
-}
-
-export function searchFromDate(): Date {
-  const now: Date = new Date();
-  const lastSearchHourOfDay: number = 20;
-
-  if (hasHourPassed(now, lastSearchHourOfDay)) {
-    now.setDate(now.getDate() + 1);
-  }
-  return now;
 }
 
 export function getCurrentDateTime(): string {
@@ -103,4 +70,35 @@ export function reversePrettyDateTime(prettyDateTimeStr: string): string {
   const [datePart, timePart] = prettyDateTimeStr.split(" ");
   const [dd, mm, yyyy] = datePart.split("/");
   return `${yyyy}-${mm}-${dd} ${timePart}`;
+}
+
+export function generateDateRange(
+  start: Date,
+  end: Date,
+  options?: { skipWeekend?: boolean; skipWeekdays?: number[] }
+): Date[] {
+  const { skipWeekend = false, skipWeekdays = [] } = options ?? {};
+
+  const skipSet: Set<number> = new Set<number>(skipWeekdays);
+  if (skipWeekend) {
+    skipSet.add(5);
+    skipSet.add(6);
+  }
+
+  const dates: Date[] = [];
+  const current: Date = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+  const last: Date = new Date(end.getFullYear(), end.getMonth(), end.getDate());
+
+  while (current <= last) {
+    if (!skipSet.has(current.getDay())) {
+      dates.push(new Date(current));
+    }
+    current.setDate(current.getDate() + 1);
+  }
+
+  return dates;
+}
+
+export function dateToTimestamp(date: Date): number {
+  return Math.floor(date.getTime() / 1000);
 }

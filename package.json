@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "npx playwright test"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -12,6 +14,8 @@
     "@playwright/test": "^1.54.2",
     "@types/node": "^24.2.1",
     "@types/twilio": "^3.19.2",
+    "@types/xlsx": "^0.0.35",
+    "fast-check": "^4.6.0",
     "tsconfig-paths": "^4.2.0"
   },
   "dependencies": {
