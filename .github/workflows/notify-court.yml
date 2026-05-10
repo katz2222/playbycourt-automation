@@ -73,9 +73,8 @@ jobs:
           URL: ${{ secrets.URL }}
           PASSWORD: ${{ secrets.PASSWORD }}
           PHONE_NUMBER: ${{ secrets.PHONE_NUMBER }}
-          TWILIO_SANDBOX_NUMBER: ${{ secrets.TWILIO_SANDBOX_NUMBER }}
-          TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
-          TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           COOKIE: ${{ secrets.COOKIE }}
           SCAN_START_DATE_OFFSET: ${{ inputs.start_date_offset }}
           SCAN_END_DATE_OFFSET: ${{ inputs.end_date_offset }}

@@ -12,7 +12,7 @@ import {
   SlotHistoryRecord,
   TimeSlot,
 } from "@src/utilities/types.util";
-import { sendWhatsAppMessage } from "@src/utilities/whatsappSender.util";
+import { sendTelegramMessage } from "@src/utilities/telegramSender.util";
 
 export async function checkCourtAvailability(
   params: ScanCourtSlotsOptions,
@@ -33,7 +33,7 @@ export async function checkCourtAvailability(
   if (newSlots.length > 0) {
     console.log(`New slots:\n${JSON.stringify(newSlots, null, 2)}`);
 
-    await sendWhatsAppMessage(message);
+    await sendTelegramMessage(message);
 
     updateSlotHistoryExcel(availableTimeSlots, params);
   } else {
