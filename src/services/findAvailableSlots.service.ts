@@ -35,17 +35,18 @@ export async function checkCourtAvailability(
 
     await sendWhatsAppMessage(message);
 
-    updateSlotHistoryExcel(availableTimeSlots);
+    updateSlotHistoryExcel(availableTimeSlots, params);
   } else {
     console.log("No new slots found, not sending message.");
 
     const hasUnavailable = hasAnySlotBecomeUnavailable(
       availableTimeSlots,
       previousRecords,
+      params,
     );
 
     if (hasUnavailable) {
-      updateSlotHistoryExcel(availableTimeSlots);
+      updateSlotHistoryExcel(availableTimeSlots, params);
       console.log("Some slots became unavailable. Excel updated.");
     } else {
       console.log("No slot availability changes. Excel not updated.");

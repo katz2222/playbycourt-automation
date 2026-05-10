@@ -13,7 +13,7 @@ import {
 
 const historyFilePath: string = path.resolve(
   __dirname,
-  "../../data/slot_history.xlsx"
+  "../../data/slot_history.xlsx",
 );
 const sheetName: string = "Slot History";
 
@@ -39,19 +39,27 @@ export function loadSlotHistory(): SlotHistoryRecord[] {
       becameUnavailableAt: row.becameUnavailableAt
         ? reversePrettyDateTime(row.becameUnavailableAt)
         : undefined,
-    })
+    }),
   );
 
   return records;
 }
 
-function markUnavailableSlots(
+export function markUnavailableSlots(
   records: SlotHistoryRecord[],
-  currentSlotKeys: Set<string>
+  currentSlotKeys: Set<string>,
+  scanParams: { startHour: number; endHour: number },
 ): void {
   const now: string = getCurrentDateTime();
 
   for (const record of records) {
+    if (
+      record.TimeSlot.start < scanParams.startHour ||
+      record.TimeSlot.start >= scanParams.endHour
+    ) {
+      continue;
+    }
+
     const key: string = slotKey(record.TimeSlot);
     const isCurrentlyAvailable: boolean = currentSlotKeys.has(key);
 
@@ -63,13 +71,13 @@ function markUnavailableSlots(
 
 function addNewSlots(
   records: SlotHistoryRecord[],
-  currentSlots: TimeSlot[]
+  currentSlots: TimeSlot[],
 ): void {
   const now: string = getCurrentDateTime();
   const activeKeys = new Set(
     records
       .filter((r) => !r.becameUnavailableAt)
-      .map((r) => slotKey(r.TimeSlot))
+      .map((r) => slotKey(r.TimeSlot)),
   );
 
   for (const slot of currentSlots) {
@@ -107,7 +115,7 @@ function writeSlotHistory(records: SlotHistoryRecord[]): void {
       becameUnavailableAt: r.becameUnavailableAt
         ? prettyDateTime(r.becameUnavailableAt)
         : "",
-    })
+    }),
   );
 
   const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(flatRows, {
@@ -126,10 +134,13 @@ function writeSlotHistory(records: SlotHistoryRecord[]): void {
 }
 
 // Main function to update slot history
-export function updateSlotHistoryExcel(currentSlots: TimeSlot[]): void {
+export function updateSlotHistoryExcel(
+  currentSlots: TimeSlot[],
+  scanParams: { startHour: number; endHour: number },
+): void {
   const currentSlotKeys: Set<string> = new Set(currentSlots.map(slotKey));
   const records: SlotHistoryRecord[] = loadSlotHistory();
-  markUnavailableSlots(records, currentSlotKeys);
+  markUnavailableSlots(records, currentSlotKeys, scanParams);
   addNewSlots(records, currentSlots);
   writeSlotHistory(records);
 }
@@ -139,16 +150,16 @@ export function updateSlotHistoryExcel(currentSlots: TimeSlot[]): void {
  */
 export function findNewSlots(
   currentSlots: TimeSlot[],
-  historyRecords: SlotHistoryRecord[]
+  historyRecords: SlotHistoryRecord[],
 ): TimeSlot[] {
   const activeSlotKeys: Set<string> = new Set(
     historyRecords
       .filter((r) => !r.becameUnavailableAt)
-      .map((r) => slotKey(r.TimeSlot))
+      .map((r) => slotKey(r.TimeSlot)),
   );
 
   const newSlots: TimeSlot[] = currentSlots.filter(
-    (slot) => !activeSlotKeys.has(slotKey(slot))
+    (slot) => !activeSlotKeys.has(slotKey(slot)),
   );
 
   return newSlots;
@@ -156,11 +167,19 @@ export function findNewSlots(
 
 export function hasAnySlotBecomeUnavailable(
   currentSlots: TimeSlot[],
-  previousRecords: SlotHistoryRecord[]
+  previousRecords: SlotHistoryRecord[],
+  scanParams: { startHour: number; endHour: number },
 ): boolean {
   const currentSlotKeys = new Set(currentSlots.map(slotKey));
 
   return previousRecords.some((record) => {
+    if (
+      record.TimeSlot.start < scanParams.startHour ||
+      record.TimeSlot.start >= scanParams.endHour
+    ) {
+      return false;
+    }
+
     const key = slotKey(record.TimeSlot);
     return !record.becameUnavailableAt && !currentSlotKeys.has(key);
   });
