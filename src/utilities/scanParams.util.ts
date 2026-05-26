@@ -29,6 +29,22 @@ export function parseScanParams(
     SCAN_SKIP_WEEKDAYS: "",
   };
 
+  // Helper to parse a number (integer or float) from the env object, with a fallback
+  function readNumber(
+    key: string,
+    moduleDefault: number,
+    hardDefault: number,
+  ): number {
+    if (env !== undefined) {
+      const raw = env[key];
+      if (raw === undefined || raw === "") return hardDefault;
+      const parsed = Number(raw);
+      if (isNaN(parsed)) return NaN;
+      return parsed;
+    }
+    return moduleDefault;
+  }
+
   // Helper to parse an integer from the env object, with a fallback
   function readInt(
     key: string,
@@ -79,12 +95,12 @@ export function parseScanParams(
     SCAN_END_DATE_OFFSET,
     DEFAULTS.SCAN_END_DATE_OFFSET,
   );
-  const startHour = readInt(
+  const startHour = readNumber(
     "SCAN_START_HOUR",
     SCAN_START_HOUR,
     DEFAULTS.SCAN_START_HOUR,
   );
-  const endHour = readInt(
+  const endHour = readNumber(
     "SCAN_END_HOUR",
     SCAN_END_HOUR,
     DEFAULTS.SCAN_END_HOUR,
@@ -105,15 +121,15 @@ export function parseScanParams(
 
   // --- Validation ---
 
-  if (!Number.isInteger(startHour) || startHour < 0 || startHour > 23) {
+  if (isNaN(startHour) || startHour < 0 || startHour > 23.5) {
     throw new Error(
-      `SCAN_START_HOUR must be an integer between 0 and 23, got: ${startHour}`,
+      `SCAN_START_HOUR must be a number between 0 and 23.5 (use .5 for half hours), got: ${startHour}`,
     );
   }
 
-  if (!Number.isInteger(endHour) || endHour < 1 || endHour > 24) {
+  if (isNaN(endHour) || endHour < 0.5 || endHour > 24) {
     throw new Error(
-      `SCAN_END_HOUR must be an integer between 1 and 24, got: ${endHour}`,
+      `SCAN_END_HOUR must be a number between 0.5 and 24 (use .5 for half hours), got: ${endHour}`,
     );
   }
 
