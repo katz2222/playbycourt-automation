@@ -6,6 +6,7 @@ import {
   hasAnySlotBecomeUnavailable,
   loadSlotHistory,
   updateSlotHistoryExcel,
+  withSlotHistoryLock,
 } from "@src/utilities/slotsHistory.util";
 import {
   ScanCourtSlotsOptions,
@@ -21,35 +22,35 @@ export async function checkCourtAvailability(
 
   const availableTimeSlots: TimeSlot[] = await scanCourtSlots(params);
 
-  const previousRecords: SlotHistoryRecord[] = loadSlotHistory();
-
-  const newSlots: TimeSlot[] = findNewSlots(
-    availableTimeSlots,
-    previousRecords,
-  );
   const message = formatCourtMessage(availableTimeSlots);
   console.log(message);
 
-  if (newSlots.length > 0) {
-    console.log(`New slots:\n${JSON.stringify(newSlots, null, 2)}`);
+  await withSlotHistoryLock(async () => {
+    const previousRecords: SlotHistoryRecord[] = loadSlotHistory();
 
-    await sendTelegramMessage(message);
-
-    updateSlotHistoryExcel(availableTimeSlots, params);
-  } else {
-    console.log("No new slots found, not sending message.");
-
-    const hasUnavailable = hasAnySlotBecomeUnavailable(
+    const newSlots: TimeSlot[] = findNewSlots(
       availableTimeSlots,
       previousRecords,
-      params,
     );
 
-    if (hasUnavailable) {
-      updateSlotHistoryExcel(availableTimeSlots, params);
-      console.log("Some slots became unavailable. Excel updated.");
+    if (newSlots.length > 0) {
+      console.log(`New slots:\n${JSON.stringify(newSlots, null, 2)}`);
+      await sendTelegramMessage(message);
+      updateSlotHistoryExcel(availableTimeSlots);
     } else {
-      console.log("No slot availability changes. Excel not updated.");
+      console.log("No new slots found, not sending message.");
+
+      const hasUnavailable = hasAnySlotBecomeUnavailable(
+        availableTimeSlots,
+        previousRecords,
+      );
+
+      if (hasUnavailable) {
+        updateSlotHistoryExcel(availableTimeSlots);
+        console.log("Some slots became unavailable. Excel updated.");
+      } else {
+        console.log("No slot availability changes. Excel not updated.");
+      }
     }
-  }
+  });
 }

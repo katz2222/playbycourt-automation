@@ -1,59 +1,33 @@
 import { test, expect } from "@playwright/test";
 import fc from "fast-check";
-import { markUnavailableSlots } from "../utilities/slotsHistory.util";
-import { SlotHistoryRecord } from "../utilities/types.util";
+import {
+  markUnavailableSlots,
+  findNewSlots,
+  hasAnySlotBecomeUnavailable,
+} from "../utilities/slotsHistory.util";
+import { SlotHistoryRecord, TimeSlot } from "../utilities/types.util";
 
 /**
- * Property 1: Bug Condition - Out-of-Range Slots Incorrectly Marked Unavailable
+ * Property 1: All absent slots are marked unavailable regardless of hour range
  *
- * For any history record where TimeSlot.start falls outside the current scan's
- * [startHour, endHour) range and becameUnavailableAt is undefined,
- * markUnavailableSlots should leave becameUnavailableAt unchanged (still undefined).
+ * After the fix, markUnavailableSlots no longer applies an hour-range filter.
+ * ALL records not present in currentSlotKeys (and with becameUnavailableAt undefined)
+ * are marked as unavailable, regardless of their TimeSlot.start hour.
  *
- * On UNFIXED code, this test is EXPECTED TO FAIL because the unfixed
- * markUnavailableSlots marks ALL records as unavailable when they are not
- * in currentSlotKeys, regardless of hour range.
- *
- * **Validates: Requirements 1.1, 2.1**
+ * **Validates: Requirements 2.4**
  */
-test("Property 1: Bug Condition - out-of-range slots should NOT be marked unavailable", () => {
+test("Property 1: All absent slots are marked unavailable regardless of hour range", () => {
   fc.assert(
     fc.property(
-      // Generate startHour in [0, 22]
-      fc.integer({ min: 0, max: 22 }),
-      // Generate a range size of at least 1 (endHour = startHour + rangeSize)
-      fc.integer({ min: 1, max: 24 }),
-      // Boolean to decide if slotStart is below startHour or at/above endHour
-      fc.boolean(),
+      // Generate a slot start hour (any hour)
+      fc.integer({ min: 0, max: 23 }),
       // Random date string
       fc.constantFrom("01/01 Monday", "15/06 Sunday", "28/12 Saturday"),
-      // Random end offset (slot duration in hours, 0.5 to 2)
+      // Random slot duration
       fc.constantFrom(0.5, 1, 1.5, 2),
-      (startHour, rangeSize, slotBelow, dateStr, duration) => {
-        const endHour = Math.min(startHour + rangeSize, 24);
-        fc.pre(endHour > startHour);
-
-        // Generate slotStart outside [startHour, endHour)
-        let slotStart: number;
-        if (slotBelow && startHour > 0) {
-          // slotStart < startHour: pick from [0, startHour - 1]
-          slotStart = startHour - 1;
-        } else if (!slotBelow && endHour <= 23) {
-          // slotStart >= endHour: pick endHour itself
-          slotStart = endHour;
-        } else if (startHour > 0) {
-          // fallback: below range
-          slotStart = 0;
-        } else {
-          // startHour is 0 and endHour is 24 — no out-of-range possible
-          fc.pre(false);
-          return;
-        }
-
-        // Ensure slotStart is truly outside [startHour, endHour)
-        fc.pre(slotStart < startHour || slotStart >= endHour);
-
+      (slotStart, dateStr, duration) => {
         const slotEnd = Math.min(slotStart + duration, 24);
+        fc.pre(slotEnd > slotStart);
 
         const record: SlotHistoryRecord = {
           TimeSlot: {
@@ -66,18 +40,12 @@ test("Property 1: Bug Condition - out-of-range slots should NOT be marked unavai
         };
 
         // Call markUnavailableSlots with an empty currentSlotKeys set
-        // (the record is not in current results, but it's out of range
-        //  so it should NOT be marked unavailable)
+        // The record is absent from current results, so it SHOULD be marked unavailable
         const emptyCurrentSlotKeys = new Set<string>();
-        markUnavailableSlots([record], emptyCurrentSlotKeys, {
-          startHour,
-          endHour,
-        });
+        markUnavailableSlots([record], emptyCurrentSlotKeys);
 
-        // Assert: becameUnavailableAt should still be undefined
-        // On unfixed code, this WILL FAIL because the function marks
-        // all records not in currentSlotKeys as unavailable
-        expect(record.becameUnavailableAt).toBeUndefined();
+        // Assert: becameUnavailableAt should be set (slot is absent, so marked unavailable)
+        expect(record.becameUnavailableAt).toBeDefined();
       },
     ),
     { numRuns: 100 },
@@ -85,43 +53,27 @@ test("Property 1: Bug Condition - out-of-range slots should NOT be marked unavai
 });
 
 /**
- * Property 2: Preservation - In-Range Slot Marking Behavior Unchanged
- *
- * For any history record where TimeSlot.start falls within the current scan's
- * [startHour, endHour) range and becameUnavailableAt is undefined:
+ * Property 2: Preservation - Slot Marking Behavior Unchanged
  *
  * Case A: If the record's key is NOT in currentSlotKeys, markUnavailableSlots
  *         should set becameUnavailableAt (non-undefined).
  * Case B: If the record's key IS in currentSlotKeys, markUnavailableSlots
  *         should leave becameUnavailableAt as undefined.
  *
- * These tests exercise the ORIGINAL unfixed markUnavailableSlots (no scanParams
- * parameter) since in-range behavior should be identical before and after the fix.
- *
  * **Validates: Requirements 3.1, 3.2, 3.3, 3.4**
  */
-test("Property 2a: Preservation - in-range slot absent from current is marked unavailable", () => {
+test("Property 2a: Preservation - slot absent from current is marked unavailable", () => {
   fc.assert(
     fc.property(
-      // Generate startHour in [0, 22]
-      fc.integer({ min: 0, max: 22 }),
-      // Generate endHour offset (at least 1 above startHour)
-      fc.integer({ min: 1, max: 24 }),
-      // Offset within range for slotStart (0 = startHour, clamped to range)
+      // Generate slotStart
       fc.integer({ min: 0, max: 23 }),
       // Random date string
       fc.constantFrom("01/01 Monday", "15/06 Sunday", "28/12 Saturday"),
       // Random slot duration
       fc.constantFrom(0.5, 1, 1.5, 2),
-      (startHour, endHourRaw, slotOffset, dateStr, duration) => {
-        const endHour = Math.min(startHour + endHourRaw, 24);
-        fc.pre(endHour > startHour);
-
-        // Generate slotStart within [startHour, endHour)
-        const slotStart = startHour + (slotOffset % (endHour - startHour));
-        fc.pre(slotStart >= startHour && slotStart < endHour);
-
+      (slotStart, dateStr, duration) => {
         const slotEnd = Math.min(slotStart + duration, 24);
+        fc.pre(slotEnd > slotStart);
 
         const record: SlotHistoryRecord = {
           TimeSlot: {
@@ -134,12 +86,9 @@ test("Property 2a: Preservation - in-range slot absent from current is marked un
         };
 
         // Case A: Call with empty currentSlotKeys (slot is absent from current)
-        // The record is in-range, so it SHOULD be marked unavailable
+        // It SHOULD be marked unavailable
         const emptyCurrentSlotKeys = new Set<string>();
-        markUnavailableSlots([record], emptyCurrentSlotKeys, {
-          startHour,
-          endHour,
-        });
+        markUnavailableSlots([record], emptyCurrentSlotKeys);
 
         // Assert: becameUnavailableAt should be set (non-undefined)
         expect(record.becameUnavailableAt).toBeDefined();
@@ -149,28 +98,18 @@ test("Property 2a: Preservation - in-range slot absent from current is marked un
   );
 });
 
-test("Property 2b: Preservation - in-range slot present in current remains available", () => {
+test("Property 2b: Preservation - slot present in current remains available", () => {
   fc.assert(
     fc.property(
-      // Generate startHour in [0, 22]
-      fc.integer({ min: 0, max: 22 }),
-      // Generate endHour offset (at least 1 above startHour)
-      fc.integer({ min: 1, max: 24 }),
-      // Offset within range for slotStart (0 = startHour, clamped to range)
+      // Generate slotStart
       fc.integer({ min: 0, max: 23 }),
       // Random date string
       fc.constantFrom("01/01 Monday", "15/06 Sunday", "28/12 Saturday"),
       // Random slot duration
       fc.constantFrom(0.5, 1, 1.5, 2),
-      (startHour, endHourRaw, slotOffset, dateStr, duration) => {
-        const endHour = Math.min(startHour + endHourRaw, 24);
-        fc.pre(endHour > startHour);
-
-        // Generate slotStart within [startHour, endHour)
-        const slotStart = startHour + (slotOffset % (endHour - startHour));
-        fc.pre(slotStart >= startHour && slotStart < endHour);
-
+      (slotStart, dateStr, duration) => {
         const slotEnd = Math.min(slotStart + duration, 24);
+        fc.pre(slotEnd > slotStart);
 
         const record: SlotHistoryRecord = {
           TimeSlot: {
@@ -187,11 +126,205 @@ test("Property 2b: Preservation - in-range slot present in current remains avail
         const currentSlotKeys = new Set<string>([key]);
 
         // Case B: Call with currentSlotKeys containing the record's key
-        // The record is in-range and present, so it should remain unchanged
-        markUnavailableSlots([record], currentSlotKeys, { startHour, endHour });
+        // The record is present, so it should remain unchanged
+        markUnavailableSlots([record], currentSlotKeys);
 
         // Assert: becameUnavailableAt should still be undefined
         expect(record.becameUnavailableAt).toBeUndefined();
+      },
+    ),
+    { numRuns: 100 },
+  );
+});
+
+/**
+ * Property 2c: Preservation - findNewSlots returns all slots when history is empty
+ *
+ * For any set of current slots, when findNewSlots is called with an empty history,
+ * ALL current slots should be returned as new (since none are known).
+ *
+ * **Validates: Requirements 3.1**
+ */
+test("Property 2c: Preservation - findNewSlots with empty history returns all slots as new", () => {
+  // Arbitrary generator for TimeSlot
+  const timeSlotArb = fc
+    .record({
+      date: fc.constantFrom(
+        "01/01 Monday",
+        "15/06 Sunday",
+        "28/12 Saturday",
+        "10/03 Wednesday",
+        "22/09 Friday",
+      ),
+      start: fc.integer({ min: 0, max: 23 }),
+      end: fc.integer({ min: 1, max: 24 }),
+    })
+    .filter((s) => s.end > s.start);
+
+  fc.assert(
+    fc.property(
+      fc.array(timeSlotArb, { minLength: 1, maxLength: 20 }),
+      (slots: TimeSlot[]) => {
+        // Deduplicate slots by key to avoid counting duplicates
+        const uniqueKeys = new Set(
+          slots.map((s) => `${s.date}-${s.start}-${s.end}`),
+        );
+        const uniqueSlots = slots.filter((s, i) => {
+          const key = `${s.date}-${s.start}-${s.end}`;
+          return (
+            slots.findIndex(
+              (s2) => `${s2.date}-${s2.start}-${s2.end}` === key,
+            ) === i
+          );
+        });
+
+        const result = findNewSlots(uniqueSlots, []);
+
+        // All unique slots should be returned as new when history is empty
+        expect(result.length).toBe(uniqueSlots.length);
+      },
+    ),
+    { numRuns: 100 },
+  );
+});
+
+/**
+ * Property 2d: Preservation - findNewSlots returns empty when all slots are already known
+ *
+ * For any set of current slots, when findNewSlots is called with history records
+ * that contain those same slots (active, no becameUnavailableAt), it should return
+ * an empty array (no new slots).
+ *
+ * **Validates: Requirements 3.2**
+ */
+test("Property 2d: Preservation - findNewSlots with known active slots returns empty", () => {
+  const timeSlotArb = fc
+    .record({
+      date: fc.constantFrom(
+        "01/01 Monday",
+        "15/06 Sunday",
+        "28/12 Saturday",
+        "10/03 Wednesday",
+        "22/09 Friday",
+      ),
+      start: fc.integer({ min: 0, max: 23 }),
+      end: fc.integer({ min: 1, max: 24 }),
+    })
+    .filter((s) => s.end > s.start);
+
+  fc.assert(
+    fc.property(
+      fc.array(timeSlotArb, { minLength: 1, maxLength: 20 }),
+      (slots: TimeSlot[]) => {
+        // Deduplicate slots
+        const uniqueSlots = slots.filter((s, i) => {
+          const key = `${s.date}-${s.start}-${s.end}`;
+          return (
+            slots.findIndex(
+              (s2) => `${s2.date}-${s2.start}-${s2.end}` === key,
+            ) === i
+          );
+        });
+
+        // Create history records for all slots (active, no becameUnavailableAt)
+        const historyRecords: SlotHistoryRecord[] = uniqueSlots.map((slot) => ({
+          TimeSlot: slot,
+          becameAvailableAt: "2025-01-01 10:00",
+          becameUnavailableAt: undefined,
+        }));
+
+        const result = findNewSlots(uniqueSlots, historyRecords);
+
+        // No slots should be reported as new since all are already in history
+        expect(result.length).toBe(0);
+      },
+    ),
+    { numRuns: 100 },
+  );
+});
+
+/**
+ * Property 2e: Preservation - hasAnySlotBecomeUnavailable detects unavailable slots
+ *
+ * When a previously-active slot (no becameUnavailableAt) is no longer
+ * present in currentSlots, hasAnySlotBecomeUnavailable should return true.
+ *
+ * **Validates: Requirements 3.3**
+ */
+test("Property 2e: Preservation - hasAnySlotBecomeUnavailable detects missing slots", () => {
+  fc.assert(
+    fc.property(
+      // Generate slotStart
+      fc.integer({ min: 0, max: 23 }),
+      // Random date string
+      fc.constantFrom("01/01 Monday", "15/06 Sunday", "28/12 Saturday"),
+      // Random slot duration
+      fc.constantFrom(0.5, 1, 1.5, 2),
+      (slotStart, dateStr, duration) => {
+        const slotEnd = Math.min(slotStart + duration, 24);
+        fc.pre(slotEnd > slotStart);
+
+        // Create a history record for a previously-active slot
+        const previousRecords: SlotHistoryRecord[] = [
+          {
+            TimeSlot: { date: dateStr, start: slotStart, end: slotEnd },
+            becameAvailableAt: "2025-01-01 10:00",
+            becameUnavailableAt: undefined,
+          },
+        ];
+
+        // Call with empty currentSlots (the slot is no longer available)
+        const result = hasAnySlotBecomeUnavailable([], previousRecords);
+
+        // Should detect that the slot became unavailable
+        expect(result).toBe(true);
+      },
+    ),
+    { numRuns: 100 },
+  );
+});
+
+/**
+ * Property 2f: Preservation - hasAnySlotBecomeUnavailable no false positives
+ *
+ * When all previously-active slots (no becameUnavailableAt) are still
+ * present in currentSlots, hasAnySlotBecomeUnavailable should return false.
+ *
+ * **Validates: Requirements 3.4**
+ */
+test("Property 2f: Preservation - hasAnySlotBecomeUnavailable no false positives when all present", () => {
+  fc.assert(
+    fc.property(
+      // Generate slotStart
+      fc.integer({ min: 0, max: 23 }),
+      // Random date string
+      fc.constantFrom("01/01 Monday", "15/06 Sunday", "28/12 Saturday"),
+      // Random slot duration
+      fc.constantFrom(0.5, 1, 1.5, 2),
+      (slotStart, dateStr, duration) => {
+        const slotEnd = Math.min(slotStart + duration, 24);
+        fc.pre(slotEnd > slotStart);
+
+        const slot: TimeSlot = {
+          date: dateStr,
+          start: slotStart,
+          end: slotEnd,
+        };
+
+        // Create a history record for a previously-active slot
+        const previousRecords: SlotHistoryRecord[] = [
+          {
+            TimeSlot: slot,
+            becameAvailableAt: "2025-01-01 10:00",
+            becameUnavailableAt: undefined,
+          },
+        ];
+
+        // Call with currentSlots containing the same slot
+        const result = hasAnySlotBecomeUnavailable([slot], previousRecords);
+
+        // Should NOT detect any slot as unavailable
+        expect(result).toBe(false);
       },
     ),
     { numRuns: 100 },
