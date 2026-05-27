@@ -47,12 +47,10 @@ jobs:
           node-version: 18
 
       - name: Restore slot_history.xlsx from cache
-        id: restore-cache
-        uses: actions/cache@v3
+        uses: actions/cache/restore@v4
         with:
           path: data/slot_history.xlsx
-          key: court-cache-${{ github.run_id }}
-          restore-keys: court-cache-
+          key: court-slot-history
 
       - name: Install dependencies
         run: npm install
@@ -88,15 +86,21 @@ jobs:
           SCAN_SKIP_WEEKDAYS: ${{ inputs.skip_weekdays }}
         run: npx ts-node -r tsconfig-paths/register src/jobs/findAvailableSlots.job.ts
 
+      - name: Delete old cache
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh cache delete court-slot-history || true
+
       - name: Save updated slot_history.xlsx to cache
-        uses: actions/cache@v3
+        uses: actions/cache/save@v4
         with:
           path: data/slot_history.xlsx
-          key: court-cache-${{ github.run_id }}
+          key: court-slot-history
 
       - name: Upload slot_history.xlsx as artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: slot_history
+          name: slot_history-${{ github.run_id }}
           path: data/slot_history.xlsx
