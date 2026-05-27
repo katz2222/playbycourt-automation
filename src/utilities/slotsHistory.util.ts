@@ -48,10 +48,16 @@ export function loadSlotHistory(): SlotHistoryRecord[] {
 export function markUnavailableSlots(
   records: SlotHistoryRecord[],
   currentSlotKeys: Set<string>,
+  scannedDates?: Set<string>,
 ): void {
   const now: string = getCurrentDateTime();
 
   for (const record of records) {
+    // If scannedDates is provided, only mark slots whose date was actually scanned
+    if (scannedDates && !scannedDates.has(record.TimeSlot.date)) {
+      continue;
+    }
+
     const key: string = slotKey(record.TimeSlot);
     const isCurrentlyAvailable: boolean = currentSlotKeys.has(key);
 
@@ -126,10 +132,13 @@ function writeSlotHistory(records: SlotHistoryRecord[]): void {
 }
 
 // Main function to update slot history
-export function updateSlotHistoryExcel(currentSlots: TimeSlot[]): void {
+export function updateSlotHistoryExcel(
+  currentSlots: TimeSlot[],
+  scannedDates?: Set<string>,
+): void {
   const currentSlotKeys: Set<string> = new Set(currentSlots.map(slotKey));
   const records: SlotHistoryRecord[] = loadSlotHistory();
-  markUnavailableSlots(records, currentSlotKeys);
+  markUnavailableSlots(records, currentSlotKeys, scannedDates);
   addNewSlots(records, currentSlots);
   writeSlotHistory(records);
 }
