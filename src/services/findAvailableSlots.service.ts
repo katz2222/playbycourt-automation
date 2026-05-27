@@ -29,6 +29,7 @@ export async function checkCourtAvailability(
     skipWeekdays: params.skipWeekdays,
   });
   const scannedDates: Set<string> = new Set(dates.map(formatDate));
+  const hourRange = { startHour: params.startHour, endHour: params.endHour };
 
   const message = formatCourtMessage(availableTimeSlots);
   console.log(message);
@@ -44,7 +45,7 @@ export async function checkCourtAvailability(
     if (newSlots.length > 0) {
       console.log(`New slots:\n${JSON.stringify(newSlots, null, 2)}`);
       await sendTelegramMessage(message);
-      updateSlotHistoryExcel(availableTimeSlots, scannedDates);
+      updateSlotHistoryExcel(availableTimeSlots, scannedDates, hourRange);
     } else {
       console.log("No new slots found, not sending message.");
 
@@ -54,7 +55,7 @@ export async function checkCourtAvailability(
       );
 
       if (hasUnavailable) {
-        updateSlotHistoryExcel(availableTimeSlots, scannedDates);
+        updateSlotHistoryExcel(availableTimeSlots, scannedDates, hourRange);
         console.log("Some slots became unavailable. Excel updated.");
       } else {
         console.log("No slot availability changes. Excel not updated.");

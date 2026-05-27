@@ -49,12 +49,22 @@ export function markUnavailableSlots(
   records: SlotHistoryRecord[],
   currentSlotKeys: Set<string>,
   scannedDates?: Set<string>,
+  hourRange?: { startHour: number; endHour: number },
 ): void {
   const now: string = getCurrentDateTime();
 
   for (const record of records) {
-    // If scannedDates is provided, only mark slots whose date was actually scanned
+    // Only mark slots whose date was actually scanned
     if (scannedDates && !scannedDates.has(record.TimeSlot.date)) {
+      continue;
+    }
+
+    // Only mark slots whose start hour falls within the scanned hour range
+    if (
+      hourRange &&
+      (record.TimeSlot.start < hourRange.startHour ||
+        record.TimeSlot.start >= hourRange.endHour)
+    ) {
       continue;
     }
 
@@ -135,10 +145,11 @@ function writeSlotHistory(records: SlotHistoryRecord[]): void {
 export function updateSlotHistoryExcel(
   currentSlots: TimeSlot[],
   scannedDates?: Set<string>,
+  hourRange?: { startHour: number; endHour: number },
 ): void {
   const currentSlotKeys: Set<string> = new Set(currentSlots.map(slotKey));
   const records: SlotHistoryRecord[] = loadSlotHistory();
-  markUnavailableSlots(records, currentSlotKeys, scannedDates);
+  markUnavailableSlots(records, currentSlotKeys, scannedDates, hourRange);
   addNewSlots(records, currentSlots);
   writeSlotHistory(records);
 }
