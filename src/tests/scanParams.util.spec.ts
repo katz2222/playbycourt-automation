@@ -16,41 +16,41 @@ function validEnv(
 
 // --- SCAN_START_HOUR validation ---
 
-test("throws when SCAN_START_HOUR is not an integer", () => {
+test("throws when SCAN_START_HOUR is not a number", () => {
   expect(() => parseScanParams(validEnv({ SCAN_START_HOUR: "abc" }))).toThrow(
-    /SCAN_START_HOUR must be an integer between 0 and 23/,
+    /SCAN_START_HOUR must be a number between 0 and 23\.5/,
   );
 });
 
 test("throws when SCAN_START_HOUR is below 0", () => {
   expect(() => parseScanParams(validEnv({ SCAN_START_HOUR: "-1" }))).toThrow(
-    /SCAN_START_HOUR must be an integer between 0 and 23/,
+    /SCAN_START_HOUR must be a number between 0 and 23\.5/,
   );
 });
 
-test("throws when SCAN_START_HOUR is above 23", () => {
+test("throws when SCAN_START_HOUR is above 23.5", () => {
   expect(() => parseScanParams(validEnv({ SCAN_START_HOUR: "24" }))).toThrow(
-    /SCAN_START_HOUR must be an integer between 0 and 23/,
+    /SCAN_START_HOUR must be a number between 0 and 23\.5/,
   );
 });
 
 // --- SCAN_END_HOUR validation ---
 
-test("throws when SCAN_END_HOUR is not an integer", () => {
+test("throws when SCAN_END_HOUR is not a number", () => {
   expect(() => parseScanParams(validEnv({ SCAN_END_HOUR: "xyz" }))).toThrow(
-    /SCAN_END_HOUR must be an integer between 1 and 24/,
+    /SCAN_END_HOUR must be a number between 0\.5 and 24/,
   );
 });
 
-test("throws when SCAN_END_HOUR is below 1", () => {
+test("throws when SCAN_END_HOUR is below 0.5", () => {
   expect(() => parseScanParams(validEnv({ SCAN_END_HOUR: "0" }))).toThrow(
-    /SCAN_END_HOUR must be an integer between 1 and 24/,
+    /SCAN_END_HOUR must be a number between 0\.5 and 24/,
   );
 });
 
 test("throws when SCAN_END_HOUR is above 24", () => {
   expect(() => parseScanParams(validEnv({ SCAN_END_HOUR: "25" }))).toThrow(
-    /SCAN_END_HOUR must be an integer between 1 and 24/,
+    /SCAN_END_HOUR must be a number between 0\.5 and 24/,
   );
 });
 
@@ -135,4 +135,12 @@ test("accepts boundary values: startHour=0, endHour=24", () => {
   );
   expect(result.startHour).toBe(0);
   expect(result.endHour).toBe(24);
+});
+
+test("accepts half-hour values like 19.5 for 19:30", () => {
+  const result = parseScanParams(
+    validEnv({ SCAN_START_HOUR: "17.5", SCAN_END_HOUR: "19.5" }),
+  );
+  expect(result.startHour).toBe(17.5);
+  expect(result.endHour).toBe(19.5);
 });

@@ -13,7 +13,7 @@ import {
 
 const historyFilePath: string = path.resolve(
   __dirname,
-  "../../data/slot_history.xlsx"
+  "../../data/slot_history.xlsx",
 );
 const sheetName: string = "Slot History";
 
@@ -39,19 +39,35 @@ export function loadSlotHistory(): SlotHistoryRecord[] {
       becameUnavailableAt: row.becameUnavailableAt
         ? reversePrettyDateTime(row.becameUnavailableAt)
         : undefined,
-    })
+    }),
   );
 
   return records;
 }
 
-function markUnavailableSlots(
+export function markUnavailableSlots(
   records: SlotHistoryRecord[],
-  currentSlotKeys: Set<string>
+  currentSlotKeys: Set<string>,
+  scannedDates?: Set<string>,
+  hourRange?: { startHour: number; endHour: number },
 ): void {
   const now: string = getCurrentDateTime();
 
   for (const record of records) {
+    // Only mark slots whose date was actually scanned
+    if (scannedDates && !scannedDates.has(record.TimeSlot.date)) {
+      continue;
+    }
+
+    // Only mark slots whose start hour falls within the scanned hour range
+    if (
+      hourRange &&
+      (record.TimeSlot.start < hourRange.startHour ||
+        record.TimeSlot.start >= hourRange.endHour)
+    ) {
+      continue;
+    }
+
     const key: string = slotKey(record.TimeSlot);
     const isCurrentlyAvailable: boolean = currentSlotKeys.has(key);
 
@@ -63,13 +79,13 @@ function markUnavailableSlots(
 
 function addNewSlots(
   records: SlotHistoryRecord[],
-  currentSlots: TimeSlot[]
+  currentSlots: TimeSlot[],
 ): void {
   const now: string = getCurrentDateTime();
   const activeKeys = new Set(
     records
       .filter((r) => !r.becameUnavailableAt)
-      .map((r) => slotKey(r.TimeSlot))
+      .map((r) => slotKey(r.TimeSlot)),
   );
 
   for (const slot of currentSlots) {
@@ -107,7 +123,7 @@ function writeSlotHistory(records: SlotHistoryRecord[]): void {
       becameUnavailableAt: r.becameUnavailableAt
         ? prettyDateTime(r.becameUnavailableAt)
         : "",
-    })
+    }),
   );
 
   const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(flatRows, {
@@ -126,10 +142,14 @@ function writeSlotHistory(records: SlotHistoryRecord[]): void {
 }
 
 // Main function to update slot history
-export function updateSlotHistoryExcel(currentSlots: TimeSlot[]): void {
+export function updateSlotHistoryExcel(
+  currentSlots: TimeSlot[],
+  scannedDates?: Set<string>,
+  hourRange?: { startHour: number; endHour: number },
+): void {
   const currentSlotKeys: Set<string> = new Set(currentSlots.map(slotKey));
   const records: SlotHistoryRecord[] = loadSlotHistory();
-  markUnavailableSlots(records, currentSlotKeys);
+  markUnavailableSlots(records, currentSlotKeys, scannedDates, hourRange);
   addNewSlots(records, currentSlots);
   writeSlotHistory(records);
 }
@@ -139,16 +159,16 @@ export function updateSlotHistoryExcel(currentSlots: TimeSlot[]): void {
  */
 export function findNewSlots(
   currentSlots: TimeSlot[],
-  historyRecords: SlotHistoryRecord[]
+  historyRecords: SlotHistoryRecord[],
 ): TimeSlot[] {
   const activeSlotKeys: Set<string> = new Set(
     historyRecords
       .filter((r) => !r.becameUnavailableAt)
-      .map((r) => slotKey(r.TimeSlot))
+      .map((r) => slotKey(r.TimeSlot)),
   );
 
   const newSlots: TimeSlot[] = currentSlots.filter(
-    (slot) => !activeSlotKeys.has(slotKey(slot))
+    (slot) => !activeSlotKeys.has(slotKey(slot)),
   );
 
   return newSlots;
@@ -156,7 +176,7 @@ export function findNewSlots(
 
 export function hasAnySlotBecomeUnavailable(
   currentSlots: TimeSlot[],
-  previousRecords: SlotHistoryRecord[]
+  previousRecords: SlotHistoryRecord[],
 ): boolean {
   const currentSlotKeys = new Set(currentSlots.map(slotKey));
 
@@ -164,4 +184,106 @@ export function hasAnySlotBecomeUnavailable(
     const key = slotKey(record.TimeSlot);
     return !record.becameUnavailableAt && !currentSlotKeys.has(key);
   });
+}
+
+// --- File Lock Utilities ---
+
+interface FileLockOptions {
+  timeoutMs?: number;
+  retryDelayMs?: number;
+  staleLockMs?: number;
+}
+
+function sleep(ms: number): Promise<void> {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+/**
+ * Acquires an exclusive file lock by atomically creating a lock file.
+ * Uses `fs.openSync(lockPath, 'wx')` which fails if the file already exists.
+ * Implements polling with configurable retry delay, timeout, and stale lock detection.
+ */
+export async function acquireFileLock(
+  lockPath: string,
+  options: FileLockOptions = {},
+): Promise<void> {
+  const timeoutMs = options.timeoutMs ?? 30000;
+  const retryDelayMs = options.retryDelayMs ?? 150;
+  const staleLockMs = options.staleLockMs ?? 60000;
+
+  const startTime = Date.now();
+
+  while (true) {
+    try {
+      const fd = fs.openSync(lockPath, "wx");
+      fs.closeSync(fd);
+      return; // Lock acquired successfully
+    } catch (err: any) {
+      if (err.code !== "EEXIST") {
+        throw err; // Unexpected error, rethrow
+      }
+
+      // Lock file exists — check if it's stale
+      try {
+        const stat = fs.statSync(lockPath);
+        const lockAge = Date.now() - stat.mtimeMs;
+        if (lockAge > staleLockMs) {
+          // Stale lock detected, remove and retry
+          fs.unlinkSync(lockPath);
+          continue;
+        }
+      } catch (statErr: any) {
+        // Lock file was removed between our open attempt and stat — retry
+        if (statErr.code === "ENOENT") {
+          continue;
+        }
+        throw statErr;
+      }
+
+      // Check timeout
+      if (Date.now() - startTime >= timeoutMs) {
+        throw new Error(
+          `Failed to acquire file lock at "${lockPath}" within ${timeoutMs}ms`,
+        );
+      }
+
+      // Wait before retrying
+      await sleep(retryDelayMs);
+    }
+  }
+}
+
+/**
+ * Releases a file lock by deleting the lock file.
+ * Handles the case where the file doesn't exist gracefully (no-op).
+ */
+export function releaseFileLock(lockPath: string): void {
+  try {
+    fs.unlinkSync(lockPath);
+  } catch (err: any) {
+    if (err.code !== "ENOENT") {
+      throw err; // Unexpected error, rethrow
+    }
+    // File doesn't exist — no-op
+  }
+}
+
+/**
+ * Wraps a callback in a file lock, ensuring exclusive access to the slot history file.
+ * The lock is acquired before the callback executes and released in a finally block.
+ */
+export async function withSlotHistoryLock<T>(
+  callback: () => Promise<T>,
+): Promise<T> {
+  const lockPath = path.resolve(
+    path.dirname(historyFilePath),
+    "slot_history.lock",
+  );
+
+  await acquireFileLock(lockPath);
+  try {
+    return await callback();
+  } finally {
+    releaseFileLock(lockPath);
+  }
 }
