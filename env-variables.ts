@@ -19,8 +19,8 @@ const SCAN_END_DATE_OFFSET = envVar
   .get("SCAN_END_DATE_OFFSET")
   .required()
   .asInt();
-const SCAN_START_HOUR = envVar.get("SCAN_START_HOUR").required().asInt();
-const SCAN_END_HOUR = envVar.get("SCAN_END_HOUR").required().asInt();
+const SCAN_START_HOUR = envVar.get("SCAN_START_HOUR").required().asFloat();
+const SCAN_END_HOUR = envVar.get("SCAN_END_HOUR").required().asFloat();
 const SCAN_SKIP_WEEKEND =
   envVar.get("SCAN_SKIP_WEEKEND").default("false").asString() === "true";
 const SCAN_SKIP_WEEKDAYS = envVar
