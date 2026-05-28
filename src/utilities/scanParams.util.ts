@@ -6,6 +6,12 @@ import {
   SCAN_SKIP_WEEKEND,
   SCAN_SKIP_WEEKDAYS,
 } from "../../env-variables";
+import {
+  readInt,
+  readNumber,
+  readString,
+  readBool,
+} from "@utils/envReaders.util";
 import { ScanCourtSlotsOptions } from "./types.util";
 
 /**
@@ -29,88 +35,38 @@ export function parseScanParams(
     SCAN_SKIP_WEEKDAYS: "",
   };
 
-  // Helper to parse a number (integer or float) from the env object, with a fallback
-  function readNumber(
-    key: string,
-    moduleDefault: number,
-    hardDefault: number,
-  ): number {
-    if (env !== undefined) {
-      const raw = env[key];
-      if (raw === undefined || raw === "") return hardDefault;
-      const parsed = Number(raw);
-      if (isNaN(parsed)) return NaN;
-      return parsed;
-    }
-    return moduleDefault;
-  }
-
-  // Helper to parse an integer from the env object, with a fallback
-  function readInt(
-    key: string,
-    moduleDefault: number,
-    hardDefault: number,
-  ): number {
-    if (env !== undefined) {
-      const raw = env[key];
-      if (raw === undefined || raw === "") return hardDefault;
-      const parsed = Number(raw);
-      if (!Number.isInteger(parsed)) return NaN;
-      return parsed;
-    }
-    return moduleDefault;
-  }
-
-  function readString(
-    key: string,
-    moduleDefault: string,
-    hardDefault: string,
-  ): string {
-    if (env !== undefined) {
-      return env[key] ?? hardDefault;
-    }
-    return moduleDefault;
-  }
-
-  function readBool(
-    key: string,
-    moduleDefault: boolean,
-    hardDefault: boolean,
-  ): boolean {
-    if (env !== undefined) {
-      const raw = env[key];
-      if (raw === undefined) return hardDefault;
-      return raw === "true";
-    }
-    return moduleDefault;
-  }
-
   const startDateOffset = readInt(
+    env,
     "SCAN_START_DATE_OFFSET",
     SCAN_START_DATE_OFFSET,
     DEFAULTS.SCAN_START_DATE_OFFSET,
   );
   const endDateOffset = readInt(
+    env,
     "SCAN_END_DATE_OFFSET",
     SCAN_END_DATE_OFFSET,
     DEFAULTS.SCAN_END_DATE_OFFSET,
   );
   const startHour = readNumber(
+    env,
     "SCAN_START_HOUR",
     SCAN_START_HOUR,
     DEFAULTS.SCAN_START_HOUR,
   );
   const endHour = readNumber(
+    env,
     "SCAN_END_HOUR",
     SCAN_END_HOUR,
     DEFAULTS.SCAN_END_HOUR,
   );
   const skipWeekend = readBool(
+    env,
     "SCAN_SKIP_WEEKEND",
     SCAN_SKIP_WEEKEND,
     DEFAULTS.SCAN_SKIP_WEEKEND,
   );
   const skipWeekdaysStr = readString(
+    env,
     "SCAN_SKIP_WEEKDAYS",
     SCAN_SKIP_WEEKDAYS,
     DEFAULTS.SCAN_SKIP_WEEKDAYS,
