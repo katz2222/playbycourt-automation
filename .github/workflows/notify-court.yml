@@ -27,6 +27,10 @@ on:
         description: "Comma-separated day numbers to skip (0=Sun..6=Sat)"
         required: false
         type: string
+      specific_dates:
+        description: "Comma-separated dates DD/MM/YYYY (mutually exclusive with offsets/skip)"
+        required: false
+        type: string
 
 concurrency:
   group: court-check
@@ -85,6 +89,7 @@ jobs:
           SCAN_END_HOUR: ${{ inputs.end_hour }}
           SCAN_SKIP_WEEKEND: ${{ inputs.skip_weekend }}
           SCAN_SKIP_WEEKDAYS: ${{ inputs.skip_weekdays }}
+          SCAN_SPECIFIC_DATES: ${{ inputs.specific_dates }}
         run: npx ts-node -r tsconfig-paths/register src/jobs/findAvailableSlots.job.ts
 
       - name: Save updated slot_history.xlsx to cache

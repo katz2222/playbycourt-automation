@@ -5,7 +5,7 @@ import { ScanCourtSlotsOptions, TimeSlot, ApiSlot } from "./types.util";
 function filterSlotsInRange(
   slots: ApiSlot[],
   startHour: number,
-  endHour: number
+  endHour: number,
 ) {
   const start = startHour * 3600;
   const end = endHour * 3600;
@@ -14,16 +14,19 @@ function filterSlotsInRange(
     (s) =>
       s.available &&
       s.seconds_from_midnight >= start &&
-      s.seconds_from_midnight < end
+      s.seconds_from_midnight < end,
   );
 }
 
-export function findConsecutiveSlots(slots: ApiSlot[], date: string): TimeSlot[] {
+export function findConsecutiveSlots(
+  slots: ApiSlot[],
+  date: string,
+): TimeSlot[] {
   const results: TimeSlot[] = [];
   const requiredSlots = 3;
 
   const sorted = [...slots].sort(
-    (a, b) => a.seconds_from_midnight - b.seconds_from_midnight
+    (a, b) => a.seconds_from_midnight - b.seconds_from_midnight,
   );
 
   let i = 0;
@@ -54,21 +57,16 @@ export function findConsecutiveSlots(slots: ApiSlot[], date: string): TimeSlot[]
 }
 
 export async function scanCourtSlots(
-  opts: ScanCourtSlotsOptions
+  opts: ScanCourtSlotsOptions,
 ): Promise<TimeSlot[]> {
-  const {
-    startDate,
-    endDate,
-    startHour,
-    endHour,
-    skipWeekend,
-    skipWeekdays,
-  } = opts;
+  const { startHour, endHour } = opts;
 
-  const dates = generateDateRange(startDate, endDate, {
-    skipWeekend,
-    skipWeekdays,
-  });
+  const dates = opts.specificDates
+    ? opts.specificDates
+    : generateDateRange(opts.startDate, opts.endDate, {
+        skipWeekend: opts.skipWeekend,
+        skipWeekdays: opts.skipWeekdays,
+      });
 
   const requests = dates.map(async (date) => {
     const timestamp = dateToTimestamp(date);
@@ -77,7 +75,7 @@ export async function scanCourtSlots(
     const filtered = filterSlotsInRange(
       data.available_hours,
       startHour,
-      endHour
+      endHour,
     );
 
     const dateStr = formatDate(date);

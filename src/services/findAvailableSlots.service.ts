@@ -23,11 +23,12 @@ export async function checkCourtAvailability(
 
   const availableTimeSlots: TimeSlot[] = await scanCourtSlots(params);
 
-  // Compute the set of dates this scan actually covered
-  const dates = generateDateRange(params.startDate, params.endDate, {
-    skipWeekend: params.skipWeekend,
-    skipWeekdays: params.skipWeekdays,
-  });
+  const dates = params.specificDates
+    ? params.specificDates
+    : generateDateRange(params.startDate, params.endDate, {
+        skipWeekend: params.skipWeekend,
+        skipWeekdays: params.skipWeekdays,
+      });
   const scannedDates: Set<string> = new Set(dates.map(formatDate));
   const hourRange = { startHour: params.startHour, endHour: params.endHour };
 
@@ -52,6 +53,8 @@ export async function checkCourtAvailability(
       const hasUnavailable = hasAnySlotBecomeUnavailable(
         availableTimeSlots,
         previousRecords,
+        scannedDates,
+        hourRange,
       );
 
       if (hasUnavailable) {

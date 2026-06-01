@@ -1,3 +1,6 @@
+# Kiro - track only steering
+.kiro/*
+!.kiro/steering/
 
 # Playwright
 node_modules/

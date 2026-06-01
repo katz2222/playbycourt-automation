@@ -177,10 +177,25 @@ export function findNewSlots(
 export function hasAnySlotBecomeUnavailable(
   currentSlots: TimeSlot[],
   previousRecords: SlotHistoryRecord[],
+  scannedDates?: Set<string>,
+  hourRange?: { startHour: number; endHour: number },
 ): boolean {
   const currentSlotKeys = new Set(currentSlots.map(slotKey));
 
   return previousRecords.some((record) => {
+    // Only consider records whose date was actually scanned
+    if (scannedDates && !scannedDates.has(record.TimeSlot.date)) {
+      return false;
+    }
+    // Only consider records whose start hour falls within the scanned range
+    if (
+      hourRange &&
+      (record.TimeSlot.start < hourRange.startHour ||
+        record.TimeSlot.start >= hourRange.endHour)
+    ) {
+      return false;
+    }
+
     const key = slotKey(record.TimeSlot);
     return !record.becameUnavailableAt && !currentSlotKeys.has(key);
   });
