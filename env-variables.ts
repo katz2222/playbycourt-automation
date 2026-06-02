@@ -10,15 +10,15 @@ const TELEGRAM_BOT_TOKEN = envVar
 const TELEGRAM_CHAT_ID = envVar.get("TELEGRAM_CHAT_ID").required().asString();
 const COOKIE = envVar.get("COOKIE").required().asString();
 
-// Scan parameters
+// Scan parameters (optional — validated in parseScanParams based on mode)
 const SCAN_START_DATE_OFFSET = envVar
   .get("SCAN_START_DATE_OFFSET")
-  .default("1")
-  .asInt();
+  .default("")
+  .asString();
 const SCAN_END_DATE_OFFSET = envVar
   .get("SCAN_END_DATE_OFFSET")
-  .default("1")
-  .asInt();
+  .default("")
+  .asString();
 const SCAN_START_HOUR = envVar.get("SCAN_START_HOUR").required().asFloat();
 const SCAN_END_HOUR = envVar.get("SCAN_END_HOUR").required().asFloat();
 const SCAN_SKIP_WEEKEND =

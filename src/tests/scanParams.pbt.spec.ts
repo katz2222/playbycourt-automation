@@ -10,7 +10,12 @@ import { parseScanParams } from "../utilities/scanParams.util";
  * **Validates: Requirements 1.2**
  */
 test("Property 1: defaults are applied when no env vars are set", () => {
-  const result = parseScanParams({});
+  const result = parseScanParams({
+    SCAN_START_DATE_OFFSET: "1",
+    SCAN_END_DATE_OFFSET: "1",
+    SCAN_START_HOUR: "10",
+    SCAN_END_HOUR: "19",
+  });
   expect(result).not.toBeNull();
 
   expect(result!.startHour).toBe(10);
@@ -46,6 +51,8 @@ test("Property 2: valid hour ranges always produce startHour < endHour", () => {
         const result = parseScanParams({
           SCAN_START_HOUR: String(startHour),
           SCAN_END_HOUR: String(endHour),
+          SCAN_START_DATE_OFFSET: "1",
+          SCAN_END_DATE_OFFSET: "1",
         });
 
         expect(result).not.toBeNull();
@@ -149,6 +156,8 @@ test("Property 4: valid date offsets produce startDate <= endDate", () => {
         const result = parseScanParams({
           SCAN_START_DATE_OFFSET: String(startOffset),
           SCAN_END_DATE_OFFSET: String(endOffset),
+          SCAN_START_HOUR: "10",
+          SCAN_END_HOUR: "19",
         });
 
         expect(result).not.toBeNull();

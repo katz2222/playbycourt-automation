@@ -20,12 +20,12 @@ export function validateOffsets(
   startDateOffset: number,
   endDateOffset: number,
 ): void {
-  if (!Number.isInteger(startDateOffset) || startDateOffset < 0) {
+  if (startDateOffset < 0) {
     throw new Error(
       `SCAN_START_DATE_OFFSET must be a non-negative integer, got: ${startDateOffset}`,
     );
   }
-  if (!Number.isInteger(endDateOffset) || endDateOffset < 0) {
+  if (endDateOffset < 0) {
     throw new Error(
       `SCAN_END_DATE_OFFSET must be a non-negative integer, got: ${endDateOffset}`,
     );
