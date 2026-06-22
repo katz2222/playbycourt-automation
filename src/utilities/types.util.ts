@@ -20,11 +20,27 @@ export interface SlotHistoryRecord {
   becameUnavailableAt?: string;
 }
 
-export interface ScanCourtSlotsOptions {
-  startDate: Date;
-  endDate: Date;
+interface BaseScanOptions {
   startHour: number;
   endHour: number;
+}
+
+interface OffsetModeScanOptions extends BaseScanOptions {
+  startDate: Date;
+  endDate: Date;
   skipWeekend?: boolean;
   skipWeekdays?: number[];
+  specificDates?: never;
 }
+
+interface SpecificDatesModeScanOptions extends BaseScanOptions {
+  specificDates: Date[];
+  startDate?: never;
+  endDate?: never;
+  skipWeekend?: never;
+  skipWeekdays?: never;
+}
+
+export type ScanCourtSlotsOptions =
+  | OffsetModeScanOptions
+  | SpecificDatesModeScanOptions;

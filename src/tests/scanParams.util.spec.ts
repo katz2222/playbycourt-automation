@@ -144,3 +144,113 @@ test("accepts half-hour values like 19.5 for 19:30", () => {
   expect(result.startHour).toBe(17.5);
   expect(result.endHour).toBe(19.5);
 });
+
+// --- Specific dates mode tests ---
+
+test("parses '25/12/2026,01/01/2027' into correct Date objects", () => {
+  const result = parseScanParams({
+    SCAN_SPECIFIC_DATES: "25/12/2026,01/01/2027",
+    SCAN_START_HOUR: "10",
+    SCAN_END_HOUR: "19",
+  });
+
+  expect(result).not.toBeNull();
+  expect(result!.specificDates).toBeDefined();
+  expect(result!.specificDates!.length).toBe(2);
+  expect(result!.specificDates![0].getDate()).toBe(25);
+  expect(result!.specificDates![0].getMonth()).toBe(11); // December = 11
+  expect(result!.specificDates![0].getFullYear()).toBe(2026);
+  expect(result!.specificDates![1].getDate()).toBe(1);
+  expect(result!.specificDates![1].getMonth()).toBe(0); // January = 0
+  expect(result!.specificDates![1].getFullYear()).toBe(2027);
+});
+
+test("throws on invalid calendar date '31/02/2025'", () => {
+  expect(() =>
+    parseScanParams({
+      SCAN_SPECIFIC_DATES: "31/02/2025",
+      SCAN_START_HOUR: "10",
+      SCAN_END_HOUR: "19",
+    }),
+  ).toThrow(/Invalid calendar date.*31\/02\/2025/);
+});
+
+test("mutual exclusivity error lists conflicting params", () => {
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const dd = String(tomorrow.getDate()).padStart(2, "0");
+  const mm = String(tomorrow.getMonth() + 1).padStart(2, "0");
+  const yyyy = String(tomorrow.getFullYear());
+
+  expect(() =>
+    parseScanParams({
+      SCAN_SPECIFIC_DATES: `${dd}/${mm}/${yyyy}`,
+      SCAN_START_HOUR: "10",
+      SCAN_END_HOUR: "19",
+      SCAN_START_DATE_OFFSET: "1",
+      SCAN_SKIP_WEEKEND: "true",
+    }),
+  ).toThrow(/SCAN_SPECIFIC_DATES cannot be used with.*SCAN_START_DATE_OFFSET/);
+});
+
+test("parses single date in SCAN_SPECIFIC_DATES", () => {
+  const result = parseScanParams({
+    SCAN_SPECIFIC_DATES: "15/06/2027",
+    SCAN_START_HOUR: "10",
+    SCAN_END_HOUR: "19",
+  });
+
+  expect(result).not.toBeNull();
+  expect(result!.specificDates).toBeDefined();
+  expect(result!.specificDates!.length).toBe(1);
+  expect(result!.specificDates![0].getDate()).toBe(15);
+  expect(result!.specificDates![0].getMonth()).toBe(5); // June = 5
+  expect(result!.specificDates![0].getFullYear()).toBe(2027);
+});
+
+test("handles dates with extra whitespace around commas", () => {
+  const result = parseScanParams({
+    SCAN_SPECIFIC_DATES: " 25/12/2026 , 01/01/2027 , 15/06/2027 ",
+    SCAN_START_HOUR: "10",
+    SCAN_END_HOUR: "19",
+  });
+
+  expect(result).not.toBeNull();
+  expect(result!.specificDates).toBeDefined();
+  expect(result!.specificDates!.length).toBe(3);
+});
+
+test("empty string treated as absent (offset mode)", () => {
+  const result = parseScanParams({
+    SCAN_SPECIFIC_DATES: "",
+    SCAN_START_HOUR: "10",
+    SCAN_END_HOUR: "19",
+    SCAN_START_DATE_OFFSET: "1",
+    SCAN_END_DATE_OFFSET: "5",
+  });
+
+  expect(result).not.toBeNull();
+  expect(result!.specificDates).toBeUndefined();
+  expect(result!.startDate).toBeInstanceOf(Date);
+  expect(result!.endDate).toBeInstanceOf(Date);
+});
+
+test("all dates are today (should be included as future)", () => {
+  const today = new Date();
+  const dd = String(today.getDate()).padStart(2, "0");
+  const mm = String(today.getMonth() + 1).padStart(2, "0");
+  const yyyy = String(today.getFullYear());
+
+  const result = parseScanParams({
+    SCAN_SPECIFIC_DATES: `${dd}/${mm}/${yyyy}`,
+    SCAN_START_HOUR: "10",
+    SCAN_END_HOUR: "19",
+  });
+
+  expect(result).not.toBeNull();
+  expect(result!.specificDates).toBeDefined();
+  expect(result!.specificDates!.length).toBe(1);
+  expect(result!.specificDates![0].getDate()).toBe(today.getDate());
+  expect(result!.specificDates![0].getMonth()).toBe(today.getMonth());
+  expect(result!.specificDates![0].getFullYear()).toBe(today.getFullYear());
+});
