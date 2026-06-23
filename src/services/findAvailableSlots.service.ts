@@ -32,19 +32,22 @@ export async function checkCourtAvailability(
   const scannedDates: Set<string> = new Set(dates.map(formatDate));
   const hourRange = { startHour: params.startHour, endHour: params.endHour };
 
-  const message = formatCourtMessage(availableTimeSlots);
-  console.log(message);
-
   await withSlotHistoryLock(async () => {
-    const previousRecords: SlotHistoryRecord[] = loadSlotHistory();
+    const fullSlotsHistory: SlotHistoryRecord[] = loadSlotHistory();
 
     const newSlots: TimeSlot[] = findNewSlots(
       availableTimeSlots,
-      previousRecords,
+      fullSlotsHistory,
     );
 
+    const knownSlots: TimeSlot[] = availableTimeSlots.filter(
+      (slot) => !newSlots.includes(slot),
+    );
+
+    const message = formatCourtMessage(newSlots, knownSlots);
+    console.log(message);
+
     if (newSlots.length > 0) {
-      console.log(`New slots:\n${JSON.stringify(newSlots, null, 2)}`);
       await sendTelegramMessage(message);
       updateSlotHistoryExcel(availableTimeSlots, scannedDates, hourRange);
     } else {
@@ -52,7 +55,7 @@ export async function checkCourtAvailability(
 
       const hasUnavailable = hasAnySlotBecomeUnavailable(
         availableTimeSlots,
-        previousRecords,
+        fullSlotsHistory,
         scannedDates,
         hourRange,
       );
