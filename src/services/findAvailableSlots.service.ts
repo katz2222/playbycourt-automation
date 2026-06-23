@@ -14,7 +14,7 @@ import {
   TimeSlot,
 } from "@src/utilities/types.util";
 import { sendTelegramMessage } from "@src/utilities/telegramSender.util";
-import { formatDate, generateDateRange } from "@src/utilities/date.utils";
+import { formatDate, resolveScanDates } from "@src/utilities/date.utils";
 
 export async function checkCourtAvailability(
   params: ScanCourtSlotsOptions,
@@ -23,36 +23,32 @@ export async function checkCourtAvailability(
 
   const availableTimeSlots: TimeSlot[] = await scanCourtSlots(params);
 
-  const dates = params.specificDates
-    ? params.specificDates
-    : generateDateRange(params.startDate, params.endDate, {
-        skipWeekend: params.skipWeekend,
-        skipWeekdays: params.skipWeekdays,
-      });
+  const dates = resolveScanDates(params);
   const scannedDates: Set<string> = new Set(dates.map(formatDate));
   const hourRange = { startHour: params.startHour, endHour: params.endHour };
 
-  const message = formatCourtMessage(availableTimeSlots);
-  console.log(message);
-
   await withSlotHistoryLock(async () => {
-    const previousRecords: SlotHistoryRecord[] = loadSlotHistory();
+    const fullSlotsHistory: SlotHistoryRecord[] = loadSlotHistory();
 
     const newSlots: TimeSlot[] = findNewSlots(
       availableTimeSlots,
-      previousRecords,
+      fullSlotsHistory,
     );
 
+    const knownSlots: TimeSlot[] = availableTimeSlots.filter(
+      (slot) => !newSlots.includes(slot),
+    );
+
+    const message = formatCourtMessage(newSlots, knownSlots);
+    console.log(message);
+
     if (newSlots.length > 0) {
-      console.log(`New slots:\n${JSON.stringify(newSlots, null, 2)}`);
       await sendTelegramMessage(message);
       updateSlotHistoryExcel(availableTimeSlots, scannedDates, hourRange);
     } else {
-      console.log("No new slots found, not sending message.");
-
       const hasUnavailable = hasAnySlotBecomeUnavailable(
         availableTimeSlots,
-        previousRecords,
+        fullSlotsHistory,
         scannedDates,
         hourRange,
       );

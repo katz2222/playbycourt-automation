@@ -1,3 +1,5 @@
+import { ScanCourtSlotsOptions } from "@src/utilities/types.util";
+
 export function formatDate(date: Date): string {
   const day: string = String(date.getDate()).padStart(2, "0");
   const month: string = String(date.getMonth() + 1).padStart(2, "0");
@@ -29,7 +31,7 @@ export function formatHourDecimalToTimeString(decimalHour: number): string {
   const minutes = Math.round((decimalHour - hours) * 60);
   return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(
     2,
-    "0"
+    "0",
   )}`;
 }
 
@@ -40,7 +42,7 @@ export function parseHourStringToDecimal(time: string): number {
 
 export function smartParseDate(
   dateStr: string,
-  contextTimestamp: string
+  contextTimestamp: string,
 ): Date {
   const [day, month] = dateStr.split(" ")[0].split("/").map(Number);
   const contextDate: Date = new Date(contextTimestamp);
@@ -75,7 +77,7 @@ export function reversePrettyDateTime(prettyDateTimeStr: string): string {
 export function generateDateRange(
   start: Date,
   end: Date,
-  options?: { skipWeekend?: boolean; skipWeekdays?: number[] }
+  options?: { skipWeekend?: boolean; skipWeekdays?: number[] },
 ): Date[] {
   const { skipWeekend = false, skipWeekdays = [] } = options ?? {};
 
@@ -86,7 +88,11 @@ export function generateDateRange(
   }
 
   const dates: Date[] = [];
-  const current: Date = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+  const current: Date = new Date(
+    start.getFullYear(),
+    start.getMonth(),
+    start.getDate(),
+  );
   const last: Date = new Date(end.getFullYear(), end.getMonth(), end.getDate());
 
   while (current <= last) {
@@ -101,4 +107,14 @@ export function generateDateRange(
 
 export function dateToTimestamp(date: Date): number {
   return Math.floor(date.getTime() / 1000);
+}
+
+export function resolveScanDates(params: ScanCourtSlotsOptions): Date[] {
+  if (params.specificDates) {
+    return params.specificDates;
+  }
+  return generateDateRange(params.startDate!, params.endDate!, {
+    skipWeekend: params.skipWeekend,
+    skipWeekdays: params.skipWeekdays,
+  });
 }
