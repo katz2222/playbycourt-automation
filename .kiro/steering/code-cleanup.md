@@ -16,3 +16,4 @@ When a refactor makes existing code unreachable or redundant (dead guards, unuse
 - Avoid leftover `console.log` debugging statements; use the project's logger utility instead.
 - When renaming or moving a function, verify no orphaned re-exports or barrel references remain.
 - Keep utility files focused on a single concern — if a helper doesn't belong in the file it's in, move it to the appropriate one.
+- Never define inline object types when a matching type already exists in `types.util.ts`. Always reuse the canonical type — even if it introduces an import.

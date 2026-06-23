@@ -14,7 +14,7 @@ import {
   TimeSlot,
 } from "@src/utilities/types.util";
 import { sendTelegramMessage } from "@src/utilities/telegramSender.util";
-import { formatDate, generateDateRange } from "@src/utilities/date.utils";
+import { formatDate, resolveScanDates } from "@src/utilities/date.utils";
 
 export async function checkCourtAvailability(
   params: ScanCourtSlotsOptions,
@@ -23,12 +23,7 @@ export async function checkCourtAvailability(
 
   const availableTimeSlots: TimeSlot[] = await scanCourtSlots(params);
 
-  const dates = params.specificDates
-    ? params.specificDates
-    : generateDateRange(params.startDate, params.endDate, {
-        skipWeekend: params.skipWeekend,
-        skipWeekdays: params.skipWeekdays,
-      });
+  const dates = resolveScanDates(params);
   const scannedDates: Set<string> = new Set(dates.map(formatDate));
   const hourRange = { startHour: params.startHour, endHour: params.endHour };
 
@@ -51,8 +46,6 @@ export async function checkCourtAvailability(
       await sendTelegramMessage(message);
       updateSlotHistoryExcel(availableTimeSlots, scannedDates, hourRange);
     } else {
-      console.log("No new slots found, not sending message.");
-
       const hasUnavailable = hasAnySlotBecomeUnavailable(
         availableTimeSlots,
         fullSlotsHistory,
