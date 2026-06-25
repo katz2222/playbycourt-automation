@@ -296,10 +296,11 @@ export async function withSlotHistoryLock<T>(
   callback: () => Promise<T>,
 ): Promise<T> {
   const historyFilePath = getHistoryFilePath();
-  const lockPath = path.resolve(
-    path.dirname(historyFilePath),
-    `slot_history_${TELEGRAM_CHAT_ID}.lock`,
-  );
+  const dir = path.dirname(historyFilePath);
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+  const lockPath = path.resolve(dir, `slot_history_${TELEGRAM_CHAT_ID}.lock`);
 
   await acquireFileLock(lockPath);
   try {
