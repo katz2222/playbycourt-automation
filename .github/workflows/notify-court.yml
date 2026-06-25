@@ -31,6 +31,10 @@ on:
         description: "Comma-separated dates DD/MM/YYYY (mutually exclusive with offsets/skip)"
         required: false
         type: string
+      telegram_chat_id:
+        description: "Telegram chat/group ID to send notifications to (overrides secret)"
+        required: false
+        type: string
 
 concurrency:
   group: court-check
@@ -53,25 +57,27 @@ jobs:
       - name: Restore slot_history.xlsx from cache
         uses: actions/cache/restore@v4
         with:
-          path: data/slot_history.xlsx
-          key: court-slot-history-${{ github.run_id }}
-          restore-keys: court-slot-history-
+          path: data/slot_history_${{ inputs.telegram_chat_id || secrets.TELEGRAM_CHAT_ID }}.xlsx
+          key: court-slot-history-${{ inputs.telegram_chat_id || secrets.TELEGRAM_CHAT_ID }}-${{ github.run_id }}
+          restore-keys: court-slot-history-${{ inputs.telegram_chat_id || secrets.TELEGRAM_CHAT_ID }}-
 
       - name: Install dependencies
         run: npm install
 
       - name: Print slot_history.xlsx content if it exists
         run: |
-          if [ -f data/slot_history.xlsx ]; then
-            echo "✅ slot_history.xlsx found. Printing contents:"
+          CHAT_ID="${{ inputs.telegram_chat_id || secrets.TELEGRAM_CHAT_ID }}"
+          FILE="data/slot_history_${CHAT_ID}.xlsx"
+          if [ -f "$FILE" ]; then
+            echo "✅ $FILE found. Printing contents:"
             node -e "
               const XLSX = require('xlsx');
-              const wb = XLSX.readFile('data/slot_history.xlsx');
+              const wb = XLSX.readFile('$FILE');
               const ws = wb.Sheets[wb.SheetNames[0]];
               console.log(JSON.stringify(XLSX.utils.sheet_to_json(ws, { header: 1 }), null, 2));
             "
           else
-            echo '❌ slot_history.xlsx not found.'
+            echo "❌ $FILE not found."
           fi
 
       - name: Run court availability check
@@ -81,7 +87,7 @@ jobs:
           PASSWORD: ${{ secrets.PASSWORD }}
           PHONE_NUMBER: ${{ secrets.PHONE_NUMBER }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TELEGRAM_CHAT_ID: ${{ inputs.telegram_chat_id || secrets.TELEGRAM_CHAT_ID }}
           COOKIE: ${{ secrets.COOKIE }}
           SCAN_START_DATE_OFFSET: ${{ inputs.start_date_offset }}
           SCAN_END_DATE_OFFSET: ${{ inputs.end_date_offset }}
@@ -95,12 +101,12 @@ jobs:
       - name: Save updated slot_history.xlsx to cache
         uses: actions/cache/save@v4
         with:
-          path: data/slot_history.xlsx
-          key: court-slot-history-${{ github.run_id }}
+          path: data/slot_history_${{ inputs.telegram_chat_id || secrets.TELEGRAM_CHAT_ID }}.xlsx
+          key: court-slot-history-${{ inputs.telegram_chat_id || secrets.TELEGRAM_CHAT_ID }}-${{ github.run_id }}
 
       - name: Upload slot_history.xlsx as artifact
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: slot_history-${{ github.run_id }}
-          path: data/slot_history.xlsx
+          name: slot_history-${{ inputs.telegram_chat_id || secrets.TELEGRAM_CHAT_ID }}-${{ github.run_id }}
+          path: data/slot_history_${{ inputs.telegram_chat_id || secrets.TELEGRAM_CHAT_ID }}.xlsx
