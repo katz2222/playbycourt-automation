@@ -10,11 +10,15 @@ import {
   reversePrettyDateTime,
   smartParseDate,
 } from "./date.utils";
+import { TELEGRAM_CHAT_ID } from "env-variables";
 
-const historyFilePath: string = path.resolve(
-  __dirname,
-  "../../data/slot_history.xlsx",
-);
+function getHistoryFilePath(): string {
+  return path.resolve(
+    __dirname,
+    `../../data/slot_history_${TELEGRAM_CHAT_ID}.xlsx`,
+  );
+}
+
 const sheetName: string = "Slot History";
 
 function slotKey(row: TimeSlot): string {
@@ -22,9 +26,10 @@ function slotKey(row: TimeSlot): string {
 }
 
 export function loadSlotHistory(): SlotHistoryRecord[] {
-  if (!fs.existsSync(historyFilePath)) return [];
+  const filePath = getHistoryFilePath();
+  if (!fs.existsSync(filePath)) return [];
 
-  const workbook: XLSX.WorkBook = XLSX.readFile(historyFilePath);
+  const workbook: XLSX.WorkBook = XLSX.readFile(filePath);
   const sheet: XLSX.WorkSheet = workbook.Sheets[sheetName];
   const flatRows: Record<string, any>[] = XLSX.utils.sheet_to_json(sheet);
 
@@ -138,7 +143,7 @@ function writeSlotHistory(records: SlotHistoryRecord[]): void {
 
   const workbook: XLSX.WorkBook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(workbook, worksheet, "Slot History");
-  XLSX.writeFile(workbook, historyFilePath);
+  XLSX.writeFile(workbook, getHistoryFilePath());
 }
 
 // Main function to update slot history
@@ -290,10 +295,12 @@ export function releaseFileLock(lockPath: string): void {
 export async function withSlotHistoryLock<T>(
   callback: () => Promise<T>,
 ): Promise<T> {
-  const lockPath = path.resolve(
-    path.dirname(historyFilePath),
-    "slot_history.lock",
-  );
+  const historyFilePath = getHistoryFilePath();
+  const dir = path.dirname(historyFilePath);
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir, { recursive: true });
+  }
+  const lockPath = path.resolve(dir, `slot_history_${TELEGRAM_CHAT_ID}.lock`);
 
   await acquireFileLock(lockPath);
   try {
