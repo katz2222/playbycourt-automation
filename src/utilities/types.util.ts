@@ -23,6 +23,7 @@ export interface SlotHistoryRecord {
 interface BaseScanOptions {
   startHour: number;
   endHour: number;
+  minPlaytimeHours: number;
 }
 
 interface OffsetModeScanOptions extends BaseScanOptions {

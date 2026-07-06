@@ -103,3 +103,16 @@ export function parseDateToken(token: string): Date {
 
   return date;
 }
+
+export function validateMinPlaytimeHours(value: number): void {
+  if (isNaN(value) || value <= 0) {
+    throw new Error(
+      `SCAN_MIN_PLAYTIME_HOURS must be a positive number, got: ${value}`,
+    );
+  }
+  if (value % 0.5 !== 0) {
+    throw new Error(
+      `SCAN_MIN_PLAYTIME_HOURS must be a multiple of 0.5 (each slot is 30 min), got: ${value}`,
+    );
+  }
+}

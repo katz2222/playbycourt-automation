@@ -31,6 +31,10 @@ on:
         description: "Comma-separated dates DD/MM/YYYY (mutually exclusive with offsets/skip)"
         required: false
         type: string
+      min_playtime_hours:
+        description: "Minimum playtime in hours (e.g. 1, 1.5, 2)"
+        required: false
+        type: string
       telegram_chat_id:
         description: "Telegram chat/group ID to send notifications to (overrides secret)"
         required: false
@@ -82,10 +86,7 @@ jobs:
 
       - name: Run court availability check
         env:
-          EMAIL: ${{ secrets.EMAIL }}
           URL: ${{ secrets.URL }}
-          PASSWORD: ${{ secrets.PASSWORD }}
-          PHONE_NUMBER: ${{ secrets.PHONE_NUMBER }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ inputs.telegram_chat_id || secrets.TELEGRAM_CHAT_ID }}
           COOKIE: ${{ secrets.COOKIE }}
@@ -96,6 +97,7 @@ jobs:
           SCAN_SKIP_WEEKEND: ${{ inputs.skip_weekend }}
           SCAN_SKIP_WEEKDAYS: ${{ inputs.skip_weekdays }}
           SCAN_SPECIFIC_DATES: ${{ inputs.specific_dates }}
+          SCAN_MIN_PLAYTIME_HOURS: ${{ inputs.min_playtime_hours }}
         run: npx ts-node -r tsconfig-paths/register src/jobs/findAvailableSlots.job.ts
 
       - name: Save updated slot_history.xlsx to cache
