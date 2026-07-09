@@ -98,7 +98,7 @@ jobs:
           SCAN_SKIP_WEEKDAYS: ${{ inputs.skip_weekdays }}
           SCAN_SPECIFIC_DATES: ${{ inputs.specific_dates }}
           SCAN_MIN_PLAYTIME_HOURS: ${{ inputs.min_playtime_hours }}
-        run: npx ts-node -r tsconfig-paths/register src/jobs/findAvailableSlots.job.ts
+        run: npx tsx src/jobs/findAvailableSlots.job.ts
 
       - name: Save updated slot_history.xlsx to cache
         uses: actions/cache/save@v4
@@ -112,3 +112,10 @@ jobs:
         with:
           name: slot_history-${{ inputs.telegram_chat_id || secrets.TELEGRAM_CHAT_ID }}-${{ github.run_id }}
           path: data/slot_history_${{ inputs.telegram_chat_id || secrets.TELEGRAM_CHAT_ID }}.xlsx
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -d text="⚠️ Court scanner workflow failed%0A%0ARun: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
