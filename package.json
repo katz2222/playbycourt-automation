@@ -15,7 +15,9 @@
     "@types/node": "^24.2.1",
     "@types/xlsx": "^0.0.35",
     "fast-check": "^4.6.0",
-    "tsconfig-paths": "^4.2.0"
+    "tsconfig-paths": "^4.2.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.8.0"
   },
   "dependencies": {
     "dotenv": "^17.2.1",
