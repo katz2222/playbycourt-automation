@@ -6,12 +6,14 @@ import {
   SCAN_SKIP_WEEKEND,
   SCAN_SKIP_WEEKDAYS,
   SCAN_SPECIFIC_DATES,
+  SCAN_MIN_PLAYTIME_HOURS,
 } from "../../env-variables";
 import { ScanCourtSlotsOptions } from "./types.util";
 import {
   validateHours,
   validateOffsets,
   validateSkipWeekdays,
+  validateMinPlaytimeHours,
   findConflictingParams,
   parseDateToken,
 } from "./scanParamsValidation.util";
@@ -51,6 +53,7 @@ function parseSpecificDates(
   env: Record<string, string | undefined> | undefined,
   startHour: number,
   endHour: number,
+  minPlaytimeHours: number,
 ): ScanCourtSlotsOptions | null {
   const conflicting = findConflictingParams(env);
   if (conflicting.length > 0) {
@@ -78,13 +81,19 @@ function parseSpecificDates(
   if (futureDates.length === 0) return null;
 
   futureDates.sort((a, b) => a.getTime() - b.getTime());
-  return { specificDates: futureDates, startHour, endHour };
+  return {
+    specificDates: futureDates,
+    startHour,
+    endHour,
+    minPlaytimeHours,
+  };
 }
 
 function parseOffsetMode(
   env: Record<string, string | undefined> | undefined,
   startHour: number,
   endHour: number,
+  minPlaytimeHours: number,
 ): ScanCourtSlotsOptions {
   const rawStart =
     env !== undefined ? env["SCAN_START_DATE_OFFSET"] : SCAN_START_DATE_OFFSET;
@@ -137,7 +146,15 @@ function parseOffsetMode(
   const endDate = new Date(today);
   endDate.setDate(endDate.getDate() + endDateOffset);
 
-  return { startDate, endDate, startHour, endHour, skipWeekend, skipWeekdays };
+  return {
+    startDate,
+    endDate,
+    startHour,
+    endHour,
+    skipWeekend,
+    skipWeekdays,
+    minPlaytimeHours,
+  };
 }
 
 /**
@@ -154,12 +171,25 @@ export function parseScanParams(
   );
   const startHour = readEnvNumber(env, "SCAN_START_HOUR", SCAN_START_HOUR);
   const endHour = readEnvNumber(env, "SCAN_END_HOUR", SCAN_END_HOUR);
+  const minPlaytimeHoursRaw =
+    env !== undefined ? env["SCAN_MIN_PLAYTIME_HOURS"] : undefined;
+  const minPlaytimeHours =
+    minPlaytimeHoursRaw !== undefined && minPlaytimeHoursRaw !== ""
+      ? Number(minPlaytimeHoursRaw)
+      : SCAN_MIN_PLAYTIME_HOURS;
 
   validateHours(startHour, endHour);
+  validateMinPlaytimeHours(minPlaytimeHours);
 
   if (specificDatesStr.trim() !== "") {
-    return parseSpecificDates(specificDatesStr, env, startHour, endHour);
+    return parseSpecificDates(
+      specificDatesStr,
+      env,
+      startHour,
+      endHour,
+      minPlaytimeHours,
+    );
   }
 
-  return parseOffsetMode(env, startHour, endHour);
+  return parseOffsetMode(env, startHour, endHour, minPlaytimeHours);
 }

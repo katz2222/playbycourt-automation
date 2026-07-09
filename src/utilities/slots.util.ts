@@ -21,9 +21,9 @@ function filterSlotsInRange(
 export function findConsecutiveSlots(
   slots: ApiSlot[],
   date: string,
+  requiredSlots: number = 3,
 ): TimeSlot[] {
   const results: TimeSlot[] = [];
-  const requiredSlots = 3;
 
   const sorted = [...slots].sort(
     (a, b) => a.seconds_from_midnight - b.seconds_from_midnight,
@@ -59,7 +59,7 @@ export function findConsecutiveSlots(
 export async function scanCourtSlots(
   opts: ScanCourtSlotsOptions,
 ): Promise<TimeSlot[]> {
-  const { startHour, endHour } = opts;
+  const { startHour, endHour, minPlaytimeHours } = opts;
 
   const dates = opts.specificDates
     ? opts.specificDates
@@ -80,7 +80,7 @@ export async function scanCourtSlots(
 
     const dateStr = formatDate(date);
 
-    return findConsecutiveSlots(filtered, dateStr);
+    return findConsecutiveSlots(filtered, dateStr, minPlaytimeHours * 2);
   });
 
   const results = await Promise.all(requests);

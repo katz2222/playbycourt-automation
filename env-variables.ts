@@ -1,8 +1,6 @@
 import "dotenv/config";
 import envVar from "env-var";
-const EMAIL = envVar.get("EMAIL").required().asString();
 const URL = envVar.get("URL").required().asString();
-const PASSWORD = envVar.get("PASSWORD").required().asString();
 const TELEGRAM_BOT_TOKEN = envVar
   .get("TELEGRAM_BOT_TOKEN")
   .required()
@@ -31,11 +29,13 @@ const SCAN_SPECIFIC_DATES = envVar
   .get("SCAN_SPECIFIC_DATES")
   .default("")
   .asString();
+const SCAN_MIN_PLAYTIME_HOURS = envVar
+  .get("SCAN_MIN_PLAYTIME_HOURS")
+  .default("1.5")
+  .asFloat();
 
 export {
-  EMAIL,
   URL,
-  PASSWORD,
   TELEGRAM_BOT_TOKEN,
   TELEGRAM_CHAT_ID,
   COOKIE,
@@ -46,4 +46,5 @@ export {
   SCAN_SKIP_WEEKEND,
   SCAN_SKIP_WEEKDAYS,
   SCAN_SPECIFIC_DATES,
+  SCAN_MIN_PLAYTIME_HOURS,
 };
