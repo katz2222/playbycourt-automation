@@ -1,3 +1,63 @@
+// Club configuration types (discriminated union)
+
+export interface BaseClubConfig {
+  name: string;
+  provider: "playbypoint" | "matchpointer";
+}
+
+export interface PlayByPointClubConfig extends BaseClubConfig {
+  provider: "playbypoint";
+  facilityId: string;
+}
+
+export interface MatchPointerClubConfig extends BaseClubConfig {
+  provider: "matchpointer";
+  venueId: string;
+}
+
+export type ClubConfig = PlayByPointClubConfig | MatchPointerClubConfig;
+
+// MatchPointer API data structures
+
+export interface MatchPointerVenue {
+  id: number;
+  name: string;
+  opening_hours: MatchPointerOpeningHours;
+}
+
+export interface MatchPointerOpeningHours {
+  timeRanges: DayTimeRange[];
+}
+
+export interface DayTimeRange {
+  day: number; // 0=Sunday, 1=Monday, ..., 6=Saturday
+  isOpen: boolean;
+  ranges: TimeRange[];
+}
+
+export interface TimeRange {
+  start: string; // "HH:MM" format
+  end: string; // "HH:MM" format
+}
+
+export interface MatchPointerCourt {
+  id: number;
+  name: string;
+  venue_id: number;
+  is_active: boolean;
+}
+
+export interface MatchPointerReservationSlot {
+  id: number;
+  court_id: number;
+  date: string; // "YYYY-MM-DD"
+  start_time: string; // "HH:MM"
+  end_time: string; // "HH:MM"
+  status: string;
+}
+
+// Existing types
+
 export interface TimeSlot {
   date: string;
   start: number;

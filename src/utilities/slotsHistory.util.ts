@@ -25,12 +25,17 @@ function slotKey(row: TimeSlot): string {
   return `${row.date}-${row.start}-${row.end}`;
 }
 
-export function loadSlotHistory(): SlotHistoryRecord[] {
+export function loadSlotHistory(worksheetName?: string): SlotHistoryRecord[] {
   const filePath = getHistoryFilePath();
   if (!fs.existsSync(filePath)) return [];
 
+  const targetSheet = worksheetName || sheetName;
   const workbook: XLSX.WorkBook = XLSX.readFile(filePath);
-  const sheet: XLSX.WorkSheet = workbook.Sheets[sheetName];
+  const sheet: XLSX.WorkSheet = workbook.Sheets[targetSheet];
+
+  // If the requested sheet doesn't exist, return empty (first time for this club)
+  if (!sheet) return [];
+
   const flatRows: Record<string, any>[] = XLSX.utils.sheet_to_json(sheet);
 
   const records: SlotHistoryRecord[] = flatRows.map(
@@ -116,7 +121,10 @@ function sortSlotHistoryRecords(records: SlotHistoryRecord[]): void {
   });
 }
 
-function writeSlotHistory(records: SlotHistoryRecord[]): void {
+function writeSlotHistory(
+  records: SlotHistoryRecord[],
+  worksheetName?: string,
+): void {
   sortSlotHistoryRecords(records);
 
   const flatRows: Record<string, string | number>[] = records.map(
@@ -141,9 +149,34 @@ function writeSlotHistory(records: SlotHistoryRecord[]): void {
     ],
   });
 
-  const workbook: XLSX.WorkBook = XLSX.utils.book_new();
-  XLSX.utils.book_append_sheet(workbook, worksheet, "Slot History");
-  XLSX.writeFile(workbook, getHistoryFilePath());
+  const filePath = getHistoryFilePath();
+  const targetSheet = worksheetName || sheetName;
+
+  if (worksheetName) {
+    // Per-club mode: read existing workbook, add/replace just this sheet
+    let workbook: XLSX.WorkBook;
+    if (fs.existsSync(filePath)) {
+      workbook = XLSX.readFile(filePath);
+    } else {
+      workbook = XLSX.utils.book_new();
+    }
+
+    // Remove existing sheet with same name if it exists
+    const sheetIdx = workbook.SheetNames.indexOf(targetSheet);
+    if (sheetIdx !== -1) {
+      workbook.SheetNames.splice(sheetIdx, 1);
+      delete workbook.Sheets[targetSheet];
+    }
+
+    // Add the new sheet
+    XLSX.utils.book_append_sheet(workbook, worksheet, targetSheet);
+    XLSX.writeFile(workbook, filePath);
+  } else {
+    // Default mode: create fresh workbook (backward compatible)
+    const workbook: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, targetSheet);
+    XLSX.writeFile(workbook, filePath);
+  }
 }
 
 // Main function to update slot history
@@ -151,12 +184,13 @@ export function updateSlotHistoryExcel(
   currentSlots: TimeSlot[],
   scannedDates?: Set<string>,
   hourRange?: { startHour: number; endHour: number },
+  worksheetName?: string,
 ): void {
   const currentSlotKeys: Set<string> = new Set(currentSlots.map(slotKey));
-  const records: SlotHistoryRecord[] = loadSlotHistory();
+  const records: SlotHistoryRecord[] = loadSlotHistory(worksheetName);
   markUnavailableSlots(records, currentSlotKeys, scannedDates, hourRange);
   addNewSlots(records, currentSlots);
-  writeSlotHistory(records);
+  writeSlotHistory(records, worksheetName);
 }
 
 /**

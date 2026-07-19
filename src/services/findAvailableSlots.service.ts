@@ -1,6 +1,7 @@
 import { formatCourtMessage } from "@src/utilities/general.util";
 import { logScanParameters } from "@src/utilities/logger.utils";
-import { scanCourtSlots } from "@src/utilities/slots.util";
+import { getPlayByPointSlots } from "@src/utilities/playByPointSlots.util";
+import { getMatchPointerSlots } from "@src/utilities/matchPointerSlots.util";
 import {
   findNewSlots,
   hasAnySlotBecomeUnavailable,
@@ -9,6 +10,7 @@ import {
   withSlotHistoryLock,
 } from "@src/utilities/slotsHistory.util";
 import {
+  ClubConfig,
   ScanCourtSlotsOptions,
   SlotHistoryRecord,
   TimeSlot,
@@ -18,17 +20,57 @@ import { formatDate, resolveScanDates } from "@src/utilities/date.utils";
 
 export async function checkCourtAvailability(
   params: ScanCourtSlotsOptions,
+  clubs: ClubConfig[],
 ): Promise<void> {
   logScanParameters(params);
-
-  const availableTimeSlots: TimeSlot[] = await scanCourtSlots(params);
 
   const dates = resolveScanDates(params);
   const scannedDates: Set<string> = new Set(dates.map(formatDate));
   const hourRange = { startHour: params.startHour, endHour: params.endHour };
 
+  for (const club of clubs) {
+    try {
+      const slots = await fetchSlotsForClub(club, dates, params);
+      await processClubResults(club, slots, scannedDates, hourRange);
+    } catch (err) {
+      console.error(`Error scanning club "${club.name}":`, err);
+    }
+  }
+}
+
+async function fetchSlotsForClub(
+  club: ClubConfig,
+  dates: Date[],
+  params: ScanCourtSlotsOptions,
+): Promise<TimeSlot[]> {
+  switch (club.provider) {
+    case "playbypoint":
+      return getPlayByPointSlots(
+        club.facilityId,
+        dates,
+        params.startHour,
+        params.endHour,
+        params.minPlaytimeHours,
+      );
+    case "matchpointer":
+      return getMatchPointerSlots(
+        club.venueId,
+        dates,
+        params.startHour,
+        params.endHour,
+        params.minPlaytimeHours,
+      );
+  }
+}
+
+async function processClubResults(
+  club: ClubConfig,
+  availableTimeSlots: TimeSlot[],
+  scannedDates: Set<string>,
+  hourRange: { startHour: number; endHour: number },
+): Promise<void> {
   await withSlotHistoryLock(async () => {
-    const fullSlotsHistory: SlotHistoryRecord[] = loadSlotHistory();
+    const fullSlotsHistory: SlotHistoryRecord[] = loadSlotHistory(club.name);
 
     const newSlots: TimeSlot[] = findNewSlots(
       availableTimeSlots,
@@ -39,12 +81,17 @@ export async function checkCourtAvailability(
       (slot) => !newSlots.includes(slot),
     );
 
-    const message = formatCourtMessage(newSlots, knownSlots);
+    const message = formatCourtMessage(club.name, newSlots, knownSlots);
     console.log(message);
 
     if (newSlots.length > 0) {
       await sendTelegramMessage(message);
-      updateSlotHistoryExcel(availableTimeSlots, scannedDates, hourRange);
+      updateSlotHistoryExcel(
+        availableTimeSlots,
+        scannedDates,
+        hourRange,
+        club.name,
+      );
     } else {
       const hasUnavailable = hasAnySlotBecomeUnavailable(
         availableTimeSlots,
@@ -54,10 +101,19 @@ export async function checkCourtAvailability(
       );
 
       if (hasUnavailable) {
-        updateSlotHistoryExcel(availableTimeSlots, scannedDates, hourRange);
-        console.log("Some slots became unavailable. Excel updated.");
+        updateSlotHistoryExcel(
+          availableTimeSlots,
+          scannedDates,
+          hourRange,
+          club.name,
+        );
+        console.log(
+          `[${club.name}] Some slots became unavailable. Excel updated.`,
+        );
       } else {
-        console.log("No slot availability changes. Excel not updated.");
+        console.log(
+          `[${club.name}] No slot availability changes. Excel not updated.`,
+        );
       }
     }
   });
