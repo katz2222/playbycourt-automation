@@ -30,7 +30,7 @@ export async function fetchVenueDetails(
 export async function fetchActiveCourts(
   venueId: string,
 ): Promise<MatchPointerCourt[]> {
-  const url = `https://api.matchpointer.app/rest/v1/courts?select=*&venue_id=eq.${venueId}&is_active=eq.true&order=name.asc`;
+  const url = `https://api.matchpointer.app/rest/v1/courts?select=*&venue_id=eq.${venueId}&is_active=eq.true&sport=eq.padel&order=name.asc`;
 
   const res = await fetch(url, {
     headers: { apikey: MATCHPOINTER_API_KEY },
