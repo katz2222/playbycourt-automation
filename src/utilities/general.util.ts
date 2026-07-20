@@ -8,6 +8,7 @@ function formatSlotLine(slot: TimeSlot): string {
 }
 
 export function formatCourtMessage(
+  clubName: string,
   newSlots: TimeSlot[],
   oldSlots: TimeSlot[],
 ): string {
@@ -15,7 +16,7 @@ export function formatCourtMessage(
     return "No free court slots found.";
   }
 
-  const sections: string[] = [];
+  const sections: string[] = [`🏟️ ${clubName}`];
 
   if (newSlots.length > 0) {
     const lines = newSlots.map(formatSlotLine);

@@ -16,7 +16,7 @@ export function logScanParameters(scanParameters: ScanCourtSlotsOptions): void {
       .map((d) => d.toDateString())
       .join(", ");
     console.log(
-      `Checking court availability for specific dates: ${dateStrs} from ${scanParameters.startHour} to ${scanParameters.endHour}`,
+      `Checking court availability for specific dates: ${dateStrs} from ${scanParameters.startHour} to ${scanParameters.endHour}, min playtime: ${scanParameters.minPlaytimeHours}h`,
     );
   } else {
     console.log(
@@ -28,6 +28,9 @@ export function logScanParameters(scanParameters: ScanCourtSlotsOptions): void {
         scanParameters.startHour +
         " to " +
         scanParameters.endHour +
+        ", min playtime: " +
+        scanParameters.minPlaytimeHours +
+        "h" +
         ", skipping weekends: " +
         scanParameters.skipWeekend,
     );

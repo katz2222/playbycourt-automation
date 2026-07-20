@@ -39,6 +39,10 @@ on:
         description: "Telegram chat/group ID to send notifications to (overrides secret)"
         required: false
         type: string
+      clubs:
+        description: "JSON array of club configs (overrides secret)"
+        required: false
+        type: string
 
 concurrency:
   group: court-check
@@ -86,10 +90,11 @@ jobs:
 
       - name: Run court availability check
         env:
-          URL: ${{ secrets.URL }}
+          CLUBS: ${{ inputs.clubs || secrets.CLUBS }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ inputs.telegram_chat_id || secrets.TELEGRAM_CHAT_ID }}
           COOKIE: ${{ secrets.COOKIE }}
+          MATCHPOINTER_API_KEY: ${{ secrets.MATCHPOINTER_API_KEY }}
           SCAN_START_DATE_OFFSET: ${{ inputs.start_date_offset }}
           SCAN_END_DATE_OFFSET: ${{ inputs.end_date_offset }}
           SCAN_START_HOUR: ${{ inputs.start_hour }}

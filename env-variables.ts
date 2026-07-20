@@ -1,6 +1,5 @@
 import "dotenv/config";
 import envVar from "env-var";
-const URL = envVar.get("URL").required().asString();
 const TELEGRAM_BOT_TOKEN = envVar
   .get("TELEGRAM_BOT_TOKEN")
   .required()
@@ -34,8 +33,15 @@ const SCAN_MIN_PLAYTIME_HOURS = envVar
   .default("1.5")
   .asFloat();
 
+const CLUBS = envVar.get("CLUBS").required().asString();
+const MATCHPOINTER_API_KEY = envVar
+  .get("MATCHPOINTER_API_KEY")
+  .default("")
+  .asString();
+
 export {
-  URL,
+  CLUBS,
+  MATCHPOINTER_API_KEY,
   TELEGRAM_BOT_TOKEN,
   TELEGRAM_CHAT_ID,
   COOKIE,

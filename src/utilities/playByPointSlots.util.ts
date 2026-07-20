@@ -1,12 +1,12 @@
-import { fetchAvailableHours } from "./api.util";
-import { dateToTimestamp, formatDate, generateDateRange } from "./date.utils";
-import { ScanCourtSlotsOptions, TimeSlot, ApiSlot } from "./types.util";
+import { fetchAvailableHours } from "./playByPointApi.util";
+import { dateToTimestamp, formatDate } from "./date.utils";
+import { ApiSlot, TimeSlot } from "./types.util";
 
-function filterSlotsInRange(
+export function filterSlotsInRange(
   slots: ApiSlot[],
   startHour: number,
   endHour: number,
-) {
+): ApiSlot[] {
   const start = startHour * 3600;
   const end = endHour * 3600;
 
@@ -56,27 +56,18 @@ export function findConsecutiveSlots(
   return results;
 }
 
-export async function scanCourtSlots(
-  opts: ScanCourtSlotsOptions,
+export async function getPlayByPointSlots(
+  facilityId: string,
+  dates: Date[],
+  startHour: number,
+  endHour: number,
+  minPlaytimeHours: number,
 ): Promise<TimeSlot[]> {
-  const { startHour, endHour, minPlaytimeHours } = opts;
-
-  const dates = opts.specificDates
-    ? opts.specificDates
-    : generateDateRange(opts.startDate, opts.endDate, {
-        skipWeekend: opts.skipWeekend,
-        skipWeekdays: opts.skipWeekdays,
-      });
-
   const requests = dates.map(async (date) => {
     const timestamp = dateToTimestamp(date);
-    const data = await fetchAvailableHours(timestamp);
+    const data = await fetchAvailableHours(facilityId, timestamp);
 
-    const filtered = filterSlotsInRange(
-      data.available_hours,
-      startHour,
-      endHour,
-    );
+    const filtered = filterSlotsInRange(data, startHour, endHour);
 
     const dateStr = formatDate(date);
 

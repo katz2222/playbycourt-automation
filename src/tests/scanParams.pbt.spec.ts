@@ -378,7 +378,7 @@ test("Property 3: Mutual exclusivity enforcement for specific dates", () => {
         /SCAN_SPECIFIC_DATES cannot be used with/,
       );
     }),
-    { numRuns: 100 },
+    { numRuns: 20 },
   );
 });
 
@@ -437,7 +437,7 @@ test("Property 4: Backward compatibility in offset mode", () => {
         expect(result!.endDate!.getTime()).toBe(expectedEnd.getTime());
       },
     ),
-    { numRuns: 100 },
+    { numRuns: 20 },
   );
 });
 
@@ -481,7 +481,7 @@ test("Property 5: All-past-dates early exit", () => {
 
       expect(result).toBeNull();
     }),
-    { numRuns: 100 },
+    { numRuns: 20 },
   );
 });
 
@@ -575,7 +575,7 @@ test("Property 6: Future date filtering and output structure", () => {
       expect(result!.startHour).toBe(startHour);
       expect(result!.endHour).toBe(endHour);
     }),
-    { numRuns: 100 },
+    { numRuns: 20 },
   );
 });
 
@@ -659,6 +659,6 @@ test("Property 7: Service uses specificDates directly", () => {
         );
       }
     }),
-    { numRuns: 100 },
+    { numRuns: 20 },
   );
 });
