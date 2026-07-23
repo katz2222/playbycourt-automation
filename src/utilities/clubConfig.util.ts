@@ -1,8 +1,4 @@
-import {
-  ClubConfig,
-  PlayByPointClubConfig,
-  MatchPointerClubConfig,
-} from "./types.util";
+import { ClubConfig, MatchPointerClubConfig } from "./types.util";
 
 export function parseClubConfigs(clubsJson: string): ClubConfig[] {
   let parsed: unknown;
@@ -29,7 +25,7 @@ export function parseClubConfigs(clubsJson: string): ClubConfig[] {
 
     switch (provider) {
       case "playbypoint": {
-        const config = validatePlayByPointConfig(raw);
+        const config = validateFacilityIdConfig(raw, "playbypoint");
         if (config) {
           validConfigs.push(config);
         } else {
@@ -50,6 +46,17 @@ export function parseClubConfigs(clubsJson: string): ClubConfig[] {
         }
         break;
       }
+      case "supabase": {
+        const config = validateFacilityIdConfig(raw, "supabase");
+        if (config) {
+          validConfigs.push(config);
+        } else {
+          console.error(
+            `Club config at index ${i}: invalid supabase config (requires non-empty "name" and "facilityId")`,
+          );
+        }
+        break;
+      }
       default:
         console.error(
           `Club config at index ${i}: unknown or missing provider "${String(provider)}"`,
@@ -61,7 +68,14 @@ export function parseClubConfigs(clubsJson: string): ClubConfig[] {
   return validConfigs;
 }
 
-function validatePlayByPointConfig(raw: unknown): PlayByPointClubConfig | null {
+function validateFacilityIdConfig(
+  raw: unknown,
+  provider: "playbypoint" | "supabase",
+): {
+  name: string;
+  facilityId: string;
+  provider: "playbypoint" | "supabase";
+} | null {
   if (!raw || typeof raw !== "object") return null;
 
   const obj = raw as Record<string, unknown>;
@@ -71,11 +85,7 @@ function validatePlayByPointConfig(raw: unknown): PlayByPointClubConfig | null {
   if (typeof name !== "string" || name.trim() === "") return null;
   if (typeof facilityId !== "string" || facilityId.trim() === "") return null;
 
-  return {
-    name,
-    provider: "playbypoint",
-    facilityId,
-  };
+  return { name, provider, facilityId };
 }
 
 function validateMatchPointerConfig(

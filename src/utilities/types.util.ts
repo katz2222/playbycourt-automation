@@ -2,7 +2,7 @@
 
 export interface BaseClubConfig {
   name: string;
-  provider: "playbypoint" | "matchpointer";
+  provider: "playbypoint" | "matchpointer" | "supabase";
 }
 
 export interface PlayByPointClubConfig extends BaseClubConfig {
@@ -15,7 +15,36 @@ export interface MatchPointerClubConfig extends BaseClubConfig {
   venueId: string;
 }
 
-export type ClubConfig = PlayByPointClubConfig | MatchPointerClubConfig;
+export interface SupabaseClubConfig extends BaseClubConfig {
+  provider: "supabase";
+  facilityId: string;
+}
+
+export type ClubConfig =
+  | PlayByPointClubConfig
+  | MatchPointerClubConfig
+  | SupabaseClubConfig;
+
+// Supabase API response types
+
+export interface SupabaseCourtAvailability {
+  court_id: string;
+  court_name: string;
+  court_position: number;
+  duration_options: number[]; // minutes, e.g. [60, 90, 120]
+}
+
+export interface SupabaseAvailableSlot {
+  start_time: string; // "HH:MM" format
+  available_courts: SupabaseCourtAvailability[];
+}
+
+export interface SupabaseFacilityResponse {
+  facility_id: string;
+  facility_name: string;
+  date: string;
+  slots: SupabaseAvailableSlot[];
+}
 
 // MatchPointer API data structures
 
